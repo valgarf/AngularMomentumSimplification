@@ -1,0 +1,672 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     26010,        663]
+NotebookOptionsPosition[     24423,        608]
+NotebookOutlinePosition[     24922,        631]
+CellTagsIndexPosition[     24851,        626]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell[TextData[{
+ "The unit testing framework allows to write unit tests for your functions \
+and modules.\nNote that the framework resides within the \
+\[OpenCurlyDoubleQuote]UnitTesting`\[CloseCurlyDoubleQuote] context.\nBefore \
+using the framework, one must call the ",
+ StyleBox["initialiseTests", "Code"],
+ " function, which intialises / resets the state of the unit testing \
+framework."
+}], "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.604832903362824*^9, 3.6048330156983433`*^9}, 
+   3.604834211215626*^9, {3.6050025222573757`*^9, 3.605002522928488*^9}}],
+
+Cell[TextData[{
+ "Adding tests is performed with the ",
+ StyleBox["addTest", "Code"],
+ " function, which takes an expression to evaluate and the expected results \
+as arguments, e.g. ",
+ StyleBox["addTest[ f[6],  300 ]", "Code"],
+ "  will succeed if ",
+ StyleBox["f[6] == 300", "Code"],
+ ".\nOne can give a specific name to the test using the option ",
+ StyleBox["name", "Code"],
+ ". If none is given, one is constructed from the input:\n",
+ StyleBox["addTest[ f[6], 300, name ->\[CloseCurlyDoubleQuote]My Test\
+\[CloseCurlyDoubleQuote]]", "Code"],
+ " is named \[OpenCurlyDoubleQuote]My Test\[CloseCurlyDoubleQuote], while ",
+ StyleBox["addTest[ f[6], 300, equivalenceFunction \[Rule] ( #1 > #2 & ) ];", 
+  "Code"],
+ " \nis named \[OpenCurlyDoubleQuote]f[6] > 300\[CloseCurlyDoubleQuote]. \n\
+Additionally, one can change the option ",
+ StyleBox["equivalenceFunction", "Code"],
+ " to perform a custom comparison. The function must take two arguments, e.g. \
+",
+ StyleBox["addTest[ f[6], 300, equivalenceFunction \[Rule] ( #1 > #2 & ) ];", 
+  "Code"],
+ " will succeed if ",
+ StyleBox["f[6] > 300", "Code"],
+ " (note that the brackets around the function are mandatory!). One should \
+keep in mind that ",
+ StyleBox["replacement rules are evil",
+  FontWeight->"Bold"],
+ " and should not be used inside the equivalence function, as they ignore the \
+Hold / HoldForm magic that is performed for storing the expression, resulting \
+in unexpected behaviour.\nFurthermore all functions that work on patterns, \
+e.g. === or =!= mix up the automatic naming, the evaluation process, however, \
+works correctly by first evaluating the expression and then comparing it to \
+the given value. One can correct this by using a ",
+ StyleBox["HoldForm", "Code"],
+ ", e.g. ",
+ StyleBox["equivalenceFunction -> (HoldForm[ #1 =!= #2 ] &)", "Code"]
+}], "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.604833020818882*^9, 3.604833077506547*^9}, {
+   3.604833234483124*^9, 3.604833664770937*^9}, 3.604834211215727*^9, {
+   3.60483639403717*^9, 3.604836452181231*^9}, {3.604836672084827*^9, 
+   3.6048367676691923`*^9}, {3.60483866314159*^9, 3.604838687685557*^9}, {
+   3.604838719702365*^9, 3.604838723413755*^9}, {3.604838840758349*^9, 
+   3.604838871302334*^9}, {3.60483894503088*^9, 3.604838980373481*^9}, {
+   3.604839725239262*^9, 3.604839776727709*^9}, {3.60484291975585*^9, 
+   3.604842920651458*^9}, {3.604842957290922*^9, 3.604842957864299*^9}}],
+
+Cell[TextData[{
+ "Furthermore one can sort tests in different \[OpenCurlyDoubleQuote]modules\
+\[CloseCurlyDoubleQuote], which have nothing to do with the ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " Modules. They are simply used for arganizing the test cases. A module can \
+be started by calling ",
+ StyleBox["beginTestModule[\[OpenCurlyDoubleQuote]Name of this module\
+\[CloseCurlyDoubleQuote]]", "Code"],
+ " and it is closed by ",
+ StyleBox["endTestModule[]", "Code"],
+ ". All tests that are added between these calls are automatically added to \
+this module. Note that modules can be nested, e.g. ",
+ StyleBox["beginTestModule[\[OpenCurlyDoubleQuote]Top\[CloseCurlyDoubleQuote]]\
+;beginTestModule[\[OpenCurlyDoubleQuote]Sub\[CloseCurlyDoubleQuote]];", 
+  "Code"],
+ " results in a module with the full name of \[OpenCurlyDoubleQuote]Top`Sub\
+\[CloseCurlyDoubleQuote]."
+}], "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.6048329432671547`*^9, 3.604832960081587*^9}, {
+  3.6048336670896797`*^9, 3.604833748674756*^9}, {3.604834025363309*^9, 
+  3.60483408537864*^9}, {3.604834118547887*^9, 3.604834211215891*^9}, {
+  3.6048429341526546`*^9, 3.604842939657179*^9}, {3.604844544761758*^9, 
+  3.604844545513069*^9}, {3.605002526672854*^9, 3.605002533104292*^9}}],
+
+Cell[TextData[{
+ "Finally, tests are run by calling the function ",
+ StyleBox["runTests[]", "Code"],
+ ". Depending on the number of tests this may take a while. The function ",
+ StyleBox["addTest[...]", "Code"],
+ " only adds the test to a list for later evaluation and it does not take \
+much time. Therefore the ",
+ StyleBox["addTest[...]", "Code"],
+ " calls can safely be put in initialise cells."
+}], "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{{3.604834205315604*^9, 3.6048342112160587`*^9}, {
+  3.604834258388246*^9, 3.6048344315549927`*^9}, {3.605002539440805*^9, 
+  3.605002540225193*^9}}],
+
+Cell["An example of the usage can be found below.", "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.},
+ CellChangeTimes->{3.604834432531541*^9}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"$Path", "=", 
+   RowBox[{"DeleteDuplicates", "@", 
+    RowBox[{"Append", "[", 
+     RowBox[{"$Path", ",", 
+      RowBox[{"NotebookDirectory", "[", "]"}]}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "UnitTesting`", " "}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.60484276150816*^9, 3.6048427658823767`*^9}, {
+   3.604842878364913*^9, 3.604842883932637*^9}, {3.604844455371643*^9, 
+   3.6048444637099047`*^9}, 3.604988225325405*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"initialiseTests", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"beginTestModule", "[", "\"\<My Module\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"addTest", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"2", "^", "2"}], "+", "3"}], ",", "7"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"addTest", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"2", "^", "2"}], "+", "3"}], ",", "8"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"addTest", "[", 
+   RowBox[{
+    RowBox[{"5", "^", "2"}], ",", "25", ",", 
+    RowBox[{"name", "\[Rule]", " ", "\"\<Basic Testing\>\""}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"addTest", "[", 
+   RowBox[{
+    RowBox[{"5", "^", "2"}], ",", "26", ",", 
+    RowBox[{"name", "\[Rule]", " ", "\"\<should fail\>\""}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"beginTestModule", "[", "\"\<Submodule -  Greater Than\>\"", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"addTest", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"2", "^", "2"}], "+", "3"}], ",", "2", ",", 
+    RowBox[{"equivalenceFunction", "\[Rule]", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"#1", ">", "#2"}], "&"}], ")"}]}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"addTest", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"5", "^", "2"}], "+", "3"}], ",", "20", ",", 
+    RowBox[{"equivalenceFunction", "\[Rule]", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"#1", ">", "#2"}], "&"}], ")"}]}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"addTest", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"5", "^", "2"}], "+", "3"}], ",", "28", ",", 
+    RowBox[{"equivalenceFunction", "\[Rule]", " ", 
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"#1", ">", "#2"}], "&"}], ")"}]}], ",", 
+    RowBox[{"name", "\[Rule]", " ", "\"\<should fail\>\""}]}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"addTest", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"5", "^", "2"}], "+", "3"}], ",", "28", ",", 
+    RowBox[{"equivalenceFunction", "\[Rule]", " ", "BLUBB"}], ",", 
+    RowBox[{
+    "name", "\[Rule]", " ", "\"\<should give an error message\>\""}]}], "]"}],
+   ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"endTestModule", "[", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"endTestModule", "[", "]"}], ";"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.604842993412984*^9, 3.604842994901963*^9}, {
+  3.604903570060409*^9, 3.604903572427252*^9}, {3.605002548942631*^9, 
+  3.605002563772017*^9}, {3.605005919324802*^9, 3.605005935711607*^9}, {
+  3.605006167915114*^9, 3.6050061682040854`*^9}},
+ CellTags->"test[38]"],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"runTests", "[", 
+   RowBox[{"msgSuccess", "\[Rule]", " ", "None"}], "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.604842741020493*^9, 3.604842742165133*^9}, {
+   3.60489987927558*^9, 3.6048999102820597`*^9}, 3.604900068507965*^9, {
+   3.604900961838118*^9, 3.6049009637879133`*^9}, {3.604901167574039*^9, 
+   3.604901175370685*^9}, {3.604901250827125*^9, 3.604901252123456*^9}, {
+   3.604901409017467*^9, 3.604901414664616*^9}, {3.604901447164926*^9, 
+   3.6049014483325243`*^9}, {3.605002567667704*^9, 3.60500256912435*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData["\<\"Running unit tests...\"\>"], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.605006158751607*^9}],
+
+Cell[BoxData[
+ StyleBox[
+  InterpretationBox["\<\"Running unit test module \\\"My Module\\\"\"\>",
+   StringForm["``Running unit test module \"``\"", "", "My Module"],
+   Editable->False],
+  StripOnInput->False,
+  LineColor->GrayLevel[0],
+  FrontFaceColor->GrayLevel[0],
+  BackFaceColor->GrayLevel[0],
+  GraphicsColor->GrayLevel[0],
+  FontColor->GrayLevel[0]]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.605006158756727*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   StyleBox[
+    InterpretationBox["\<\"   \\!\\(\\\"\\\\!\\\\(\\\\(\\\\(2\\\\^2 + \
+3\\\\)\\\\) \\\\[Equal] 8\\\\)\\\"\\): Failed (expression evaluated to \
+\\\"\\!\\(7\\)\\\") \"\>",
+     StringForm["``   ``: Failed (expression evaluated to \"``\") ", "", 
+      StringForm["``", HoldForm[2^2 + 3] == HoldForm[8]], 7],
+     Editable->False],
+    StripOnInput->False,
+    LineColor->RGBColor[1, 0, 0],
+    FrontFaceColor->RGBColor[1, 0, 0],
+    BackFaceColor->RGBColor[1, 0, 0],
+    GraphicsColor->RGBColor[1, 0, 0],
+    FontColor->RGBColor[1, 0, 0]], "\[InvisibleSpace]", 
+   TagBox[
+    ButtonBox[
+     PaneSelectorBox[{False->"\<\"go to test\"\>", True->
+      StyleBox["\<\"go to test\"\>", "HyperlinkActive"]}, Dynamic[
+       CurrentValue["MouseOver"]],
+      BaseStyle->{"Hyperlink"},
+      FrameMargins->0,
+      ImageSize->Automatic],
+     BaseStyle->"Hyperlink",
+     ButtonData:>{
+       NotebookObject[
+        FrontEndObject[
+         LinkObject["2gx_shm", 3, 1]], 18], "test[38]"},
+     ButtonNote->ButtonData],
+    Annotation[#, {
+      NotebookObject[
+       FrontEndObject[
+        LinkObject["2gx_shm", 3, 1]], 18], "test[38]"}, "Hyperlink"]& ]}],
+  SequenceForm[
+   Style[
+    StringForm["``   ``: Failed (expression evaluated to \"``\") ", "", 
+     StringForm["``", HoldForm[2^2 + 3] == HoldForm[8]], 7], 
+    RGBColor[1, 0, 0]], 
+   Hyperlink["go to test", {
+     NotebookObject[
+      FrontEndObject[
+       LinkObject["2gx_shm", 3, 1]], 18], "test[38]"}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.605006158758473*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   StyleBox[
+    InterpretationBox["\<\"   should fail: Failed (expression evaluated to \\\
+\"\\!\\(25\\)\\\") \"\>",
+     StringForm[
+     "``   ``: Failed (expression evaluated to \"``\") ", "", "should fail", 
+      25],
+     Editable->False],
+    StripOnInput->False,
+    LineColor->RGBColor[1, 0, 0],
+    FrontFaceColor->RGBColor[1, 0, 0],
+    BackFaceColor->RGBColor[1, 0, 0],
+    GraphicsColor->RGBColor[1, 0, 0],
+    FontColor->RGBColor[1, 0, 0]], "\[InvisibleSpace]", 
+   TagBox[
+    ButtonBox[
+     PaneSelectorBox[{False->"\<\"go to test\"\>", True->
+      StyleBox["\<\"go to test\"\>", "HyperlinkActive"]}, Dynamic[
+       CurrentValue["MouseOver"]],
+      BaseStyle->{"Hyperlink"},
+      FrameMargins->0,
+      ImageSize->Automatic],
+     BaseStyle->"Hyperlink",
+     ButtonData:>{
+       NotebookObject[
+        FrontEndObject[
+         LinkObject["2gx_shm", 3, 1]], 18], "test[38]"},
+     ButtonNote->ButtonData],
+    Annotation[#, {
+      NotebookObject[
+       FrontEndObject[
+        LinkObject["2gx_shm", 3, 1]], 18], "test[38]"}, "Hyperlink"]& ]}],
+  SequenceForm[
+   Style[
+    StringForm[
+    "``   ``: Failed (expression evaluated to \"``\") ", "", "should fail", 
+     25], 
+    RGBColor[1, 0, 0]], 
+   Hyperlink["go to test", {
+     NotebookObject[
+      FrontEndObject[
+       LinkObject["2gx_shm", 3, 1]], 18], "test[38]"}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.60500615876126*^9}],
+
+Cell[BoxData[
+ StyleBox[
+  InterpretationBox["\<\"   Running unit test module \\\"Submodule -  Greater \
+Than\\\"\"\>",
+   StringForm[
+   "``Running unit test module \"``\"", "   ", "Submodule -  Greater Than"],
+   Editable->False],
+  StripOnInput->False,
+  LineColor->GrayLevel[0],
+  FrontFaceColor->GrayLevel[0],
+  BackFaceColor->GrayLevel[0],
+  GraphicsColor->GrayLevel[0],
+  FontColor->GrayLevel[0]]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.6050061587622843`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   StyleBox[
+    InterpretationBox["\<\"      should fail: Failed (expression evaluated to \
+\\\"\\!\\(28\\)\\\") \"\>",
+     StringForm[
+     "``   ``: Failed (expression evaluated to \"``\") ", "   ", 
+      "should fail", 28],
+     Editable->False],
+    StripOnInput->False,
+    LineColor->RGBColor[1, 0, 0],
+    FrontFaceColor->RGBColor[1, 0, 0],
+    BackFaceColor->RGBColor[1, 0, 0],
+    GraphicsColor->RGBColor[1, 0, 0],
+    FontColor->RGBColor[1, 0, 0]], "\[InvisibleSpace]", 
+   TagBox[
+    ButtonBox[
+     PaneSelectorBox[{False->"\<\"go to test\"\>", True->
+      StyleBox["\<\"go to test\"\>", "HyperlinkActive"]}, Dynamic[
+       CurrentValue["MouseOver"]],
+      BaseStyle->{"Hyperlink"},
+      FrameMargins->0,
+      ImageSize->Automatic],
+     BaseStyle->"Hyperlink",
+     ButtonData:>{
+       NotebookObject[
+        FrontEndObject[
+         LinkObject["2gx_shm", 3, 1]], 18], "test[38]"},
+     ButtonNote->ButtonData],
+    Annotation[#, {
+      NotebookObject[
+       FrontEndObject[
+        LinkObject["2gx_shm", 3, 1]], 18], "test[38]"}, "Hyperlink"]& ]}],
+  SequenceForm[
+   Style[
+    StringForm[
+    "``   ``: Failed (expression evaluated to \"``\") ", "   ", "should fail",
+      28], 
+    RGBColor[1, 0, 0]], 
+   Hyperlink["go to test", {
+     NotebookObject[
+      FrontEndObject[
+       LinkObject["2gx_shm", 3, 1]], 18], "test[38]"}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.605006158763072*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"UnitTesting`Private`runTest", "::", "error"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Equivalence function for test \\\"\[NoBreak]\\!\\(\\\"My \
+Module`Submodule -  Greater Than`should give an error \
+message\\\"\\)\[NoBreak]\\\" did not yield a boolean value. Result of \
+comparison: \[NoBreak]\\!\\(BLUBB[\\(\\(28, 28\\)\\)]\\)\[NoBreak]\"\>"}]], \
+"Message", "MSG",
+ CellChangeTimes->{3.604900959943348*^9, 3.604901175997369*^9, 
+  3.604901234133293*^9, 3.604903679975889*^9, 3.604905602638496*^9, 
+  3.604988237460105*^9, 3.604988357706292*^9, 3.604988390071817*^9, 
+  3.605002574834792*^9, 3.605006073521832*^9, 3.605006123001277*^9, 
+  3.605006158856414*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   StyleBox[
+    InterpretationBox["\<\"      should give an error message: Failed \
+(expression evaluated to \\\"\\!\\(28\\)\\\") \"\>",
+     StringForm[
+     "``   ``: Failed (expression evaluated to \"``\") ", "   ", 
+      "should give an error message", 28],
+     Editable->False],
+    StripOnInput->False,
+    LineColor->RGBColor[1, 0, 0],
+    FrontFaceColor->RGBColor[1, 0, 0],
+    BackFaceColor->RGBColor[1, 0, 0],
+    GraphicsColor->RGBColor[1, 0, 0],
+    FontColor->RGBColor[1, 0, 0]], "\[InvisibleSpace]", 
+   TagBox[
+    ButtonBox[
+     PaneSelectorBox[{False->"\<\"go to test\"\>", True->
+      StyleBox["\<\"go to test\"\>", "HyperlinkActive"]}, Dynamic[
+       CurrentValue["MouseOver"]],
+      BaseStyle->{"Hyperlink"},
+      FrameMargins->0,
+      ImageSize->Automatic],
+     BaseStyle->"Hyperlink",
+     ButtonData:>{
+       NotebookObject[
+        FrontEndObject[
+         LinkObject["2gx_shm", 3, 1]], 18], "test[38]"},
+     ButtonNote->ButtonData],
+    Annotation[#, {
+      NotebookObject[
+       FrontEndObject[
+        LinkObject["2gx_shm", 3, 1]], 18], "test[38]"}, "Hyperlink"]& ]}],
+  SequenceForm[
+   Style[
+    StringForm[
+    "``   ``: Failed (expression evaluated to \"``\") ", "   ", 
+     "should give an error message", 28], 
+    RGBColor[1, 0, 0]], 
+   Hyperlink["go to test", {
+     NotebookObject[
+      FrontEndObject[
+       LinkObject["2gx_shm", 3, 1]], 18], "test[38]"}]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.605006158858424*^9}],
+
+Cell[BoxData[
+ StyleBox[
+  InterpretationBox["\<\"   Finished unit test module \\\"Submodule -  \
+Greater Than\\\": \\!\\(2\\) successful tests, \\!\\(2\\) failures\"\>",
+   StringForm[
+   "``Finished unit test module \"``\": `` successful tests, `` failures", 
+    "   ", "Submodule -  Greater Than", 2, 2],
+   Editable->False],
+  StripOnInput->False,
+  LineColor->RGBColor[1, 0, 0],
+  FrontFaceColor->RGBColor[1, 0, 0],
+  BackFaceColor->RGBColor[1, 0, 0],
+  GraphicsColor->RGBColor[1, 0, 0],
+  FontColor->RGBColor[1, 0, 0]]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.605006158859701*^9}],
+
+Cell[BoxData[
+ StyleBox[
+  InterpretationBox["\<\"Finished unit test module \\\"My Module\\\": \\!\\(4\
+\\) successful tests, \\!\\(4\\) failures\"\>",
+   StringForm[
+   "``Finished unit test module \"``\": `` successful tests, `` failures", "",
+     "My Module", 4, 4],
+   Editable->False],
+  StripOnInput->False,
+  LineColor->RGBColor[1, 0, 0],
+  FrontFaceColor->RGBColor[1, 0, 0],
+  BackFaceColor->RGBColor[1, 0, 0],
+  GraphicsColor->RGBColor[1, 0, 0],
+  FontColor->RGBColor[1, 0, 0]]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.605006158860796*^9}],
+
+Cell[BoxData[
+ StyleBox[
+  InterpretationBox["\<\"Unit tests Finished: \\!\\(4\\) successful tests, \
+\\!\\(4\\) failures\"\>",
+   StringForm["Unit tests Finished: `` successful tests, `` failures", 4, 4],
+   Editable->False],
+  StripOnInput->False,
+  LineColor->RGBColor[1, 0, 0],
+  FrontFaceColor->RGBColor[1, 0, 0],
+  BackFaceColor->RGBColor[1, 0, 0],
+  GraphicsColor->RGBColor[1, 0, 0],
+  FontColor->RGBColor[1, 0, 0]]], "Print",
+ CellChangeTimes->{
+  3.604844337720377*^9, 3.604844412157268*^9, 3.6048444738973827`*^9, 
+   3.6048975002608833`*^9, {3.604898151046443*^9, 3.6048981637193203`*^9}, 
+   3.604899862048843*^9, 3.6048999112263927`*^9, 3.604900005279604*^9, 
+   3.604900106567634*^9, 3.60490014305217*^9, 3.6049009541206913`*^9, 
+   3.60490117594681*^9, 3.604901234026065*^9, 3.604903679863414*^9, 
+   3.604905602529952*^9, 3.6049882373713493`*^9, 3.6049883576022043`*^9, 
+   3.6049883899696302`*^9, 3.6050025747206163`*^9, 3.605006073344327*^9, 
+   3.60500612289291*^9, 3.605006158862458*^9}]
+}, Open  ]]
+}, Open  ]]
+},
+WindowSize->{846, 869},
+WindowMargins->{{Automatic, 79}, {Automatic, 0}},
+ShowSelection->True,
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{
+ "test[38]"->{
+  Cell[6268, 144, 2777, 82, 319, "Input",
+   InitializationCell->True,
+   CellTags->"test[38]"]}
+ }
+*)
+(*CellTagsIndex
+CellTagsIndex->{
+ {"test[38]", 24730, 619}
+ }
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 600, 11, 91, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[1182, 35, 2465, 47, 311, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[3650, 84, 1305, 24, 111, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[4958, 110, 632, 13, 68, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}],
+Cell[5593, 125, 154, 2, 30, "Text",
+ CellGroupingRules->{GroupTogetherGrouping, 10000.}]
+}, Open  ]],
+Cell[5762, 130, 503, 12, 55, "Input",
+ InitializationCell->True],
+Cell[6268, 144, 2777, 82, 319, "Input",
+ InitializationCell->True,
+ CellTags->"test[38]"],
+Cell[CellGroupData[{
+Cell[9070, 230, 560, 9, 32, "Input"],
+Cell[CellGroupData[{
+Cell[9655, 243, 629, 9, 23, "Print"],
+Cell[10287, 254, 944, 19, 23, "Print"],
+Cell[11234, 275, 2130, 52, 25, "Print"],
+Cell[13367, 329, 2001, 53, 23, "Print"],
+Cell[15371, 384, 990, 21, 23, "Print"],
+Cell[16364, 407, 2011, 53, 23, "Print"]
+}, Open  ]],
+Cell[18390, 463, 720, 14, 59, "Message"],
+Cell[CellGroupData[{
+Cell[19135, 481, 2062, 53, 23, "Print"],
+Cell[21200, 536, 1110, 22, 23, "Print"],
+Cell[22313, 560, 1072, 22, 23, "Print"],
+Cell[23388, 584, 1007, 20, 23, "Print"]
+}, Open  ]]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
