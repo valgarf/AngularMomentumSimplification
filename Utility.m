@@ -1,6 +1,6 @@
 (* ::Package:: *)
 
-BeginPackage["Utility`"];
+BeginPackage["Utility`"]
 ClearAll[Evaluate[Context[]<>"*"]];
 
 FreeQAll::usage=
@@ -135,12 +135,12 @@ normalizeSumRule::usage=
 "simplifies the input rule if the rule involved a sum. It identifies factors that are independent of the summation variables and moves them to the right-hand side of the rule.
 ";
 
-declareIndexed::usage=""
-declareIndexedPrimed::usage=""
-declareIndexedAM::usage=""
+declareIndexed::usage="";
+declareIndexedPrimed::usage="";
+declareIndexedAM::usage="";
 
 
-Begin["`Private`"];
+Begin["`Private`"]
 ClearAll[Evaluate[Context[]<>"*"]];
 
 
@@ -200,18 +200,18 @@ Switch[ruleList[[1]],
 	"rd", rd[ruleList[[2]],ruleList[[3]]],
 	"rc", r[ruleList[[2]],con[ruleList[[3]],ruleList[[4]]]],
 	"r", r[ruleList[[2]],ruleList[[3]]]
-]/.{con[Hold[a_],Hold[b_]]:> conX[HoldForm[a],HoldForm[b]],rd[a_,Hold[b_]]:> rdX[a,HoldForm[b]],r[a_,Hold[b_]]:> rX[a,HoldForm[b]]}/.{rd-> rdX,r-> rX}//.{conX-> Condition,rdX-> RuleDelayed,rX-> Rule};
+]/.{con[Hold[a_],Hold[b_]]:> conX[a,b],rd[a_,Hold[b_]]:> rdX[a,b],r[a_,Hold[b_]]:> rX[a,b]}/.{rd-> rdX,r-> rX}//.{conX-> Condition,rdX-> RuleDelayed,rX-> Rule};
 
 SetAttributes[normalizeSumRule,Listable];
 normalizeSumRule[rule_]:=Module[{ruleList,rulePattern,ruleResult,ruleParts,result},
 	ruleList=ruleSplit[rule];
 	rulePattern=ruleList[[2]];
 	ruleResult=ruleList[[3]];
-	(*i=0;*)
-	While[True,
-		(*i++;*)
+	i=0;
+	While[i<2^16,
+		i++;
 		ruleParts=rulePattern/.{
-			sum[a_ b_,set[c__]]:> {sum[b,set[c]],a}/;FreeQAll[removeBlanks[a],removeBlanks[{c}]]&& FreeQNone[removeBlanks[b],removeBlanks[getAllVariables[a]]]
+			sum[a_ b_,set[c__]]:> {sum[b,set[c]],1/a}/;FreeQAll[removeBlanks[a],removeBlanks[{c}]]&& FreeQNone[removeBlanks[b],removeBlanks[getAllVariables[a]]]
 		};
 		If[rulePattern=!=ruleParts,
 			rulePattern=ruleParts[[1]];
@@ -254,7 +254,7 @@ declareIndexedAM[x_]:=Module[{
 ];
 
 
-End[];
+End[]
 
 
-EndPackage[];
+EndPackage[]

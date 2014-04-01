@@ -53,6 +53,7 @@ addTest[set@@(sum[f[a,b,c],a,b,c]//invertArguments[b,c]),
 ];
 addTest[set@@getAllVariables[f[g[a]]*Exp[u]*(1+x)/y^2],set@@{a,u,x,y}];
 addTest[removeBlanks[f[a_,b_]*c_ Exp[d_]],f[a,b]*c Exp[d]];
+SetOptions[addTest,equivalenceFunction->(HoldForm[#1===#2]&)];
 addTest[ruleSplit[f[a_,b_]:> a^2],{"rd",f[a_,b_],Hold[a^2]}];
 addTest[ruleSplit[f[a_,b_]-> u^2],{"r",f[a_,b_],Hold[u^2]}];
 addTest[ruleSplit[f[a_,b_]:>  a^3/;b>0],{"rdc",f[a_,b_],Hold[a^3],Hold[b>0]}];
@@ -60,17 +61,18 @@ addTest[ruleJoin[ruleSplit[f[a_,b_]:> a^2]],f[a_,b_]:> a^2];
 addTest[ruleJoin[ruleSplit[f[a_,b_]-> u^2]],f[a_,b_]-> u^2];
 addTest[ruleJoin[ruleSplit[f[a_,b_]:>  a^3/;b>0]],f[a_,b_]:>  a^3/;b>0];
 addTest[normalizeSumRule[sum[f[a_,b_,c_](-1)^(c_),set[a_,b_]]:> g[c]],
-	sum[f[a_,b_,c_],set[a_,b_]]:> (-1)^c g[c]
+	sum[f[a_,b_,c_],set[a_,b_]]:>(-1)^(-c) g[c]
 ];
 addTest[normalizeSumRule[sum[f[a_,b_,c_](-1)^(c_),set[a_,b_]]:> sum[g[b,c],set[a]]],
-	sum[f[a_,b_,c_],set[a_,b_]]:> sum[(-1)^c g[b,c],set[a]]
+	sum[f[a_,b_,c_],set[a_,b_]]:>sum[(-1)^(-c) g[b,c],set[a]]
 ];
 addTest[normalizeSumRule[sum[f[a_,b_,c_](-1)^(c_)g[b_,e_]h[e_]u[d_],set[a_,b_]]:> sum[G[b,c],set[a]]],
-	sum[f[a_,b_,c_]g[b_,e_]u[d_],set[a_,b_]]:> sum[h[e]((-1)^c G[b,c]),set[a]]
+	sum[f[a_,b_,c_]g[b_,e_]u[d_],set[a_,b_]]:>sum[h[e]^(-1)((-1)^(-c) G[b,c]),set[a]]
 ];
 addTest[normalizeSumRule[sum[-f[a_,b_,c_],set[a_,b_]]:> sum[G[b,c],set[a]]],
-	sum[f[a_,b_,c_],set[a_,b_]]:> sum[- G[b,c],set[a]]
+	sum[f[a_,b_,c_],set[a_,b_]]:>sum[- G[b,c],set[a]]
 ];
+SetOptions[addTest,equivalenceFunction->(#1==#2&)];
 endTestModule[];
 
 
@@ -98,6 +100,7 @@ ms[a,b]
 %//TraditionalForm
 msp[a,b]
 %//TraditionalForm
+
 
 
 

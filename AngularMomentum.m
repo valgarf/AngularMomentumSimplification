@@ -4,7 +4,7 @@
 (*Initialise*)
 
 
-BeginPackage["AngularMomentum`",{"Utility`"}];
+BeginPackage["AngularMomentum`",{"Utility`"}]
 ClearAll[Evaluate[Context[]<>"*"]];
 
 
@@ -50,8 +50,12 @@ rotateSymbols::usage=
 "Rotates the 3j,6j and 9j symbols so that the given arguments are in the lower right. If a symbol depends on multiple arguments, The first argument will be in the lower-right and the second argument will be to the left or above the first one.
 ";
 
+simplifyAMSums::usage=
+"
+";
 
-Begin["`Private`"];
+
+Begin["`Private`"]
 ClearAll[Evaluate[Context[]<>"*"]];
 
 
@@ -62,8 +66,8 @@ ClearAll[Evaluate[Context[]<>"*"]];
 $integerQN={1};
 $halfintegerQN={1/2,Global`half};
 
-declareQNInteger::doubledefinition="Symbol `1` has been declared a half-integer quantum number already".
-declareQNHalfInteger::doubledefinition="Symbol `1` has been declared an integer quantum number already".
+declareQNInteger::doubledefinition="Symbol `1` has been declared a half-integer quantum number already";
+declareQNHalfInteger::doubledefinition="Symbol `1` has been declared an integer quantum number already";
 SetAttributes[declareQNInteger,Listable];
 SetAttributes[declareQNHalfInteger,Listable];
 
@@ -107,7 +111,7 @@ sh/:MakeBoxes[sh[a__], fmt:TraditionalForm]:=MakeBoxes[SphericalHarmonicY[a],fmt
 SetAttributes[triX,Orderless]
 SetAttributes[zeroX,Orderless]
 SetAttributes[sjOL,Orderless]
-
+SetAttributes[tjOL,Orderless]
 
 
 (* ::Section:: *)
@@ -118,7 +122,7 @@ SetAttributes[sjOL,Orderless]
 (*Preparation*)
 
 
-prepareFactorsRules={
+prepareFactorRules={
 		(-1)^(a_):>mX[a]
 	};
 
@@ -126,24 +130,33 @@ prepareSumRules={
 		sum[a_,b___]:> sum[a,set[b]] /;FreeQ[{b},set]
 	};
 
-prepareSymbolsOrderless={
+prepareSymbolOrderlessRules={
+		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> tjOL[{{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}},{{c,\[Gamma]},{a,\[Alpha]},{b,\[Beta]}},{{b,\[Beta]},{c,\[Gamma]},{a,\[Alpha]}}],
 		sj[{a_,b_,c_},{d_,e_,f_}]:> sjOL[set[a,b,c],set[a,e,f],set[d,b,f],set[d,e,c]],
-		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> tjOL[Signature[{{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}}],set[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}]]
+		nj[{a_,b_,c_},{d_,e_,f_},{g_,h_,j_}]:> njOL[set[set[a,e,j],set[b,f,g],set[c,d,h]],set[set[a,b,c],set[d,e,f],set[g,h,j],set[a,d,g],set[b,e,h],set[c,f,j]]]
 	};
+
+(*prepareSymbolsOrderlessRule={
+		sj[{a_,b_,c_},{d_,e_,f_}]:> sjOL[set[a,b,c],set[a,e,f],set[d,b,f],set[d,e,c]],
+		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> tjOL[_,set[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}]]
+(*?(MatchQ[EvenPermutations[{{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}}],#]&)*)
+	};*)
 
 
 (* ::Subsection:: *)
 (*Simplification*)
 
 
-simplifyFactorsRules={
+simplifyFactorRules={
 		(-1)^(a_):>mX[a],
-		mX[n_. a_+ b_]:> mX[a]^n mX[b],
+		mX[a_ + b_]:> mX[a] mX[b],
+		mX[n_Integer a_]:> mX[a]^n,
 		mX[-a_]^n_:> mX[a]^(-n),
-		mX[a_]^n_:> mX[a]^Mod[n,4]/; (n>= 4||n<0) && MemberQ[AngularMomentum`Private`$halfintegerQN,a],
-		mX[a_]^n_:> mX[a]^Mod[n,2]/; n!=0 && n!=1 &&MemberQ[AngularMomentum`Private`$integerQN,a],
-		mX[a_]^n_:> -mX[a]^Mod[n,2]/; 2<=n<4 && MemberQ[AngularMomentum`Private`$halfintegerQN,a],
+		mX[a_]^n_:> mX[a]^Mod[n,4]/; (n>= 4||n<0) && MemberQ[$halfintegerQN,a],
+		mX[a_]^n_:> mX[a]^Mod[n,2]/; n!=0 && n!=1 && MemberQ[$integerQN,a],
+		mX[a_]^n_:> -mX[a]^Mod[n,2]/; 2<=n<4 && MemberQ[$halfintegerQN,a],
 		mX[a_]^0:> 1,
+		mX[0]-> 1,
 		mX[1]->(-1),
 		mX[-1]->(-1),
 		mX[1/2]->(I),
@@ -164,6 +177,11 @@ cleanupFactorRules={
 		mX[a_]:>(-1)^a,
 		-(-1)^a_:> (-1)^(a+1),
 		I (-1)^a_:> (-1)^(a+1/2)
+	};
+cleanupSymbolOrderlessRules={
+		tjOL[{{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}},{{c_,\[Gamma]_},{a_,\[Alpha]_},{b_,\[Beta]_}},{{b_,\[Beta]_},{c_,\[Gamma]_},{a_,\[Alpha]_}}]:>tj[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}],
+		sjOL[set[a_,b_,c_],set[a_,e_,f_],set[d_,b_,f_],set[d_,e_,c_]]:> sj[{a,b,c},{d,e,f}],
+		njOL[set[set[a_,e_,j_],set[b_,f_,g_],set[c_,d_,h_]],set[set[a_,b_,c_],set[d_,e_,f_],set[g_,h_,j_],set[a_,d_,g_],set[b_,e_,h_],set[c_,f_,j_]]]:> nj[{a,b,c},{d,e,f},{g,h,j}]
 	};
 
 
@@ -220,19 +238,67 @@ rotateSymbols[k__]:=rotCompleteHelper[{k}];
 
 
 (* ::Section:: *)
-(*Simplifying Sums*)
+(*Simplifying Sums of 3jm, 6j and 9j Symbols*)
 
 
-prepare[expr_]:=expr//.{
-		
+(* ::Subsection:: *)
+(*Raw Rules*)
+
+
+(* ::Subsubsection:: *)
+(*6J*)
+
+
+simplify6jRawRules={
+		sum[m_.(2 x_+1)sj[{a_,b_,x_},{a_,b_,c_}],x_,u___]
+			:> sum[m (-1)^(2c),u]
+				/;FreeQAll[{m,u,a,b,c},{x}],
+		sum[m_. (-1)^(a_+b_+x_)(2 x_+1)sj[{a_,b_,x_},{b_,a_,c_}],x_,u___]
+			:> sum[m Sqrt[2a+1]Sqrt[2b+1]KroneckerDelta[c,0],u]
+				/;FreeQAll[{m,u,a,b,c},{x}],
+		sum[m_.(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{a_,b_,q_}],x_,u___]
+			:> sum[m 1/(2p+1)KroneckerDelta[p,q],u]
+				/;FreeQAll[{m,u,a,b,c,d,p,q},{x}],
+		sum[m_. (-1)^(p_+q_+x_)(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{b_,a_,q_}],x_,u___]
+			:> sum[m  sj[{c,a,q},{d,b,p}],u]/;FreeQAll[{m,u,a,b,c,d,p,q},{x}]
 	};
+simplify6jRawRules//TraditionalForm
+
+
+(* ::Subsection:: *)
+(*Expanded Rules*)
+
+
+simplifySymbolRules=Join[simplify6jRawRules]//.
+		Join[prepareFactorRules,prepareSumRules,prepareSymbolOrderlessRules]//.
+		Join[simplifyFactorRules]//
+		normalizeSumRule;
+simplifySymbolRules//TraditionalForm			
+
+
+(* ::Subsection:: *)
+(*Functions*)
+
+
+
+
+simplifyAMSums[expr_]:=Module[{prev,result},
+	result=expr//.Join[prepareFactorRules,prepareSumRules,prepareSymbolOrderlessRules];
+	prev=None;	
+	While[prev=!=result,
+		Print[TraditionalForm[result//.Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules]]];
+		prev=result;
+		result=prev/.Join[simplifyFactorRules,simplifySymbolRules];		
+	];	
+	Return[result//.Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules]];
+];
 
 
 (* ::Section:: *)
 (*Cleanup*)
 
 
-End[];
+End[]
 
 
-EndPackage[];
+EndPackage[]
