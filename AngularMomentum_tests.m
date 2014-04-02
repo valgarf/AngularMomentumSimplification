@@ -14,12 +14,15 @@ initialiseTests[];
 
 
 addTest[toTJ[sum[cg[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}]cg[{d,\[Delta]},{e,\[Epsilon]},{f,\[Phi]}],\[Alpha],\[Beta],\[Gamma]]],
-sum[Sqrt[2c+1]Sqrt[2f+1](-1)^(-a+b-\[Gamma]-d+e-\[Phi])tj[{a,\[Alpha]},{b,\[Beta]},{c,-\[Gamma]}]tj[{d,\[Delta]},{e,\[Epsilon]},{f,-\[Phi]}],\[Alpha],\[Beta],\[Gamma]]
+	sum[Sqrt[2c+1]Sqrt[2f+1](-1)^(-a+b-\[Gamma]-d+e-\[Phi])tj[{a,\[Alpha]},{b,\[Beta]},{c,-\[Gamma]}]tj[{d,\[Delta]},{e,\[Epsilon]},{f,-\[Phi]}],\[Alpha],\[Beta],\[Gamma]]
 ];
 addTest[toCG[toTJ[sum[cg[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}]cg[{d,\[Delta]},{e,\[Epsilon]},{f,\[Phi]}],\[Alpha],\[Beta],\[Gamma]]]],
-sum[cg[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}]cg[{d,\[Delta]},{e,\[Epsilon]},{f,\[Phi]}],\[Alpha],\[Beta],\[Gamma]]];
+	sum[cg[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}]cg[{d,\[Delta]},{e,\[Epsilon]},{f,\[Phi]}],\[Alpha],\[Beta],\[Gamma]]
+];
+
 declareQNInteger[{Hidden`t[a,b],Hidden`tp[a,b],Hidden`t[a,b,c,d]}];
 declareQNHalfInteger/@{Hidden`t[a],Hidden`tp[a],Hidden`t[a,b,c]};
+
 addTest[MemberQ[AngularMomentum`Private`$integerQN,Hidden`t[a,b]],True];
 addTest[MemberQ[AngularMomentum`Private`$integerQN,Hidden`tp[a,b]],True];
 addTest[MemberQ[AngularMomentum`Private`$integerQN,Hidden`t[a,b,c,d]],True];
@@ -33,6 +36,17 @@ addTest[MemberQ[AngularMomentum`Private`$halfintegerQN,Hidden`t[a]],True];
 addTest[MemberQ[AngularMomentum`Private`$halfintegerQN,Hidden`tp[a]],True];
 addTest[MemberQ[AngularMomentum`Private`$halfintegerQN,Hidden`t[a,b,c]],True];
 
+testExpr[1]=sum[(-1)^\[Mu] (2 \[Mu]+1)sj[{a,b,\[Mu]},{c,d,t}]sj[{c,d,\[Mu]},{b,a,tp}],\[Mu],t];
+testExpr[2]=sum[(-1)^\[Mu] (2u+1)(2 \[Mu]+1)sj[{a,b,\[Mu]},{a,b,u}]sj[{a,b,\[Mu]},{b,a,up}],\[Mu],u];
+declareQNHalfInteger[{a,b,c,d,t,tp}];
+declareQNInteger[{u,up,\[Mu]}];
+
+addTest[simplifyAMSums[testExpr[1],Print->False],
+	sum[(-1)^(t+tp) sj[{a,c,tp},{b,d,t}],t]
+];
+addTest[simplifyAMSums[testExpr[2],Print->False],
+	(-1)^(a+b) Sqrt[2a+1] Sqrt[2b+1] KroneckerDelta[0,up]
+];
 
 
 runTests[];
@@ -57,27 +71,17 @@ nj[{a,b,c},{d,sh[l,m,\[Theta],\[Phi]],f},{g,h,i}]
 
 
 
-(*transTJ[tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]]:= tj[{c,\[Gamma]},{a,\[Alpha]},{b,\[Beta]}];
-declareQNHalfInteger/@{a,c};
-declareQNInteger/@{b,d};
-trans[1]@trans[0][(-1)^(3a+5b+4c+d)]
-Simplify[(-1)^(3a+5b+4c+d) u[a,b,c],TransformationFunctions->{trans[0],trans[1]}]
-Simplify[-mX[a] mX[b] mX[d] u[a,b,c],
-	TransformationFunctions->{trans[0],trans[1],trans[3],trans[2]},
-	ComplexityFunction->(Count[#,(-1)^n_.,{0,Infinity}] - 1 Count[#,triX[___],{0,Infinity}] - 2 Count[#,v[___],{0,Infinity}] &)
-]*)
+declarePrimed[u]
+declareQNHalfInteger[{a,b,c,d,t,tp,\[Alpha],\[Beta]}];
+declareQNInteger[{u,up,\[Mu],\[Gamma]}];
+testExpr[2]*tj[{a,\[Alpha]},{b,\[Beta]},{u,\[Gamma]}]//extractConditions//TraditionalForm
+testExpr[2]*tj[{a,\[Alpha]},{b,\[Beta]},{u,\[Gamma]}]//consistencyCheck
 
 
-declareQNHalfInteger[{a,b}];
-declareQNInteger[{t,tp,\[Mu]}];
-testExpr[1]=sum[(-1)^\[Mu] (2 \[Mu]+1)sj[{a,b,\[Mu]},{c,d,t}]sj[{c,d,\[Mu]},{b,a,tp}],\[Mu],t];
-testExpr[2]=sum[(-1)^\[Mu] (2t+1)(2 \[Mu]+1)sj[{a,b,\[Mu]},{a,b,t}]sj[{a,b,\[Mu]},{b,a,tp}],\[Mu],t];
-testExpr[1]//TraditionalForm
-testExpr[1]//simplifyAMSums//TraditionalForm
-testExpr[2]//TraditionalForm
-testExpr[2]//simplifyAMSums//TraditionalForm
-AngularMomentum`Private`$integerQN
-AngularMomentum`Private`$halfintegerQN
+conX@@@Map[rs,{{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}},{2}]
 
 
+Or@@(MemberQ[#,u] && MemberQ[#,\[Gamma]]&)/@{AngularMomentum`Private`$integerQN,AngularMomentum`Private`$halfintegerQN}
 
+
+Drop[Flatten@Position[{1,1,1,1,1/2+\[Beta],f},x_/;!EvenQ[2*x],{1}],1]

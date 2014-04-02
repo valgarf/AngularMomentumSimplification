@@ -54,6 +54,22 @@ simplifyAMSums::usage=
 "
 ";
 
+conTri::usage=
+"
+";
+
+conZero::usage=
+"
+";
+
+extractConditions::usage=
+"
+";
+
+consistencyCheck::usage=
+"
+";
+
 
 Begin["`Private`"]
 ClearAll[Evaluate[Context[]<>"*"]];
@@ -90,6 +106,62 @@ declareQNHalfInteger[x_]:=Module[{},
 	Return[x];
 ];
 
+extractConditions[expr_]:=Module[{
+		elements={}
+	},
+	elements=Cases[expr,sj[__]|tj[__]|nj[__]|cg[__],{0,Infinity}];
+	elements=elements//.{
+			sj[{a_,b_,c_},{d_,e_,f_}]:> {conTri[a,b,c],conTri[a,e,f],conTri[d,b,f],conTri[d,e,c]},
+			tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> {conTri[a,b,c],conZero[\[Alpha],\[Beta],\[Gamma]]},
+			cg[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> {conTri[a,b,c],conZero[\[Alpha],\[Beta],-\[Gamma]]},
+			nj[{a_,b_,c_},{d_,e_,f_},{g_,h_,j_}]:> {conTri[a,b,c],conTri[d,e,f],conTri[g,h,j],conTri[a,d,g],conTri[b,e,h],conTri[c,f,j]}
+		};
+	elements=DeleteDuplicates@Flatten[elements];
+	Return[elements];
+];
+
+consistencyCheck::projection="Symbols \"`1`\" and \"`2`\" have not been declared consistently, e.g. one might be an integer and the other is a half-integer";
+consistencyCheck::notfound="Symbol \"`1`\" has not been declared an integer or half-integer quantum number. Please use the functions declareQNInteger and declareQNHalfInteger.";
+consistencyCheck::halfinteger="Condition \"`1`\" cannot be fulfilled as the sum of the arguments cannot yield an integer";
+consistencyCheck[expr_]:=Module[{conditions,symbols,notfound},
+	conditions=extractConditions[expr];
+	symbols=getAllVariables[conditions];
+
+	(*check for undeclared symbols*)
+	notfound=Flatten@Position[(MemberQ[$integerQN,#]||MemberQ[$halfintegerQN,#]&)/@symbols,False];
+	Do[Message[consistencyCheck::notfound,symbols[[i]]],{i,notfound}];
+
+	(*Check that a+b+c is an integer for conTri[a,b,c] and conZero[a,b,c]*)
+	notfound=Drop[#,1]&@Flatten@Position[
+		conditions/.
+			{x_Symbol:>0/;MemberQ[$integerQN,x],x_Symbol:>1/2/;MemberQ[$halfintegerQN,x]}/.
+			{conTri[a__]:> Total[{a}], conZero[a__]:> Total[{a}]}
+		,
+		x_/;!EvenQ[2*x]
+		,
+		{1}
+	];
+	Do[Message[consistencyCheck::halfinteger,TraditionalForm[conditions[[i]]]],{i,notfound}];
+
+	(*Check that angular momentum quantum number and the correspondng
+	 projection quantum number are both integers or both half-integers.*)
+	conditions=Cases[expr,tj[__]|cg[__],{0,Infinity}];
+	conditions=DeleteDuplicates@Flatten[conditions//.{			
+			tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> conX@@@Map[removeSign,{{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}},{2}],
+			cg[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> conX@@@Map[removeSign,{{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}},{2}]
+		}];
+	notfound=Flatten@Position[
+			conditions//.
+				{conX[a_,\[Alpha]_]:>True /; Or@@(MemberQ[#,a] && MemberQ[#,\[Alpha]]&)/@{$integerQN,$halfintegerQN}}/.
+				{conX[___]-> False},
+			False];
+	conditions=conditions/.{conX[a_,b_]:> {a,b}};
+	Do[Message[consistencyCheck::projection,
+			TraditionalForm[conditions[[i]][[1]]],
+			TraditionalForm[conditions[[i]][[2]]]
+		],{i,notfound}];	
+];
+
 toTJ[expr_]:=expr//.{
 	cg[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:>Sqrt[2 c+1](-1)^(-a+b-\[Gamma]) tj[{a,\[Alpha]},{b,\[Beta]},{c,-\[Gamma]}]
 };
@@ -104,12 +176,18 @@ StyleBox[RowBox[{"c","(",GridBox[Map[MakeBoxes[#,fmt]&,{{j1,j2},{m1,m2}},{2}]],"
 nj/:MakeBoxes[nj[a__], fmt:TraditionalForm]:=
 StyleBox[RowBox[{"{",GridBox[Map[MakeBoxes[#,fmt]&,{a},{2}]],"}"}],SpanMaxSize->\[Infinity]];
 
+conTri/:MakeBoxes[conTri[a__], fmt:TraditionalForm]:=
+StyleBox[RowBox[{"\[EmptyUpTriangle]","{",Sequence@@(MakeBoxes[#,fmt]&/@{a}),"}"}],SpanMaxSize->\[Infinity]];
+conZero/:MakeBoxes[conZero[a_,b_,c_], fmt:TraditionalForm]:=MakeBoxes[KroneckerDelta[a+b,c],fmt];
+
 sj/:MakeBoxes[sj[a__], fmt:TraditionalForm]:=MakeBoxes[SixJSymbol[a],fmt];
 tj/:MakeBoxes[tj[a__], fmt:TraditionalForm]:=MakeBoxes[ThreeJSymbol[a],fmt];
 sh/:MakeBoxes[sh[a__], fmt:TraditionalForm]:=MakeBoxes[SphericalHarmonicY[a],fmt];
 
-SetAttributes[triX,Orderless]
-SetAttributes[zeroX,Orderless]
+(*SetAttributes[triX,Orderless]
+SetAttributes[zeroX,Orderless]*)
+SetAttributes[conTri,Orderless]
+SetAttributes[conZero,Orderless]
 SetAttributes[sjOL,Orderless]
 SetAttributes[tjOL,Orderless]
 
@@ -151,10 +229,10 @@ simplifyFactorRules={
 		(-1)^(a_):>mX[a],
 		mX[a_ + b_]:> mX[a] mX[b],
 		mX[n_Integer a_]:> mX[a]^n,
+		mX[a_Integer]:> mX[1]^a /; a<-1 || a>1,
 		mX[-a_]^n_:> mX[a]^(-n),
-		mX[a_]^n_:> mX[a]^Mod[n,4]/; (n>= 4||n<0) && MemberQ[$halfintegerQN,a],
-		mX[a_]^n_:> mX[a]^Mod[n,2]/; n!=0 && n!=1 && MemberQ[$integerQN,a],
-		mX[a_]^n_:> -mX[a]^Mod[n,2]/; 2<=n<4 && MemberQ[$halfintegerQN,a],
+		mX[a_]^n_:> mX[a]^Mod[n,2] /; n!=0 && n!=1 && MemberQ[$integerQN,a],
+		mX[a_]^n_:> (-1)^(Floor[n/2])mX[a]^Mod[n,2] /; n!=0 && n!=1 && MemberQ[$halfintegerQN,a],
 		mX[a_]^0:> 1,
 		mX[0]-> 1,
 		mX[1]->(-1),
@@ -280,17 +358,26 @@ simplifySymbolRules//TraditionalForm
 (*Functions*)
 
 
-
-
-simplifyAMSums[expr_]:=Module[{prev,result},
-	result=expr//.Join[prepareFactorRules,prepareSumRules,prepareSymbolOrderlessRules];
-	prev=None;	
-	While[prev=!=result,
-		Print[TraditionalForm[result//.Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules]]];
-		prev=result;
-		result=prev/.Join[simplifyFactorRules,simplifySymbolRules];		
+Options[simplifyAMSums]={Print->False};
+simplifyAMSums[expr_,OptionsPattern[]]:=Module[{
+		prev,result,
+		prepareRules=Join[prepareFactorRules,prepareSumRules,prepareSymbolOrderlessRules],
+		simplifyRules=Join[simplifyFactorRules,simplifySymbolRules],
+		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules]
+	},
+	consistencyCheck[expr];
+	result=expr//.prepareRules;		
+	If[OptionValue[Print],
+		prev=None;
+		While[prev=!=result,
+			Print[TraditionalForm[result//.cleanupRules]];
+			prev=result;
+			result=prev/.simplifyRules;		
+		];
+		,
+		result=result//.simplifyRules;	
 	];	
-	Return[result//.Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules]];
+	Return[result//.cleanupRules];
 ];
 
 

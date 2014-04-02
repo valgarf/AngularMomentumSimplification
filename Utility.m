@@ -136,6 +136,7 @@ normalizeSumRule::usage=
 ";
 
 declareIndexed::usage="";
+declarePrimed::usage="";
 declareIndexedPrimed::usage="";
 declareIndexedAM::usage="";
 
@@ -229,6 +230,10 @@ declareIndexed[x_]:=Module[{},
 	x/:MakeBoxes[x[a__], fmt:TraditionalForm]:=SubscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]]];
 ];
 
+declarePrimedHelper[x_,xp_]:=Module[{},
+	xp/:MakeBoxes[xp, fmt:TraditionalForm]:=SuperscriptBox[MakeBoxes[x,fmt],"\[Prime]"];
+];
+
 declareIndexedPrimedHelper[x_,xp_]:=Module[{},
 	xp/:MakeBoxes[xp[a__], fmt:TraditionalForm]:=SubsuperscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]],"\[Prime]"];
 ];
@@ -241,6 +246,7 @@ declareIndexedAMHelper[x_,mx_,mxp_]:=Module[{},
 declareIndexedPrimed[x_]:=Module[{xp=ToExpression[ToString[x]<>"p"]},
 	declareIndexed[x];
 	declareIndexedPrimedHelper[x,xp];
+	declarePrimedHelper[x,xp];
 ];
 
 declareIndexedAM[x_]:=Module[{
@@ -250,7 +256,12 @@ declareIndexedAM[x_]:=Module[{
 		},
 	declareIndexed[x];
 	declareIndexedPrimedHelper[x,xp];
+	declarePrimedHelper[x,xp];
 	declareIndexedAMHelper[x,mx,mxp];
+];
+
+declarePrimed[x_]:=Module[{xp=ToExpression[ToString[x]<>"p"]},
+	declarePrimedHelper[x,xp];
 ];
 
 

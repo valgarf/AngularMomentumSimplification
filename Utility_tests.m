@@ -100,8 +100,8 @@ ms[a,b]
 %//TraditionalForm
 msp[a,b]
 %//TraditionalForm
-
-
+sp
+%//TraditionalForm
 
 
 
