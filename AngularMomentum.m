@@ -50,7 +50,7 @@ rotateSymbols::usage=
 "Rotates the 3j,6j and 9j symbols so that the given arguments are in the lower right. If a symbol depends on multiple arguments, The first argument will be in the lower-right and the second argument will be to the left or above the first one.
 ";
 
-simplifyAMSums::usage=
+simplifyAMSum::usage=
 "
 ";
 
@@ -125,7 +125,7 @@ consistencyCheck::notfound="Symbol \"`1`\" has not been declared an integer or h
 consistencyCheck::halfinteger="Condition \"`1`\" cannot be fulfilled as the sum of the arguments cannot yield an integer";
 consistencyCheck[expr_]:=Module[{conditions,symbols,notfound},
 	conditions=extractConditions[expr];
-	symbols=getAllVariables[conditions];
+	symbols=DeleteDuplicates@(removeSign/@Flatten[conditions//.{conTri[a__]:>{a}, conZero[a__]:>{a}}]);
 
 	(*check for undeclared symbols*)
 	notfound=Flatten@Position[(MemberQ[$integerQN,#]||MemberQ[$halfintegerQN,#]&)/@symbols,False];
@@ -134,13 +134,14 @@ consistencyCheck[expr_]:=Module[{conditions,symbols,notfound},
 	(*Check that a+b+c is an integer for conTri[a,b,c] and conZero[a,b,c]*)
 	notfound=Drop[#,1]&@Flatten@Position[
 		conditions/.
-			{x_Symbol:>0/;MemberQ[$integerQN,x],x_Symbol:>1/2/;MemberQ[$halfintegerQN,x]}/.
+			Join[(#->1/2)&/@$halfintegerQN,(#->0)&/@$integerQN]/.
 			{conTri[a__]:> Total[{a}], conZero[a__]:> Total[{a}]}
 		,
 		x_/;!EvenQ[2*x]
 		,
 		{1}
 	];
+
 	Do[Message[consistencyCheck::halfinteger,TraditionalForm[conditions[[i]]]],{i,notfound}];
 
 	(*Check that angular momentum quantum number and the correspondng
@@ -178,7 +179,8 @@ StyleBox[RowBox[{"{",GridBox[Map[MakeBoxes[#,fmt]&,{a},{2}]],"}"}],SpanMaxSize->
 
 conTri/:MakeBoxes[conTri[a__], fmt:TraditionalForm]:=
 StyleBox[RowBox[{"\[EmptyUpTriangle]","{",Sequence@@(MakeBoxes[#,fmt]&/@{a}),"}"}],SpanMaxSize->\[Infinity]];
-conZero/:MakeBoxes[conZero[a_,b_,c_], fmt:TraditionalForm]:=MakeBoxes[KroneckerDelta[a+b,c],fmt];
+conZero/:MakeBoxes[conZero[a_,b_,c_], fmt:TraditionalForm]:=MakeBoxes[KroneckerDelta[a+b+c,0],fmt];
+
 
 sj/:MakeBoxes[sj[a__], fmt:TraditionalForm]:=MakeBoxes[SixJSymbol[a],fmt];
 tj/:MakeBoxes[tj[a__], fmt:TraditionalForm]:=MakeBoxes[ThreeJSymbol[a],fmt];
@@ -193,7 +195,7 @@ SetAttributes[tjOL,Orderless]
 
 
 (* ::Section:: *)
-(*Transformation rules*)
+(*General Transformation Rules*)
 
 
 (* ::Subsection:: *)
@@ -241,6 +243,13 @@ simplifyFactorRules={
 		mX[-1/2]->(-I)		
 	};
 
+simplifySumRules={
+		KroneckerDelta[-a_,-b_]:> KroneckerDelta[a,b],
+		sum[a_ KroneckerDelta[b_,c_],set[b_,d___]]:> sum[(a/.b-> c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]],
+		sum[a_ KroneckerDelta[b_,c_],set[d___]]:> sum[(a/.b-> c) KroneckerDelta[b,c],set[d]]/;FreeQAll[{d},{b,c}]&&!FreeQ[a,b]&&!FreeQ[a,c]&&(!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]),
+		sum[a_ sum[b_,set[c___]],set[d___]]:> sum[a b,set[c,d]]
+	};
+
 
 
 (* ::Subsection:: *)
@@ -248,8 +257,9 @@ simplifyFactorRules={
 
 
 cleanupSumRules={
-		sum[a_,set[b___]]:> sum[a,b],
-		sum[a_]:> a	
+		(*sum[a_,set[b___]]:> sum[a,b],*)
+		sum[a_]:> a,
+		sum[a_,set[]]:> a	
 	};
 cleanupFactorRules={
 		mX[a_]:>(-1)^a,
@@ -265,7 +275,7 @@ cleanupSymbolOrderlessRules={
 
 
 (* ::Section::Closed:: *)
-(*Rotation of Symbols*)
+(*Rotation of Symbols (currently not used)*)
 
 
 rotTJ[k1_,keep_]:={
@@ -324,6 +334,23 @@ rotateSymbols[k__]:=rotCompleteHelper[{k}];
 
 
 (* ::Subsubsection:: *)
+(*3jm*)
+
+
+simplify3jmRawRules={
+		sum[m_. (-1)^(a_+\[Alpha]_)tj[{a_,-\[Alpha]_},{a_,\[Alpha]_},{c_,\[Gamma]_}],\[Alpha]_,u___]
+			:> sum[m Sqrt[2 a+1]KroneckerDelta[c,0]KroneckerDelta[\[Gamma],0],u]
+				/;FreeQAll[{m,u,a,c,\[Gamma]},{\[Alpha]}],
+		sum[m_. (-1)^(p_+\[Psi]_+q_+\[Kappa]_)tj[{a_,\[Alpha]_},{p_,-\[Psi]_},{q_,\[Kappa]neg_}]tj[{p_,\[Psi]_},{q_,\[Kappa]_},{ap_,\[Alpha]p_}],\[Psi]_,\[Kappa]uns_,u___]
+			:> sum[m (-1)^(a+-\[Alpha])1/(2 a+1)KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],-\[Alpha]p],u]
+				/;FreeQAll[{m,u,a,\[Alpha],ap,\[Alpha]p,p,q},{\[Psi],\[Kappa]}]&&ensureSignQ[\[Kappa],\[Kappa]neg,\[Kappa]uns],
+		sum[m_. (-1)^(q_+\[Kappa]_)tj[{a_,\[Alpha]_},{b_,\[Beta]_},{q_,-\[Kappa]_}]tj[{q_,\[Kappa]_},{a_,\[Alpha]p_},{b_,\[Beta]p_}],q_,\[Kappa]_,u___]
+			:> sum[m (-1)^(a-\[Alpha]+b-\[Beta])KroneckerDelta[\[Beta],-\[Beta]p]KroneckerDelta[\[Alpha],-\[Alpha]p],u]
+				/;FreeQAll[{m,u,a,\[Alpha],\[Alpha]p,b,\[Beta],\[Beta]p},{q,\[Kappa]}]
+	};
+
+
+(* ::Subsubsection:: *)
 (*6J*)
 
 
@@ -340,39 +367,69 @@ simplify6jRawRules={
 		sum[m_. (-1)^(p_+q_+x_)(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{b_,a_,q_}],x_,u___]
 			:> sum[m  sj[{c,a,q},{d,b,p}],u]/;FreeQAll[{m,u,a,b,c,d,p,q},{x}]
 	};
-simplify6jRawRules//TraditionalForm
+
+
+(* ::Subsection:: *)
+(*Private Helper Functions Involving 3jm, 6j or 9j symbols*)
+
+
+prepare3jmSignHelper[expr_,symb_,keep_]:=
+	expr/.({
+				tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]tj[{ap_,\[Alpha]p_},{bp_,\[Beta]p_},{cp_,\[Gamma]p_}]:> (-1)^(a+b+c)tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]tj[{ap,\[Alpha]p},{bp,\[Beta]p},{cp,\[Gamma]p}]			/;
+				!FreeQ[{\[Alpha],\[Beta],\[Gamma]},symb]&&!FreeQ[{\[Alpha]p,\[Beta]p,\[Gamma]p},symb]&&FreeQAll[{\[Alpha],\[Beta],\[Gamma]},keep]&&
+				(FreeQ[{\[Alpha],\[Beta],\[Gamma]},-symb]==FreeQ[{\[Alpha]p,\[Beta]p,\[Gamma]p},-symb])
+			}/.prepareSymbolOrderlessRules);
+
+prepare3jmSignAll[expr_,l_]:=prepare3jmSignHelper[prepare3jmSignAll[expr,Drop[l,-1]],Last[l],Drop[l,-1]];
+prepare3jmSignAll[expr_,{}]:=expr;
+prepare3jmSign[expr_]:=expr//.{sum[a_,set[b___]]:>sum[prepare3jmSignAll[a,{b}],set[b]]};
+
+(*prepare3jmFactorHelper[factor_,relevant_,]:=
+	expr/.*)
+
+createAlternativeRules3jm[rule_]:=Module[{ruleList,rulePattern,ruleResult,rulePatternList},
+	ruleList=ruleSplit[rule];
+	rulePattern=ruleList[[2]];
+	rulePatternList=rulePattern/.
+		{tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> alternative[tj[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}],(-1)^(a+b+c)tj[{b,\[Beta]},{a,\[Alpha]},{c,\[Gamma]}]]}/.
+		alternative-> List;
+	Return[ruleJoin[ReplacePart[ruleList,2-> #]]&/@rulePatternList];			
+];
 
 
 (* ::Subsection:: *)
 (*Expanded Rules*)
 
 
-simplifySymbolRules=Join[simplify6jRawRules]//.
+simplifySymbolRules=Join[
+			simplify6jRawRules,
+			Flatten[createAlternativeRules3jm/@simplify3jmRawRules,1]
+		]//.
 		Join[prepareFactorRules,prepareSumRules,prepareSymbolOrderlessRules]//.
 		Join[simplifyFactorRules]//
 		normalizeSumRule;
-simplifySymbolRules//TraditionalForm			
+simplifySymbolRules//TraditionalForm
 
 
 (* ::Subsection:: *)
 (*Functions*)
 
 
-Options[simplifyAMSums]={Print->False};
-simplifyAMSums[expr_,OptionsPattern[]]:=Module[{
+Options[simplifyAMSum]={Print->False};
+simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 		prev,result,
 		prepareRules=Join[prepareFactorRules,prepareSumRules,prepareSymbolOrderlessRules],
-		simplifyRules=Join[simplifyFactorRules,simplifySymbolRules],
+		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifySymbolRules],
 		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules]
 	},
 	consistencyCheck[expr];
-	result=expr//.prepareRules;		
+	result=toTJ[expr]//.prepareRules;		
 	If[OptionValue[Print],
 		prev=None;
 		While[prev=!=result,
 			Print[TraditionalForm[result//.cleanupRules]];
 			prev=result;
-			result=prev/.simplifyRules;		
+			result=prepare3jmSign[prev]/.simplifyRules;		
 		];
 		,
 		result=result//.simplifyRules;	

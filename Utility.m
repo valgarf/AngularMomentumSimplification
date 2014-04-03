@@ -140,6 +140,8 @@ declarePrimed::usage="";
 declareIndexedPrimed::usage="";
 declareIndexedAM::usage="";
 
+ensureSignQ::usage="";
+
 
 Begin["`Private`"]
 ClearAll[Evaluate[Context[]<>"*"]];
@@ -226,6 +228,7 @@ normalizeSumRule[rule_]:=Module[{ruleList,rulePattern,ruleResult,ruleParts,resul
 	Return[ruleJoin[ruleList]];
 ];
 
+SetAttributes[declareIndexed,Listable]
 declareIndexed[x_]:=Module[{},
 	x/:MakeBoxes[x[a__], fmt:TraditionalForm]:=SubscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]]];
 ];
@@ -243,12 +246,14 @@ declareIndexedAMHelper[x_,mx_,mxp_]:=Module[{},
 	mxp/:MakeBoxes[mxp[a__], fmt:TraditionalForm]:=SubsuperscriptBox[MakeBoxes[Global`m,fmt],SubscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]]],"\[Prime]"];
 ];
 
+SetAttributes[declareIndexedPrimed,Listable]
 declareIndexedPrimed[x_]:=Module[{xp=ToExpression[ToString[x]<>"p"]},
 	declareIndexed[x];
 	declareIndexedPrimedHelper[x,xp];
 	declarePrimedHelper[x,xp];
 ];
 
+SetAttributes[declareIndexedAM,Listable]
 declareIndexedAM[x_]:=Module[{
 			xp=ToExpression[ToString[x]<>"p"],
 			mx=ToExpression["m"<>ToString[x]],
@@ -260,9 +265,13 @@ declareIndexedAM[x_]:=Module[{
 	declareIndexedAMHelper[x,mx,mxp];
 ];
 
+SetAttributes[declarePrimed,Listable]
 declarePrimed[x_]:=Module[{xp=ToExpression[ToString[x]<>"p"]},
 	declarePrimedHelper[x,xp];
 ];
+
+ensureSignQ[x_,negx_]:=x===-negx;
+ensureSignQ[x_,negx_,unsx_]:=x===-negx && (x===unsx || negx===unsx) && removeSign[unsx]===unsx;
 
 
 End[]

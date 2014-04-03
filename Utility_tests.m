@@ -73,6 +73,14 @@ addTest[normalizeSumRule[sum[-f[a_,b_,c_],set[a_,b_]]:> sum[G[b,c],set[a]]],
 	sum[f[a_,b_,c_],set[a_,b_]]:>sum[- G[b,c],set[a]]
 ];
 SetOptions[addTest,equivalenceFunction->(#1==#2&)];
+addTest[ensureSignQ[a,-a,a],True];
+addTest[ensureSignQ[-b,b,b],True];
+addTest[ensureSignQ[-c,c,-c],False];
+addTest[ensureSignQ[a,b,a],False];
+addTest[ensureSignQ[-c,-c,c],False];
+addTest[ensureSignQ[a,a,a],False];
+addTest[ensureSignQ[a,a,-a],False];
+
 endTestModule[];
 
 
@@ -102,6 +110,9 @@ msp[a,b]
 %//TraditionalForm
 sp
 %//TraditionalForm
+
+
+
 
 
 
