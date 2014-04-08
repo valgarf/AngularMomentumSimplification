@@ -142,6 +142,13 @@ declareIndexedAM::usage="";
 
 ensureSignQ::usage="";
 
+ruleToFunction::usage="";
+ruleToFunctionRepeated::usage="";
+
+speM::usage="";
+unsM::usage="";
+evenPermM::usage="";
+
 
 Begin["`Private`"]
 ClearAll[Evaluate[Context[]<>"*"]];
@@ -206,15 +213,20 @@ Switch[ruleList[[1]],
 ]/.{con[Hold[a_],Hold[b_]]:> conX[a,b],rd[a_,Hold[b_]]:> rdX[a,b],r[a_,Hold[b_]]:> rX[a,b]}/.{rd-> rdX,r-> rX}//.{conX-> Condition,rdX-> RuleDelayed,rX-> Rule};
 
 SetAttributes[normalizeSumRule,Listable];
-normalizeSumRule[rule_]:=Module[{ruleList,rulePattern,ruleResult,ruleParts,result},
+normalizeSumRule[rule_]:=Module[{ruleList,rulePattern,ruleResult,ruleParts,result,keep},
 	ruleList=ruleSplit[rule];
 	rulePattern=ruleList[[2]];
 	ruleResult=ruleList[[3]];
+	If[Length[ruleList]>3,
+		keep=DeleteDuplicates@Flatten@Cases[ruleList[[4]],ensureSignQ[a__]:> {a},{0,Infinity}];,
+		keep={};
+	];
+	keep=DeleteDuplicates@Join[keep,Flatten[Cases[rulePattern,sum[a_,set[b___]]:> getAllVariables[{b}],{0,Infinity}],1]];
 	i=0;
 	While[i<2^16,
 		i++;
 		ruleParts=rulePattern/.{
-			sum[a_ b_,set[c__]]:> {sum[b,set[c]],1/a}/;FreeQAll[removeBlanks[a],removeBlanks[{c}]]&& FreeQNone[removeBlanks[b],removeBlanks[getAllVariables[a]]]
+			sum[a_ b_,set[c__]]:> {sum[b,set[c]],1/a}/;FreeQAll[removeBlanks[a],removeBlanks[keep]]&& FreeQNone[removeBlanks[b],removeBlanks[getAllVariables[a]]]
 		};
 		If[rulePattern=!=ruleParts,
 			rulePattern=ruleParts[[1]];
@@ -272,6 +284,72 @@ declarePrimed[x_]:=Module[{xp=ToExpression[ToString[x]<>"p"]},
 
 ensureSignQ[x_,negx_]:=x===-negx;
 ensureSignQ[x_,negx_,unsx_]:=x===-negx && (x===unsx || negx===unsx) && removeSign[unsx]===unsx;
+
+ruleToFunction[rule_]:=(#/.rule &);
+ruleToFunctionRepeated[rule_]:=(#//.rule &);
+
+speMHelper[apos_,aneg_]:=(Alternatives[\!\(\*
+TagBox[
+StyleBox[
+RowBox[{"-", 
+RowBox[{"patX", "[", 
+RowBox[{"aneg", ",", 
+RowBox[{"Blank", "[", "]"}]}], "]"}]}],
+ShowSpecialCharacters->False,
+ShowStringCharacters->True,
+NumberMarks->True],
+FullForm]\),\!\(\*
+TagBox[
+StyleBox[
+RowBox[{"patX", "[", 
+RowBox[{"apos", ",", 
+RowBox[{"Blank", "[", "]"}]}], "]"}],
+ShowSpecialCharacters->False,
+ShowStringCharacters->True,
+NumberMarks->True],
+FullForm]\)]/;Length[{apos,aneg}]==1)//.patX-> Pattern;
+speM[a_]:=Module[{
+		apos=ToExpression[ToString[a]<>"pos"],
+		aneg=ToExpression[ToString[a]<>"neg"]
+	},
+	Return[speMHelper[apos,aneg]];
+];
+
+speM[-a_]:=Module[{
+		apos=ToExpression[ToString[a]<>"pos"],
+		aneg=ToExpression[ToString[a]<>"neg"]
+	},
+	Return[speMHelper[aneg,apos]];
+];
+
+unsMHelper[apos_,aneg_]:=(Alternatives[\!\(\*
+TagBox[
+StyleBox[
+RowBox[{"patX", "[", 
+RowBox[{"apos", ",", 
+RowBox[{"Blank", "[", "]"}]}], "]"}],
+ShowSpecialCharacters->False,
+ShowStringCharacters->True,
+NumberMarks->True],
+FullForm]\),\!\(\*
+TagBox[
+StyleBox[
+RowBox[{"patX", "[", 
+RowBox[{"aneg", ",", 
+RowBox[{"Blank", "[", "]"}]}], "]"}],
+ShowSpecialCharacters->False,
+ShowStringCharacters->True,
+NumberMarks->True],
+FullForm]\)]/;Length[{apos,aneg}]==1)//.patX-> Pattern;
+unsM[a_]:=Module[{
+		apos=ToExpression[ToString[a]<>"pos"],
+		aneg=ToExpression[ToString[a]<>"neg"]
+	},
+	Return[unsMHelper[apos,aneg]];
+];
+
+evenPermM[l_]:=(Alternatives@@EvenPermutations[l]);
+evenPermM[l__]:=(Sequence/@Alternatives@@EvenPermutations[{l}]);
 
 
 End[]

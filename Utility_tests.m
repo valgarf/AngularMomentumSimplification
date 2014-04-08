@@ -80,7 +80,25 @@ addTest[ensureSignQ[a,b,a],False];
 addTest[ensureSignQ[-c,-c,c],False];
 addTest[ensureSignQ[a,a,a],False];
 addTest[ensureSignQ[a,a,-a],False];
-
+addTest[ruleToFunction[{a-> b,b-> c}]@a,b];
+addTest[ruleToFunctionRepeated[{a-> b,b-> c}]@a,c];
+testSpecialMatchingRule[1]=f[speM[a],speM[-a],unsM[a]]:> g[apos]h[aneg];
+addTest[f[a,-a,a]/.testSpecialMatchingRule[1],g[a]h[]];
+addTest[f[-a,a,a]/.testSpecialMatchingRule[1],g[]h[a]];
+addTest[f[a,a,a]/.testSpecialMatchingRule[1],f[a,a,a]];
+addTest[f[-a,-a,a]/.testSpecialMatchingRule[1],f[-a,-a,a]];
+addTest[f[a,-a,-a]/.testSpecialMatchingRule[1],f[a,-a,-a]];
+addTest[f[a,a,-a]/.testSpecialMatchingRule[1],f[a,a,-a]];
+addTest[f[-a,-a,-a]/.testSpecialMatchingRule[1],f[-a,-a,-a]];
+addTest[f[-a,a,-a]/.testSpecialMatchingRule[1],f[-a,a,-a]];
+testSpecialMatchingRule[2]=evenPermM[f[a,b,c,d]]:> g[a,b,c,d];
+addTest[f[a,b,c,d]/.testSpecialMatchingRule[2],g[a,b,c,d]];
+addTest[f[b,d,c,a]/.testSpecialMatchingRule[2],g[a,b,c,d]];
+addTest[f[c,d,a,b]/.testSpecialMatchingRule[2],g[a,b,c,d]];
+addTest[f[d,a,c,b]/.testSpecialMatchingRule[2],g[a,b,c,d]];
+addTest[f[a,b,d,c]/.testSpecialMatchingRule[2],f[a,b,d,c]];
+addTest[f[a,c,b,d]/.testSpecialMatchingRule[2],f[a,c,b,d]];
+addTest[f[b,a,c,d]/.testSpecialMatchingRule[2],f[b,a,c,d]];
 endTestModule[];
 
 
@@ -110,9 +128,6 @@ msp[a,b]
 %//TraditionalForm
 sp
 %//TraditionalForm
-
-
-
 
 
 
