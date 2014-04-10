@@ -3,64 +3,62 @@
 BeginPackage["Utility`"]
 ClearAll[Evaluate[Context[]<>"*"]];
 
+
 FreeQAll::usage=
-"Checks if all expressions a are independent of all elements in the list b.
+"FreeQAll[expr1,...,listOfElements] Checks if all expressions expr1,... are independent of all elements in listOfSymbols.
 
 Arguments:
 
-a: sequence of expressions
-b: list of elements
+expr1,...: sequence of expressions
+listOfElements: list of elements
 
-Returns: True if all expressions are free of all elements, False otherwise
-";
+Returns: True if all expressions are free of all elements, False otherwise.";
 
 FreeQAllUnsigned::usage=
-"Removes minus signs that may be in front of parameters in the list b, then invokes FreeQAll
+"FreeQAllUnsigned[expr1,...,listOfElements]  removes minus signs that may be in front of parameters in listOfElements, then invokes FreeQAll.
 Equivalent to FreeQAll[a,removeSign/@b].
 
 Arguments:
 
-a: sequence of expressions
-b: list of elements
+expr1,...: sequence of expressions
+listOfElements: list of elements
 
 Returns: True if all expressions are free of all elements, False otherwise
 ";
 
 FreeQNone::usage=
-"Checks if the sequence of expressions a depends on all elements in the list b
+"FreeQNone[expr1,...,listOfElements] checks if the sequence of expressions (expr1,...) depends on all elements in listOfElements
 
 Arguments:
 
-a: sequence of expressions
-b: list of elements
+expr1,...: sequence of expressions
+listOfElements: list of elements
 
-Returns: True if the sequence depends on all the elements froom list b, False otherwise.
+Returns: True if {expr1,...} depends on all the elements from listOfElements, False otherwise.
 ";
 
 FreeQNoneUnsigned::usage=
-"Removes minus signs that may be in front of parameters in the list b, then invokes FreeQNone
+"FreeQNoneUnsigned[expr1,...,listOfElements] removes minus signs that may be in front of parameters in listOfSymbols, then invokes FreeQNone
 Equivalent to FreeQNone[a,removeSign/@b].
 
 Arguments:
 
-a: sequence of expressions
-b: list of elements
+expr1,...: sequence of expressions
+listOfElements: list of elements
 
-Returns: True if the sequence depends on all the elements froom list b, False otherwise.
+Returns: True if {expr1,...} depends on all the elements from listOfElements, False otherwise.
 ";
 
 EvenPermutations::usage=
-"Returns all even permutations of the input list.
+"EvenPermutations[list] returns all even permutations of the input list.
 ";
 
 OddPermutations::usage=
-"Returns all odd permutations of the input list.
+"OddPermutations[list] returns all odd permutations of the input list.
 ";
 
 alternative::usage=
-"denotes a set of alternative versions of an expression. All of these versions should be identical. It is used in pattern matching: A specific pattern has to match one of the alternative versions. The function is automatically pulled out of an expression, e.g. a*alternative[b,c] becomes alternative[a*b,a*c]\!\(\*
-StyleBox[\".\", \"Text\"]\)\!\(\*
-StyleBox[\" \", \"Text\"]\)All the functions alternative should be pulled out of must be listed in $altFunctionList.
+"denotes a set of alternative versions of an expression. All of these versions should be identical. It can be used in pattern matching: A specific pattern has to match one of the alternative versions. The function is automatically pulled out of an expression, e.g. a*alternative[b,c] becomes alternative[a*b,a*c]. All the functions alternative should be pulled out of must be listed in $altFunctionList.
 ";
 
 $altFunctionList::usage=
@@ -82,9 +80,8 @@ tonum::usage=
 ";
 
 removeSign::usage=
-"remove a minus sign in front of the input parameter x. Differs from \"abs\"\!\(\*
-StyleBox[\" \",\nFontWeight->\"Bold\",\nFontSlant->\"Italic\"]\)as it uses pattern matching to remove the sign. If the input is -a, it will result in a\!\(\*
-StyleBox[\".\", \"Code\"]\)
+"remove a minus sign in front of the input parameter x.
+Differs from \"abs\" as it uses pattern matching to remove the sign. If the input is -a, it will result in a.
 ";
 
 sign::usage=
@@ -132,8 +129,8 @@ ruleJoin::usage=
 ";
 
 normalizeSumRule::usage=
-"simplifies the input rule if the rule involved a sum. It identifies factors that are independent of the summation variables and moves them to the right-hand side of the rule.
-";
+"simplifies the input rule if the rule involved a sum. It identifies factors hat are ndependent of he summation variables and moves them to the right-hand side of the rule.
+"
 
 declareIndexed::usage="";
 declarePrimed::usage="";

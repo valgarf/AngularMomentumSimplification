@@ -416,16 +416,28 @@ simplify6jRawRules={
 (*Private Helper Functions Involving 3jm, 6j or 9j symbols*)
 
 
-prepare3jmSignHelper[expr_,symb_,keep_]:=
-	expr/.({
-				tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]tj[{ap_,\[Alpha]p_},{bp_,\[Beta]p_},{cp_,\[Gamma]p_}]:> (-1)^(a+b+c)tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]tj[{ap,\[Alpha]p},{bp,\[Beta]p},{cp,\[Gamma]p}]			/;
-				!FreeQ[{\[Alpha],\[Beta],\[Gamma]},symb]&&!FreeQ[{\[Alpha]p,\[Beta]p,\[Gamma]p},symb]&&FreeQAll[{\[Alpha],\[Beta],\[Gamma]},keep]&&
-				(FreeQ[{\[Alpha],\[Beta],\[Gamma]},-symb]==FreeQ[{\[Alpha]p,\[Beta]p,\[Gamma]p},-symb])
-			}/.prepareSymbolOrderlessRules);
-
-prepare3jmSignAll[expr_,l_]:=prepare3jmSignHelper[prepare3jmSignAll[expr,Drop[l,-1]],Last[l],Drop[l,-1]];
 prepare3jmSignAll[expr_,{}]:=expr;
-prepare3jmSign[expr_]:=expr//.{sum[a_,set[b___]]:>sum[prepare3jmSignAll[a,{b}],set[b]]};
+prepare3jmSign[expr_]:=expr/.{sum[a_,set[b___]]:>sum[prepare3jmSignAll[a,{b}],set[b]]};
+prepare3jmSignAll[expr_,l_]:=Module[{tmpFunc,tmpRule,result,transFunc,compFunc},
+	tmpFunc={
+		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]tj[{ap_,\[Alpha]p_},{bp_,\[Beta]p_},{cp_,\[Gamma]p_}]:>mX[a]mX[b]mX[c]tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]tj[{ap,\[Alpha]p},{bp,\[Beta]p},{cp,\[Gamma]p}]/;
+		!FreeQ[{\[Alpha],\[Beta],\[Gamma]},#]&&!FreeQ[{\[Alpha]p,\[Beta]p,\[Gamma]p},#]&&OrderedQ[{tj[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}],tj[{ap,\[Alpha]p},{bp,\[Beta]p},{cp,\[Gamma]p}]}],
+		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]tj[{ap_,\[Alpha]p_},{bp_,\[Beta]p_},{cp_,\[Gamma]p_}]:>mX[a]mX[b]mX[c]tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]tj[{ap,\[Alpha]p},{bp,\[Beta]p},{cp,\[Gamma]p}]/;
+		!FreeQ[{\[Alpha],\[Beta],\[Gamma]},#]&&!FreeQ[{\[Alpha]p,\[Beta]p,\[Gamma]p},#]&&!OrderedQ[{tj[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}],tj[{ap,\[Alpha]p},{bp,\[Beta]p},{cp,\[Gamma]p}]}]
+	}&;	
+	transFunc=ruleToFunction/@Flatten[tmpFunc/@l,1];	
+	compFunc[newexpr_]:=30*Count[
+							Cases[newexpr/.
+								{tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> XX[\[Alpha]]XX[\[Beta]]XX[\[Gamma]]},
+							XX[a_]^n_./;MemberQ[l,removeSign[a]],{0,Infinity}]
+							,
+							XX[_]^n_/;n>1
+						]+LeafCount[newexpr];
+	tmp=Flatten[tmpFunc/@l,1];
+	result=Simplify[expr,TransformationFunctions->transFunc,ComplexityFunction->compFunc];
+	
+	Return[result];	
+];
 
 prepare3jmFactor::multiplesums="Expression has multiple sums. Cannot prepare factors";
 prepare3jmFactor[expr_]:=Module[{variableList,sumExpr,finalSumExpr,transFunc,factorList,compFunc,functions},
@@ -442,7 +454,6 @@ prepare3jmFactor[expr_]:=Module[{variableList,sumExpr,finalSumExpr,transFunc,fac
 	compFunc[newexpr_]:=-20 Count[newexpr,x_/;MemberQ[(mX/@variableList),x],{0,Infinity}]+LeafCount[newexpr];
 	functions=Table[transFunc[i],{i,Length[factorList]}];
 	finalSumExpr=Simplify[sumExpr,TransformationFunctions->functions,ComplexityFunction->compFunc];
-
 	Return[expr/.sumExpr->finalSumExpr];
 ];
 
@@ -658,6 +669,7 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 				Print["Timing :0"];
 			];
 		];
+		result=result//.simplifyRules;
 	];	
 	Return[result//.cleanupRules];
 ];
