@@ -1,0 +1,641 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     21336,        632]
+NotebookOptionsPosition[     19760,        576]
+NotebookOutlinePosition[     20119,        592]
+CellTagsIndexPosition[     20076,        589]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+Cell["\<\
+For evaluating any of the examples in this notebook, one has to load the \
+Utility package:\
+\>", "Text",
+ CellChangeTimes->{{3.6061327785932283`*^9, 3.606132835153154*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"$Path", "=", 
+   RowBox[{"DeleteDuplicates", "@", 
+    RowBox[{"Append", "[", 
+     RowBox[{"$Path", ",", 
+      RowBox[{"NotebookDirectory", "[", "]"}]}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "Utility`"}]}], "Input",
+ InitializationCell->True,
+ CellChangeTimes->{{3.6061327708198433`*^9, 3.60613277187703*^9}}],
+
+Cell["\<\
+All functions defined in the Utility` context:\
+\>", "Text",
+ CellChangeTimes->{{3.6061327785932283`*^9, 3.606132835153154*^9}, {
+  3.606134801222459*^9, 3.606134820566264*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "Utility`*"}]], "Input",
+ CellChangeTimes->{{3.606134822752797*^9, 3.606134826297391*^9}}],
+
+Cell[BoxData[
+ DynamicModuleBox[{Typeset`open$$ = True}, 
+  PaneSelectorBox[{False->
+   RowBox[{
+    OpenerBox[Dynamic[Typeset`open$$],
+     ImageSize->Small], 
+    StyleBox["Utility`", "InfoHeading"]}], True->GridBox[{
+     {
+      RowBox[{
+       OpenerBox[Dynamic[Typeset`open$$],
+        ImageSize->Small], 
+       StyleBox["Utility`", "InfoHeading"]}]},
+     {GridBox[{
+        {
+         ButtonBox["alternative",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"alternative", "Utility`"}},
+          
+          ButtonNote->"Utility`"], 
+         ButtonBox["FreeQNoneUnsigned",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"FreeQNoneUnsigned", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["ruleToFunctionRepeated",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"ruleToFunctionRepeated", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["declareIndexed",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"declareIndexed", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["getAllVariables",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"getAllVariables", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["set",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"set", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["declareIndexedAM",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"declareIndexedAM", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["integrate",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"integrate", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["sign",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"sign", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["declareIndexedPrimed",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"declareIndexedPrimed", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["invertArguments",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"invertArguments", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["speM",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"speM", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["declarePrimed",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"declarePrimed", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["normalizeSumRule",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"normalizeSumRule", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["sum",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"sum", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["ensureSignQ",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"ensureSignQ", "Utility`"}},
+          
+          ButtonNote->"Utility`"], 
+         ButtonBox["OddPermutations",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"OddPermutations", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["tochar",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"tochar", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["evenPermM",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"evenPermM", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["removeBlanks",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"removeBlanks", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["tonum",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"tonum", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["EvenPermutations",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"EvenPermutations", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["removeSign",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"removeSign", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["unsM",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"unsM", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["FreeQAll",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"FreeQAll", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["ruleJoin",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"ruleJoin", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["$altFunctionList",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"$altFunctionList", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["FreeQAllUnsigned",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"FreeQAllUnsigned", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["ruleSplit",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"ruleSplit", "Utility`"}},
+          ButtonNote->"Utility`"], ""},
+        {
+         ButtonBox["FreeQNone",
+          BaseStyle->"InformationLink",
+          ButtonData:>{"Info3606142027-9032228", {"FreeQNone", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["ruleToFunction",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606142027-9032228", {"ruleToFunction", "Utility`"}},
+          ButtonNote->"Utility`"], ""}
+       },
+       DefaultBaseStyle->"InfoGrid",
+       GridBoxItemSize->{"Columns" -> {{
+            Scaled[0.31666666666666665`]}}}]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}}]}, 
+   Dynamic[Typeset`open$$],
+   ImageSize->Automatic]]], "Print", "InfoCell",
+ CellChangeTimes->{3.60613482771938*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Pattern Matching", "Section",
+ CellChangeTimes->{{3.606133302338048*^9, 3.606133305266151*^9}}],
+
+Cell["\<\
+In this section various functions useful for pattern matching are presented.\
+\>", "Text",
+ CellChangeTimes->{{3.606133317777687*^9, 3.606133331745942*^9}}]
+}, Open  ]],
+
+Cell["\<\
+Transforming Rules and Expressions\
+\>", "Section",
+ CellChangeTimes->{{3.6061349994307413`*^9, 3.606135006038556*^9}}],
+
+Cell[CellGroupData[{
+
+Cell["Traditional Form", "Section",
+ CellChangeTimes->{{3.606133336769796*^9, 3.606133340530094*^9}}],
+
+Cell["\<\
+The Utility package has a few functions that have a special representation \
+when using TraditionalForm. Furthermore it allows to add indexed and primed \
+numbers in an easy manner.\
+\>", "Text",
+ CellChangeTimes->{{3.6061327785932283`*^9, 3.606132779088702*^9}, {
+  3.60613335235431*^9, 3.606133424194178*^9}}],
+
+Cell["\<\
+The functions sum and integrate, both of which are replacements for the \
+corresponding built-in functions, have the same traditional form as their \
+built-in counterparts:\
+\>", "Text",
+ CellChangeTimes->{{3.6061327785932283`*^9, 3.606132779088702*^9}, {
+  3.606133430450593*^9, 3.6061335008026543`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"integrate", "[", 
+   RowBox[{
+    RowBox[{"sum", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"f", "[", 
+        RowBox[{"a", ",", "b", ",", "c"}], "]"}], " ", 
+       RowBox[{"g", "[", "\[Psi]", "]"}], 
+       RowBox[{"h", "[", "\[Omega]", "]"}]}], ",", "a", ",", "b", ",", "c"}], 
+     "]"}], ",", "\[Psi]", ",", "\[Omega]"}], "]"}], "//", 
+  "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.60613350168353*^9, 3.606133546289439*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"\[Integral]", 
+   RowBox[{"\[Integral]", 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       UnderscriptBox["\[Sum]", "a"], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", "b"], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", "c"], 
+         RowBox[{
+          RowBox[{"g", "(", "\[Psi]", ")"}], " ", 
+          RowBox[{"h", "(", "\[Omega]", ")"}], " ", 
+          RowBox[{"f", "(", 
+           RowBox[{"a", ",", "b", ",", "c"}], ")"}]}]}]}]}], ")"}], 
+     RowBox[{"\[DifferentialD]", "\[Omega]"}], 
+     RowBox[{"\[DifferentialD]", "\[Psi]"}]}]}]}], TraditionalForm]], "Output",\
+
+ CellChangeTimes->{
+  3.606133548577078*^9, {3.606134395908132*^9, 3.606134416744821*^9}}]
+}, Open  ]],
+
+Cell[TextData[{
+ "There usually is a problem representing primed or indexed quantum numbers \
+in ",
+ StyleBox["Mathematica.",
+  FontSlant->"Italic"],
+ " It is cumbersome to type them and sometimes they get in the way of pattern \
+matching, as indices are treated in funny ways. Therefore the following \
+notation is advised. Assume you have the angular momentum j, then one uses a \
+\[OpenCurlyDoubleQuote]p\[CloseCurlyDoubleQuote] to denote a primed version \
+and [...] to denote indices. Furthermore one can prepend an \
+\[OpenCurlyDoubleQuote]m\[CloseCurlyDoubleQuote] to denote projection quantum \
+numbers, e.g.\nj - some angular momentum\njp - second angular momentum j\
+\[CloseCurlyQuote]\nj[a,b] - indices:  ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox["j", 
+    RowBox[{"a", "\[InvisibleComma]", "b"}]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\nmjp[a,b,c] - ",
+ Cell[BoxData[
+  FormBox[
+   SubscriptBox[
+    RowBox[{"m", "'"}], 
+    SubscriptBox["j", 
+     RowBox[{"a", "\[InvisibleComma]", "b"}]]], TraditionalForm]],
+  FormatType->"TraditionalForm"],
+ "\n\nOf course, without telling ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " to represent them in a different way, it will not do so:"
+}], "Text",
+ CellChangeTimes->{{3.6061327785932283`*^9, 3.606132779088702*^9}, {
+  3.606133613826746*^9, 3.606133725348689*^9}, {3.606133756996379*^9, 
+  3.606134063268215*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{"j", ",", "jp", ",", 
+    RowBox[{"j", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+    RowBox[{"jp", "[", 
+     RowBox[{"u", ",", "v"}], "]"}], ",", "mj", ",", 
+    RowBox[{"mj", "[", "a", "]"}], ",", "mjp", ",", 
+    RowBox[{"mjp", "[", 
+     RowBox[{"t", ",", "v"}], "]"}]}], "}"}], "//", 
+  "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.606134064449456*^9, 3.6061340921478148`*^9}, {
+  3.6061342040912323`*^9, 3.6061342094368763`*^9}, {3.60613428559757*^9, 
+  3.606134286028563*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{"j", ",", "jp", ",", 
+    RowBox[{"j", "(", 
+     RowBox[{"a", ",", "b", ",", "c"}], ")"}], ",", 
+    RowBox[{"jp", "(", 
+     RowBox[{"u", ",", "v"}], ")"}], ",", "mj", ",", 
+    RowBox[{"mj", "(", "a", ")"}], ",", "mjp", ",", 
+    RowBox[{"mjp", "(", 
+     RowBox[{"t", ",", "v"}], ")"}]}], "}"}], TraditionalForm]], "Output",
+ CellChangeTimes->{
+  3.606134096764011*^9, {3.606134397988154*^9, 3.606134418962788*^9}}]
+}, Open  ]],
+
+Cell["\<\
+One can declare j to be an angular momentum quantum number:\
+\>", "Text",
+ CellChangeTimes->{{3.6061327785932283`*^9, 3.606132779088702*^9}, {
+  3.6061341099562483`*^9, 3.6061341342440453`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"declareIndexedAM", "[", "j", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.606134122983223*^9, 3.606134149398808*^9}}],
+
+Cell["\<\
+Now, using TraditionalForm should work:\
+\>", "Text",
+ CellChangeTimes->{{3.6061327785932283`*^9, 3.606132779088702*^9}, {
+  3.6061341099562483`*^9, 3.606134161812693*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{"j", ",", "jp", ",", 
+    RowBox[{"j", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+    RowBox[{"jp", "[", 
+     RowBox[{"u", ",", "v"}], "]"}], ",", "mj", ",", 
+    RowBox[{"mj", "[", "a", "]"}], ",", "mjp", ",", 
+    RowBox[{"mjp", "[", 
+     RowBox[{"t", ",", "v"}], "]"}]}], "}"}], "//", 
+  "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.606134214301133*^9, 3.606134225516275*^9}, {
+  3.606134282126189*^9, 3.60613428250913*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{"j", ",", 
+    SuperscriptBox["j", "\[Prime]"], ",", 
+    SubscriptBox["j", 
+     RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], ",", 
+    
+    SubsuperscriptBox["j", 
+     RowBox[{"u", "\[InvisibleComma]", "v"}], "\[Prime]"], ",", 
+    SubscriptBox["m", "j"], ",", 
+    SubscriptBox["m", 
+     SubscriptBox["j", "a"]], ",", 
+    SubsuperscriptBox["m", "j", "\[Prime]"], ",", 
+    SubsuperscriptBox["m", 
+     SubscriptBox["j", 
+      RowBox[{"t", "\[InvisibleComma]", "v"}]], "\[Prime]"]}], "}"}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{3.606134165108054*^9, 3.606134228452559*^9, 
+  3.6061342887397957`*^9, 3.606134424596382*^9}]
+}, Open  ]],
+
+Cell["\<\
+There are additional declare* Functions. They just declare parts of the above \
+representations:\
+\>", "Text",
+ CellChangeTimes->{{3.6061327785932283`*^9, 3.606132779088702*^9}, {
+  3.6061341099562483`*^9, 3.606134161812693*^9}, {3.6061344434446287`*^9, 
+  3.60613448957288*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"declarePrimed", "[", "a", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareIndexed", "[", "b", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareIndexedPrimed", "[", "c", "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareIndexedAM", "[", "d", "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{"a", ",", "ap", ",", 
+    RowBox[{"a", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+    RowBox[{"ap", "[", 
+     RowBox[{"u", ",", "v"}], "]"}], ",", "ma", ",", 
+    RowBox[{"ma", "[", "a", "]"}], ",", "map", ",", 
+    RowBox[{"map", "[", 
+     RowBox[{"t", ",", "v"}], "]"}]}], "}"}], "//", 
+  "TraditionalForm"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{"b", ",", "bp", ",", 
+    RowBox[{"b", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+    RowBox[{"bp", "[", 
+     RowBox[{"u", ",", "v"}], "]"}], ",", "mb", ",", 
+    RowBox[{"mb", "[", "a", "]"}], ",", "mbp", ",", 
+    RowBox[{"mbp", "[", 
+     RowBox[{"t", ",", "v"}], "]"}]}], "}"}], "//", 
+  "TraditionalForm"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{"c", ",", "cp", ",", 
+    RowBox[{"c", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+    RowBox[{"cp", "[", 
+     RowBox[{"u", ",", "v"}], "]"}], ",", "mc", ",", 
+    RowBox[{"mc", "[", "a", "]"}], ",", "mcp", ",", 
+    RowBox[{"mcp", "[", 
+     RowBox[{"t", ",", "v"}], "]"}]}], "}"}], "//", 
+  "TraditionalForm"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"{", 
+   RowBox[{"d", ",", "dp", ",", 
+    RowBox[{"d", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+    RowBox[{"dp", "[", 
+     RowBox[{"u", ",", "v"}], "]"}], ",", "md", ",", 
+    RowBox[{"md", "[", "a", "]"}], ",", "mdp", ",", 
+    RowBox[{"mdp", "[", 
+     RowBox[{"t", ",", "v"}], "]"}]}], "}"}], "//", 
+  "TraditionalForm"}]}], "Input",
+ CellChangeTimes->{{3.606134495288939*^9, 3.606134572637508*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{"a", ",", 
+    SuperscriptBox["a", "\[Prime]"], ",", 
+    RowBox[{"a", "(", 
+     RowBox[{"a", ",", "b", ",", "c"}], ")"}], ",", 
+    RowBox[{
+     SuperscriptBox["a", "\[Prime]"], "(", 
+     RowBox[{"u", ",", "v"}], ")"}], ",", "ma", ",", 
+    RowBox[{"ma", "(", "a", ")"}], ",", "map", ",", 
+    RowBox[{"map", "(", 
+     RowBox[{"t", ",", "v"}], ")"}]}], "}"}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.606134574660864*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{"b", ",", "bp", ",", 
+    SubscriptBox["b", 
+     RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], ",", 
+    
+    RowBox[{"bp", "(", 
+     RowBox[{"u", ",", "v"}], ")"}], ",", "mb", ",", 
+    RowBox[{"mb", "(", "a", ")"}], ",", "mbp", ",", 
+    RowBox[{"mbp", "(", 
+     RowBox[{"t", ",", "v"}], ")"}]}], "}"}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.6061345746636066`*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{"c", ",", 
+    SuperscriptBox["c", "\[Prime]"], ",", 
+    SubscriptBox["c", 
+     RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], ",", 
+    
+    SubsuperscriptBox["c", 
+     RowBox[{"u", "\[InvisibleComma]", "v"}], "\[Prime]"], ",", "mc", ",", 
+    RowBox[{"mc", "(", "a", ")"}], ",", "mcp", ",", 
+    RowBox[{"mcp", "(", 
+     RowBox[{"t", ",", "v"}], ")"}]}], "}"}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.606134574666441*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{"d", ",", 
+    SuperscriptBox["d", "\[Prime]"], ",", 
+    SubscriptBox["d", 
+     RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], ",", 
+    
+    SubsuperscriptBox["d", 
+     RowBox[{"u", "\[InvisibleComma]", "v"}], "\[Prime]"], ",", 
+    SubscriptBox["m", "d"], ",", 
+    SubscriptBox["m", 
+     SubscriptBox["d", "a"]], ",", 
+    SubsuperscriptBox["m", "d", "\[Prime]"], ",", 
+    SubsuperscriptBox["m", 
+     SubscriptBox["d", 
+      RowBox[{"t", "\[InvisibleComma]", "v"}]], "\[Prime]"]}], "}"}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{3.606134574668953*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell["Misc", "Section",
+ CellChangeTimes->{{3.606133314578802*^9, 3.6061333152343493`*^9}}]
+},
+WindowSize->{740, 867},
+WindowMargins->{{Automatic, 90}, {-14, Automatic}},
+ShowSelection->True,
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[557, 20, 183, 4, 31, "Text"],
+Cell[743, 26, 370, 10, 55, "Input",
+ InitializationCell->True],
+Cell[1116, 38, 187, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[1328, 46, 118, 2, 32, "Input"],
+Cell[1449, 50, 7045, 186, 297, "Print"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[8531, 241, 101, 1, 79, "Section"],
+Cell[8635, 244, 166, 3, 31, "Text"]
+}, Open  ]],
+Cell[8816, 250, 129, 3, 79, "Section"],
+Cell[CellGroupData[{
+Cell[8970, 257, 101, 1, 48, "Section"],
+Cell[9074, 260, 321, 6, 51, "Text"],
+Cell[9398, 268, 315, 6, 51, "Text"],
+Cell[CellGroupData[{
+Cell[9738, 278, 480, 13, 32, "Input"],
+Cell[10221, 293, 717, 21, 78, "Output"]
+}, Open  ]],
+Cell[10953, 317, 1401, 33, 256, "Text"],
+Cell[CellGroupData[{
+Cell[12379, 354, 559, 14, 55, "Input"],
+Cell[12941, 370, 470, 12, 47, "Output"]
+}, Open  ]],
+Cell[13426, 385, 204, 4, 31, "Text"],
+Cell[13633, 391, 153, 3, 32, "Input"],
+Cell[13789, 396, 182, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[13996, 404, 504, 13, 55, "Input"],
+Cell[14503, 419, 715, 19, 51, "Output"]
+}, Open  ]],
+Cell[15233, 441, 289, 6, 31, "Text"],
+Cell[CellGroupData[{
+Cell[15547, 451, 1985, 54, 275, "Input"],
+Cell[17535, 507, 486, 13, 47, "Output"],
+Cell[18024, 522, 454, 12, 47, "Output"],
+Cell[18481, 536, 510, 13, 47, "Output"],
+Cell[18994, 551, 644, 18, 51, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[19665, 573, 91, 1, 78, "Section"]
+}
+]
+*)
+
+(* End of internal cache information *)

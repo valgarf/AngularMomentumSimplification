@@ -1,0 +1,2065 @@
+(* Content-type: application/vnd.wolfram.mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 9.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       157,          7]
+NotebookDataLength[     72506,       2056]
+NotebookOptionsPosition[     69057,       1945]
+NotebookOutlinePosition[     69415,       1961]
+CellTagsIndexPosition[     69372,       1958]
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Basic Usage", "Section",
+ CellChangeTimes->{{3.606123433686789*^9, 3.606123438823172*^9}}],
+
+Cell["First of all, the AngularMomentum Package must be loaded:", "Text",
+ CellChangeTimes->{{3.60611007968565*^9, 3.606110115669086*^9}}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"$Path", "=", 
+   RowBox[{"DeleteDuplicates", "@", 
+    RowBox[{"Append", "[", 
+     RowBox[{"$Path", ",", 
+      RowBox[{"NotebookDirectory", "[", "]"}]}], "]"}]}]}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{"<<", "AngularMomentum`"}]}], "Input",
+ CellChangeTimes->{{3.606110092104203*^9, 3.606110097064487*^9}, {
+  3.606110326552638*^9, 3.60611037716278*^9}}],
+
+Cell["\<\
+Loading the package might take some time (~15 s on my machine). There is one \
+known issue when loading it multiple times: In this case loading the package \
+may never finish. In this case abort the evaluation (Evaluation->Abort \
+Evaluation / Alt+.) and try again.\
+\>", "Text",
+ CellChangeTimes->{{3.606110122341791*^9, 3.606110251798451*^9}}],
+
+Cell["\<\
+Lets assume we want to simplify the following expression, which invovles a \
+few Clebsch-\[LineSeparator]Gordan symbols:\
+\>", "Text",
+ CellChangeTimes->{{3.606110029526826*^9, 3.6061100725535307`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"testExpr", "[", "1", "]"}], "=", 
+   RowBox[{"sum", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "/", "2"}], ",", 
+          RowBox[{"mt", "[", "a", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "/", "2"}], ",", 
+          RowBox[{"mt", "[", "b", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"t", "[", 
+           RowBox[{"a", ",", "b"}], "]"}], ",", 
+          RowBox[{"mt", "[", 
+           RowBox[{"a", ",", "b"}], "]"}]}], "}"}]}], "]"}], " ", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "/", "2"}], ",", 
+          RowBox[{"mtp", "[", "a", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "/", "2"}], ",", 
+          RowBox[{"mtp", "[", "b", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"tp", "[", 
+           RowBox[{"a", ",", "b"}], "]"}], ",", 
+          RowBox[{"mtp", "[", 
+           RowBox[{"a", ",", "b"}], "]"}]}], "}"}]}], "]"}], " ", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"t", "[", 
+           RowBox[{"a", ",", "b"}], "]"}], ",", 
+          RowBox[{"mt", "[", 
+           RowBox[{"a", ",", "b"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "/", "2"}], ",", 
+          RowBox[{"mt", "[", "c", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"t", "[", 
+           RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+          RowBox[{"mt", "[", 
+           RowBox[{"a", ",", "b", ",", "c"}], "]"}]}], "}"}]}], "]"}], " ", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"tp", "[", 
+           RowBox[{"a", ",", "b"}], "]"}], ",", 
+          RowBox[{"mtp", "[", 
+           RowBox[{"a", ",", "b"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"1", "/", "2"}], ",", 
+          RowBox[{"mtp", "[", "c", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"tp", "[", 
+           RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+          RowBox[{"mtp", "[", 
+           RowBox[{"a", ",", "b", ",", "c"}], "]"}]}], "}"}]}], "]"}], " ", 
+      RowBox[{"KroneckerDelta", "[", 
+       RowBox[{
+        RowBox[{"mt", "[", "c", "]"}], ",", 
+        RowBox[{"mtp", "[", "c", "]"}]}], "]"}], " ", 
+      RowBox[{"sum", "[", 
+       RowBox[{
+        RowBox[{"3", " ", 
+         RowBox[{"cg", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"1", "/", "2"}], ",", 
+             RowBox[{"mt", "[", "b", "]"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "\[Mu]"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"1", "/", "2"}], ",", 
+             RowBox[{"mtp", "[", "b", "]"}]}], "}"}]}], "]"}], " ", 
+         RowBox[{"cg", "[", 
+          RowBox[{
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"1", "/", "2"}], ",", 
+             RowBox[{"mtp", "[", "a", "]"}]}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{"1", ",", "\[Mu]"}], "}"}], ",", 
+           RowBox[{"{", 
+            RowBox[{
+             RowBox[{"1", "/", "2"}], ",", 
+             RowBox[{"mt", "[", "a", "]"}]}], "}"}]}], "]"}]}], ",", 
+        "\[Mu]"}], "]"}]}], ",", 
+     RowBox[{"mt", "[", "a", "]"}], ",", 
+     RowBox[{"mt", "[", "b", "]"}], ",", 
+     RowBox[{"mt", "[", "c", "]"}], ",", 
+     RowBox[{"mt", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], ",", 
+     RowBox[{"mtp", "[", "a", "]"}], ",", 
+     RowBox[{"mtp", "[", "b", "]"}], ",", 
+     RowBox[{"mtp", "[", "c", "]"}], ",", 
+     RowBox[{"mtp", "[", 
+      RowBox[{"a", ",", "b"}], "]"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{3.606110014808257*^9}],
+
+Cell["\<\
+As this looks rather ugly, lets have a look at the expression in the \
+traditional form:\
+\>", "Text",
+ CellChangeTimes->{{3.606110264933941*^9, 3.60611027062984*^9}, {
+  3.606110401830777*^9, 3.606110439013682*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"testExpr", "[", "1", "]"}], "//", "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.606110440431953*^9, 3.60611044535828*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   UnderscriptBox["\[Sum]", 
+    RowBox[{"mt", "(", "a", ")"}]], 
+   RowBox[{
+    UnderscriptBox["\[Sum]", 
+     RowBox[{"mt", "(", "b", ")"}]], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      RowBox[{"mt", "(", "c", ")"}]], 
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       RowBox[{"mt", "(", 
+        RowBox[{"a", ",", "b"}], ")"}]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        RowBox[{"mtp", "(", "a", ")"}]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         RowBox[{"mtp", "(", "b", ")"}]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          RowBox[{"mtp", "(", "c", ")"}]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           RowBox[{"mtp", "(", 
+            RowBox[{"a", ",", "b"}], ")"}]], 
+          RowBox[{
+           TemplateBox[{RowBox[{
+               RowBox[{"mt", "(", "c", ")"}], ",", 
+               RowBox[{"mtp", "(", "c", ")"}]}]},
+            "KroneckerDeltaSeq"], " ", 
+           StyleBox[
+            RowBox[{"c", "(", GridBox[{
+               {
+                FractionBox["1", "2"], 
+                FractionBox["1", "2"]},
+               {
+                RowBox[{"mt", "(", "a", ")"}], 
+                RowBox[{"mt", "(", "b", ")"}]}
+              }], "|", GridBox[{
+               {
+                RowBox[{"t", "(", 
+                 RowBox[{"a", ",", "b"}], ")"}]},
+               {
+                RowBox[{"mt", "(", 
+                 RowBox[{"a", ",", "b"}], ")"}]}
+              }], ")"}],
+            SpanMaxSize->DirectedInfinity[1]], " ", 
+           StyleBox[
+            RowBox[{"c", "(", GridBox[{
+               {
+                RowBox[{"t", "(", 
+                 RowBox[{"a", ",", "b"}], ")"}], 
+                FractionBox["1", "2"]},
+               {
+                RowBox[{"mt", "(", 
+                 RowBox[{"a", ",", "b"}], ")"}], 
+                RowBox[{"mt", "(", "c", ")"}]}
+              }], "|", GridBox[{
+               {
+                RowBox[{"t", "(", 
+                 RowBox[{"a", ",", "b", ",", "c"}], ")"}]},
+               {
+                RowBox[{"mt", "(", 
+                 RowBox[{"a", ",", "b", ",", "c"}], ")"}]}
+              }], ")"}],
+            SpanMaxSize->DirectedInfinity[1]], " ", 
+           StyleBox[
+            RowBox[{"c", "(", GridBox[{
+               {
+                FractionBox["1", "2"], 
+                FractionBox["1", "2"]},
+               {
+                RowBox[{"mtp", "(", "a", ")"}], 
+                RowBox[{"mtp", "(", "b", ")"}]}
+              }], "|", GridBox[{
+               {
+                RowBox[{"tp", "(", 
+                 RowBox[{"a", ",", "b"}], ")"}]},
+               {
+                RowBox[{"mtp", "(", 
+                 RowBox[{"a", ",", "b"}], ")"}]}
+              }], ")"}],
+            SpanMaxSize->DirectedInfinity[1]], " ", 
+           StyleBox[
+            RowBox[{"c", "(", GridBox[{
+               {
+                RowBox[{"tp", "(", 
+                 RowBox[{"a", ",", "b"}], ")"}], 
+                FractionBox["1", "2"]},
+               {
+                RowBox[{"mtp", "(", 
+                 RowBox[{"a", ",", "b"}], ")"}], 
+                RowBox[{"mtp", "(", "c", ")"}]}
+              }], "|", GridBox[{
+               {
+                RowBox[{"tp", "(", 
+                 RowBox[{"a", ",", "b", ",", "c"}], ")"}]},
+               {
+                RowBox[{"mtp", "(", 
+                 RowBox[{"a", ",", "b", ",", "c"}], ")"}]}
+              }], ")"}],
+            SpanMaxSize->DirectedInfinity[1]], " ", 
+           RowBox[{
+            UnderscriptBox["\[Sum]", "\[Mu]"], 
+            RowBox[{"3", " ", 
+             StyleBox[
+              RowBox[{"c", "(", GridBox[{
+                 {
+                  FractionBox["1", "2"], "1"},
+                 {
+                  RowBox[{"mtp", "(", "a", ")"}], "\[Mu]"}
+                }], "|", GridBox[{
+                 {
+                  FractionBox["1", "2"]},
+                 {
+                  RowBox[{"mt", "(", "a", ")"}]}
+                }], ")"}],
+              SpanMaxSize->DirectedInfinity[1]], " ", 
+             StyleBox[
+              RowBox[{"c", "(", GridBox[{
+                 {
+                  FractionBox["1", "2"], "1"},
+                 {
+                  RowBox[{"mt", "(", "b", ")"}], "\[Mu]"}
+                }], "|", GridBox[{
+                 {
+                  FractionBox["1", "2"]},
+                 {
+                  RowBox[{"mtp", "(", "b", ")"}]}
+                }], ")"}],
+              SpanMaxSize->DirectedInfinity[1]]}]}]}]}]}]}]}]}]}]}]}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{3.6061104500673637`*^9, 3.606125325130004*^9, 
+  3.606125369190948*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "This is still rather ugly. We need to tell ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " how to represent the quantum numbers.\nIn this case this is rather easy:"
+}], "Text",
+ CellChangeTimes->{{3.606110264933941*^9, 3.60611027062984*^9}, {
+  3.606110401830777*^9, 3.606110516486414*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"declareIndexedAM", "[", "t", "]"}], ";"}]], "Input",
+ CellChangeTimes->{{3.606110517965289*^9, 3.606110536617663*^9}}],
+
+Cell["\<\
+There are multiple declare functions in the Utility` package, you can have a \
+look at them by typing\
+\>", "Text",
+ CellChangeTimes->{{3.60611060840596*^9, 3.606110651461768*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"?", "Utility`declare*"}]], "Input",
+ CellChangeTimes->{{3.606110652825758*^9, 3.606110659353221*^9}}],
+
+Cell[BoxData[
+ DynamicModuleBox[{Typeset`open$$ = True}, 
+  PaneSelectorBox[{False->
+   RowBox[{
+    OpenerBox[Dynamic[Typeset`open$$],
+     ImageSize->Small], 
+    StyleBox["Utility`", "InfoHeading"]}], True->GridBox[{
+     {
+      RowBox[{
+       OpenerBox[Dynamic[Typeset`open$$],
+        ImageSize->Small], 
+       StyleBox["Utility`", "InfoHeading"]}]},
+     {GridBox[{
+        {
+         ButtonBox["declareIndexed",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606132574-5426245", {"declareIndexed", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["declareIndexedPrimed",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606132574-5426245", {"declareIndexedPrimed", "Utility`"}},
+          ButtonNote->"Utility`"]},
+        {
+         ButtonBox["declareIndexedAM",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606132574-5426245", {"declareIndexedAM", "Utility`"}},
+          ButtonNote->"Utility`"], 
+         ButtonBox["declarePrimed",
+          BaseStyle->"InformationLink",
+          
+          ButtonData:>{
+           "Info3606132574-5426245", {"declarePrimed", "Utility`"}},
+          ButtonNote->"Utility`"]}
+       },
+       DefaultBaseStyle->"InfoGrid",
+       GridBoxItemSize->{"Columns" -> {{
+            Scaled[0.475]}}}]}
+    },
+    GridBoxAlignment->{"Columns" -> {{Left}}, "Rows" -> {{Baseline}}}]}, 
+   Dynamic[Typeset`open$$],
+   ImageSize->Automatic]]], "Print", "InfoCell",
+ CellChangeTimes->{3.606125375116557*^9}]
+}, Open  ]],
+
+Cell["Back to our expression:", "Text",
+ CellChangeTimes->{{3.6061106831266327`*^9, 3.606110686997703*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"testExpr", "[", "1", "]"}], "//", "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.606110694425643*^9, 3.606110695753961*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   UnderscriptBox["\[Sum]", 
+    SubscriptBox["m", 
+     SubscriptBox["t", "a"]]], 
+   RowBox[{
+    UnderscriptBox["\[Sum]", 
+     SubscriptBox["m", 
+      SubscriptBox["t", "b"]]], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      SubscriptBox["m", 
+       SubscriptBox["t", "c"]]], 
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b"}]]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubsuperscriptBox["m", 
+         SubscriptBox["t", "a"], "\[Prime]"]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubsuperscriptBox["m", 
+          SubscriptBox["t", "b"], "\[Prime]"]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", "c"], "\[Prime]"]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubsuperscriptBox["m", 
+            SubscriptBox["t", 
+             RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"]], 
+          RowBox[{
+           TemplateBox[{RowBox[{
+               SubscriptBox["m", 
+                SubscriptBox["t", "c"]], ",", 
+               SubsuperscriptBox["m", 
+                SubscriptBox["t", "c"], "\[Prime]"]}]},
+            "KroneckerDeltaSeq"], " ", 
+           StyleBox[
+            RowBox[{"c", "(", GridBox[{
+               {
+                FractionBox["1", "2"], 
+                FractionBox["1", "2"]},
+               {
+                SubscriptBox["m", 
+                 SubscriptBox["t", "a"]], 
+                SubscriptBox["m", 
+                 SubscriptBox["t", "b"]]}
+              }], "|", GridBox[{
+               {
+                SubscriptBox["t", 
+                 RowBox[{"a", "\[InvisibleComma]", "b"}]]},
+               {
+                SubscriptBox["m", 
+                 SubscriptBox["t", 
+                  RowBox[{"a", "\[InvisibleComma]", "b"}]]]}
+              }], ")"}],
+            SpanMaxSize->DirectedInfinity[1]], " ", 
+           StyleBox[
+            RowBox[{"c", "(", GridBox[{
+               {
+                SubscriptBox["t", 
+                 RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+                FractionBox["1", "2"]},
+               {
+                SubscriptBox["m", 
+                 SubscriptBox["t", 
+                  RowBox[{"a", "\[InvisibleComma]", "b"}]]], 
+                SubscriptBox["m", 
+                 SubscriptBox["t", "c"]]}
+              }], "|", GridBox[{
+               {
+                SubscriptBox["t", 
+                 RowBox[{
+                 "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]},
+               {
+                SubscriptBox["m", 
+                 SubscriptBox["t", 
+                  RowBox[{
+                  "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", 
+                   "c"}]]]}
+              }], ")"}],
+            SpanMaxSize->DirectedInfinity[1]], " ", 
+           StyleBox[
+            RowBox[{"c", "(", GridBox[{
+               {
+                FractionBox["1", "2"], 
+                FractionBox["1", "2"]},
+               {
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", "a"], "\[Prime]"], 
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", "b"], "\[Prime]"]}
+              }], "|", GridBox[{
+               {
+                SubsuperscriptBox["t", 
+                 RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"]},
+               {
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", 
+                  RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"]}
+              }], ")"}],
+            SpanMaxSize->DirectedInfinity[1]], " ", 
+           StyleBox[
+            RowBox[{"c", "(", GridBox[{
+               {
+                SubsuperscriptBox["t", 
+                 RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"], 
+                FractionBox["1", "2"]},
+               {
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", 
+                  RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"], 
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", "c"], "\[Prime]"]}
+              }], "|", GridBox[{
+               {
+                SubsuperscriptBox["t", 
+                 RowBox[{
+                 "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+                 "\[Prime]"]},
+               {
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", 
+                  RowBox[{
+                  "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+                 "\[Prime]"]}
+              }], ")"}],
+            SpanMaxSize->DirectedInfinity[1]], " ", 
+           RowBox[{
+            UnderscriptBox["\[Sum]", "\[Mu]"], 
+            RowBox[{"3", " ", 
+             StyleBox[
+              RowBox[{"c", "(", GridBox[{
+                 {
+                  FractionBox["1", "2"], "1"},
+                 {
+                  SubsuperscriptBox["m", 
+                   SubscriptBox["t", "a"], "\[Prime]"], "\[Mu]"}
+                }], "|", GridBox[{
+                 {
+                  FractionBox["1", "2"]},
+                 {
+                  SubscriptBox["m", 
+                   SubscriptBox["t", "a"]]}
+                }], ")"}],
+              SpanMaxSize->DirectedInfinity[1]], " ", 
+             StyleBox[
+              RowBox[{"c", "(", GridBox[{
+                 {
+                  FractionBox["1", "2"], "1"},
+                 {
+                  SubscriptBox["m", 
+                   SubscriptBox["t", "b"]], "\[Mu]"}
+                }], "|", GridBox[{
+                 {
+                  FractionBox["1", "2"]},
+                 {
+                  SubsuperscriptBox["m", 
+                   SubscriptBox["t", "b"], "\[Prime]"]}
+                }], ")"}],
+              SpanMaxSize->DirectedInfinity[1]]}]}]}]}]}]}]}]}]}]}]}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{3.606110697788073*^9, 3.606125376729475*^9}]
+}, Open  ]],
+
+Cell["\<\
+It looks better now. The next step is to check whether our expression does \
+make any sense (actually this is done automatically when trying to perform a \
+simplification, however we will do it explicitly here and discuss possible \
+problems).\
+\>", "Text",
+ CellChangeTimes->{{3.6061106831266327`*^9, 3.606110745238072*^9}, {
+   3.60611125060001*^9, 3.606111299510662*^9}, {3.6061194109321327`*^9, 
+   3.606119428004662*^9}, 3.606119510147793*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"testExpr", "[", "1", "]"}], "//", "consistencyCheck"}]], "Input",
+ CellChangeTimes->{{3.606111302116479*^9, 3.606111314304575*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbol \\\"\[NoBreak]\\!\\(t[\\(\\(a, \
+b\\)\\)]\\)\[NoBreak]\\\" has not been declared an integer or half-integer \
+quantum number. Please use the functions declareQNInteger and \
+declareQNHalfInteger. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/notfound\\\", ButtonNote -> \
+\\\"AngularMomentum`consistencyCheck::notfound\\\"]\\)\"\>"}]], "Message", \
+"MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.60612537914675*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbol \\\"\[NoBreak]\\!\\(mt[a]\\)\[NoBreak]\\\" has not \
+been declared an integer or half-integer quantum number. Please use the \
+functions declareQNInteger and declareQNHalfInteger. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/notfound\\\", ButtonNote -> \
+\\\"AngularMomentum`consistencyCheck::notfound\\\"]\\)\"\>"}]], "Message", \
+"MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.606125379194964*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbol \\\"\[NoBreak]\\!\\(mt[b]\\)\[NoBreak]\\\" has not \
+been declared an integer or half-integer quantum number. Please use the \
+functions declareQNInteger and declareQNHalfInteger. \\!\\(\\*ButtonBox[\\\"\
+\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/notfound\\\", ButtonNote -> \
+\\\"AngularMomentum`consistencyCheck::notfound\\\"]\\)\"\>"}]], "Message", \
+"MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.606125379257153*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \
+\[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck :: notfound\\), \
+\\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this calculation. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
+ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.60612537930301*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
+\\`\\*StyleBox[\\(\[EmptyUpTriangle] {1\\/2 1\\/2 t\\_\\(a \[InvisibleComma] \
+b\\)}\\), Rule[SpanMaxSize, DirectedInfinity[1]]]\\), TraditionalForm, \
+Rule[Editable, True]]\\)\[NoBreak]\\\" cannot be fulfilled as the sum of the \
+arguments cannot yield an integer\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.606125379393293*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
+\\`\\*TemplateBox[List[RowBox[List[RowBox[List[RowBox[List[\\\"-\\\", \
+SubscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", RowBox[List[\\\"a\\\", \\\"\\\
+\\[InvisibleComma]\\\", \\\"b\\\"]]]]]], \\\"+\\\", SubscriptBox[\\\"m\\\", \
+SubscriptBox[\\\"t\\\", RowBox[List[\\\"a\\\"]]]], \\\"+\\\", SubscriptBox[\\\
+\"m\\\", SubscriptBox[\\\"t\\\", RowBox[List[\\\"b\\\"]]]]]], \\\",\\\", \
+\\\"0\\\"]]], \\\"KroneckerDeltaSeq\\\"]\\), TraditionalForm, Rule[Editable, \
+True]]\\)\[NoBreak]\\\" cannot be fulfilled as the sum of the arguments \
+cannot yield an integer\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.606125379505995*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
+\\`\\*StyleBox[\\(\[EmptyUpTriangle] {1\\/2 1\\/2 t\\_\\(a \[InvisibleComma] \
+b\\)\\%\[Prime]}\\), Rule[SpanMaxSize, DirectedInfinity[1]]]\\), \
+TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" cannot be fulfilled \
+as the sum of the arguments cannot yield an integer\"\>"}]], "Message", "MSG",
+ 
+ CellChangeTimes->{3.606111315405006*^9, 3.6061253796169043`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \
+\[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck :: halfinteger\\), \
+\\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this calculation. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
+ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.6061253796605873`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbols \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`1\\/2\\), TraditionalForm, \
+Rule[Editable, True]]\\)\[NoBreak]\\\" and \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`m\\_\\(t\\_\\(a\\)\\)\\), \
+TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" have not been \
+declared consistently, e.g. one might be an integer and the other is a \
+half-integer\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.6061253797488737`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbols \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`1\\/2\\), TraditionalForm, \
+Rule[Editable, True]]\\)\[NoBreak]\\\" and \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`m\\_\\(t\\_\\(b\\)\\)\\), \
+TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" have not been \
+declared consistently, e.g. one might be an integer and the other is a \
+half-integer\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.6061253798701563`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbols \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`t\\_\\(a \[InvisibleComma] \
+b\\)\\), TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" and \\\"\
+\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`m\\_\\(t\\_\\(a \
+\[InvisibleComma] b\\)\\)\\), TraditionalForm, Rule[Editable, True]]\\)\
+\[NoBreak]\\\" have not been declared consistently, e.g. one might be an \
+integer and the other is a half-integer\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.606125380000416*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"General", "::", "stop"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Further output of \
+\[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck :: projection\\), \
+\\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this calculation. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
+ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111315405006*^9, 3.606125380002977*^9}]
+}, Open  ]],
+
+Cell[TextData[{
+ "There are multiple errors. All of the relate to a simple problem: We have \
+not told ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " about the quantum numbers we are using. These are the first error \
+messages, consistencyCheck::notfound. The other errors just pop up because ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " has no idea about the symbols. It wants to know whether the quantum \
+numbers are integers or half-integers. We provide this information now:"
+}], "Text",
+ CellChangeTimes->{{3.606111336295247*^9, 3.606111474663344*^9}, {
+   3.606119450917115*^9, 3.606119455460417*^9}, 3.60611949366859*^9}],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"declareQNHalfInteger", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"mt", "[", "a", "]"}], ",", 
+     RowBox[{"mt", "[", "b", "]"}], ",", 
+     RowBox[{"mt", "[", "c", "]"}], ",", 
+     RowBox[{"mtp", "[", "a", "]"}], ",", 
+     RowBox[{"mtp", "[", "b", "]"}], ",", 
+     RowBox[{"mtp", "[", "c", "]"}], ",", 
+     RowBox[{"t", "[", 
+      RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+     RowBox[{"tp", "[", 
+      RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+     RowBox[{"mt", "[", 
+      RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+     RowBox[{"mtp", "[", 
+      RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", "\[Mu]"}], "}"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareQNInteger", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"t", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], ",", 
+     RowBox[{"tp", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], ",", 
+     RowBox[{"mt", "[", 
+      RowBox[{"a", ",", "b"}], "]"}], ",", 
+     RowBox[{"mtp", "[", 
+      RowBox[{"a", ",", "b"}], "]"}]}], "}"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.60611147578131*^9, 3.6061116012629757`*^9}}],
+
+Cell["Performing the check again:", "Text",
+ CellChangeTimes->{{3.606111336295247*^9, 3.606111474663344*^9}, {
+  3.606111623543806*^9, 3.606111630551744*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"testExpr", "[", "1", "]"}], "//", "consistencyCheck"}]], "Input",
+ CellChangeTimes->{3.606111485625758*^9, 3.60611161661938*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
+\\`\\*TemplateBox[List[RowBox[List[RowBox[List[RowBox[List[\\\"-\\\", \
+SubsuperscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", \
+RowBox[List[\\\"b\\\"]]], \\\"\\\\[Prime]\\\"]]], \\\"+\\\", \
+SubscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", RowBox[List[\\\"b\\\"]]]], \\\
+\"+\\\", \\\"\\\\[Mu]\\\"]], \\\",\\\", \\\"0\\\"]]], \\\"KroneckerDeltaSeq\\\
+\"]\\), TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" cannot be \
+fulfilled as the sum of the arguments cannot yield an integer\"\>"}]], \
+"Message", "MSG",
+ CellChangeTimes->{3.606111634324306*^9, 3.6061253835282288`*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
+\\`\\*TemplateBox[List[RowBox[List[RowBox[List[SubsuperscriptBox[\\\"m\\\", \
+SubscriptBox[\\\"t\\\", RowBox[List[\\\"a\\\"]]], \\\"\\\\[Prime]\\\"], \\\"-\
+\\\", SubscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", \
+RowBox[List[\\\"a\\\"]]]], \\\"+\\\", \\\"\\\\[Mu]\\\"]], \\\",\\\", \
+\\\"0\\\"]]], \\\"KroneckerDeltaSeq\\\"]\\), TraditionalForm, Rule[Editable, \
+True]]\\)\[NoBreak]\\\" cannot be fulfilled as the sum of the arguments \
+cannot yield an integer\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111634324306*^9, 3.606125383641222*^9}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbols \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`1\\), TraditionalForm, \
+Rule[Editable, True]]\\)\[NoBreak]\\\" and \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`\[Mu]\\), TraditionalForm, \
+Rule[Editable, True]]\\)\[NoBreak]\\\" have not been declared consistently, \
+e.g. one might be an integer and the other is a half-integer\"\>"}]], \
+"Message", "MSG",
+ CellChangeTimes->{3.606111634324306*^9, 3.606125383750718*^9}]
+}, Open  ]],
+
+Cell["\<\
+There are still errors. They tell us that mt[b]+mtp[b]+\[Mu] cannot be an \
+integer and that the symbols \[OpenCurlyDoubleQuote]1\[CloseCurlyDoubleQuote] \
+and \[OpenCurlyDoubleQuote]\[Mu]\[CloseCurlyDoubleQuote] seem to be \
+inconsistent. In fact, we did an error in the declaration above: We declared \
+\[Mu] to be a half-integer. However, it must be an integer. Lets try to \
+correct that:\
+\>", "Text",
+ CellChangeTimes->{{3.606111336295247*^9, 3.606111474663344*^9}, {
+  3.606111623543806*^9, 3.606111743464181*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"declareQNInteger", "[", "\[Mu]", "]"}]], "Input",
+ CellChangeTimes->{{3.606111750188449*^9, 3.60611175143486*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  StyleBox[
+   RowBox[{"declareQNInteger", "::", "doubledefinition"}], "MessageName"], 
+  RowBox[{
+  ":", " "}], "\<\"Symbol \[NoBreak]\\!\\(\[Mu]\\)\[NoBreak] has been \
+declared a half-integer quantum number already\"\>"}]], "Message", "MSG",
+ CellChangeTimes->{3.606111752480803*^9, 3.606125385511077*^9}],
+
+Cell[BoxData["None"], "Output",
+ CellChangeTimes->{3.606111752482917*^9, 3.606125385512335*^9}]
+}, Open  ]],
+
+Cell["\<\
+Trying to declare \[Mu] an integer now fails, as it has been declared a \
+half-integer already. However, if we are sure we want to change this, we can \
+force the declaration to work:\
+\>", "Text",
+ CellChangeTimes->{{3.606111336295247*^9, 3.606111474663344*^9}, {
+  3.606111623543806*^9, 3.6061118038314962`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"declareQNInteger", "[", 
+  RowBox[{"\[Mu]", ",", 
+   RowBox[{"Overwrite", "\[Rule]", " ", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{{3.606111809243783*^9, 3.606111812155233*^9}}],
+
+Cell[BoxData["\[Mu]"], "Output",
+ CellChangeTimes->{3.606111814950161*^9, 3.606125386838475*^9}]
+}, Open  ]],
+
+Cell["\<\
+Now \[Mu] is declared an integer and we perform the consistency Check again:\
+\>", "Text",
+ CellChangeTimes->{{3.606111336295247*^9, 3.606111474663344*^9}, {
+  3.606111623543806*^9, 3.6061118384714413`*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"testExpr", "[", "1", "]"}], "//", "consistencyCheck"}]], "Input"],
+
+Cell[TextData[{
+ "No errors should appear now. Great, ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " knows all it should and we perform simplification using the function \
+simplifyAMSum. It may take a while and one should use the option Print->True \
+as it prints the expression it is currently working on. This function is far \
+from finished and it has the nasty habit of never finishing if it cannot \
+simplify the rule any further."
+}], "Text",
+ CellChangeTimes->{{3.6061118564561787`*^9, 3.606111884952417*^9}, {
+  3.6061119311766872`*^9, 3.606112018712315*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"result", "=", 
+  RowBox[{"simplifyAMSum", "[", 
+   RowBox[{
+    RowBox[{"testExpr", "[", "1", "]"}], ",", 
+    RowBox[{"Print", "\[Rule]", "True"}]}], "]"}]}]], "Input",
+ CellChangeTimes->{{3.606111918364449*^9, 3.6061119284096937`*^9}, {
+  3.606123556587594*^9, 3.6061235575634527`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ TagBox[
+  FormBox[
+   RowBox[{
+    UnderscriptBox["\[Sum]", "\[Mu]"], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      SubscriptBox["m", 
+       SubscriptBox["t", "a"]]], 
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["t", "b"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["t", "c"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b"}]]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", "a"], "\[Prime]"]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubsuperscriptBox["m", 
+            SubscriptBox["t", "b"], "\[Prime]"]], 
+          RowBox[{
+           UnderscriptBox["\[Sum]", 
+            SubsuperscriptBox["m", 
+             SubscriptBox["t", 
+              RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"]], 
+           RowBox[{"6", " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"2", " ", 
+               SubscriptBox["t", 
+                RowBox[{"a", "\[InvisibleComma]", "b"}]]}], "+", "1"}]], " ", 
+            
+            SqrtBox[
+             RowBox[{
+              RowBox[{"2", " ", 
+               SubscriptBox["t", 
+                RowBox[{
+                "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]}], 
+              "+", "1"}]], " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"2", " ", 
+               SubsuperscriptBox["t", 
+                RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"]}], "+", 
+              "1"}]], " ", 
+            RowBox[{
+             TagBox[
+              StyleBox["(",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol], "\[MediumSpace]", GridBox[{
+               {
+                FractionBox["1", "2"], 
+                FractionBox["1", "2"], 
+                SubscriptBox["t", 
+                 RowBox[{"a", "\[InvisibleComma]", "b"}]]},
+               {
+                SubscriptBox["m", 
+                 SubscriptBox["t", "a"]], 
+                SubscriptBox["m", 
+                 SubscriptBox["t", "b"]], 
+                RowBox[{"-", 
+                 SubscriptBox["m", 
+                  SubscriptBox["t", 
+                   RowBox[{"a", "\[InvisibleComma]", "b"}]]]}]}
+              }], "\[MediumSpace]", 
+             TagBox[
+              StyleBox[")",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol]}], " ", 
+            RowBox[{
+             TagBox[
+              StyleBox["(",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol], "\[MediumSpace]", GridBox[{
+               {
+                FractionBox["1", "2"], "1", 
+                FractionBox["1", "2"]},
+               {
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", "a"], "\[Prime]"], "\[Mu]", 
+                RowBox[{"-", 
+                 SubscriptBox["m", 
+                  SubscriptBox["t", "a"]]}]}
+              }], "\[MediumSpace]", 
+             TagBox[
+              StyleBox[")",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol]}], " ", 
+            RowBox[{
+             TagBox[
+              StyleBox["(",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol], "\[MediumSpace]", GridBox[{
+               {
+                FractionBox["1", "2"], "1", 
+                FractionBox["1", "2"]},
+               {
+                SubscriptBox["m", 
+                 SubscriptBox["t", "b"]], "\[Mu]", 
+                RowBox[{"-", 
+                 SubsuperscriptBox["m", 
+                  SubscriptBox["t", "b"], "\[Prime]"]}]}
+              }], "\[MediumSpace]", 
+             TagBox[
+              StyleBox[")",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol]}], " ", 
+            SqrtBox[
+             RowBox[{
+              RowBox[{"2", " ", 
+               SubsuperscriptBox["t", 
+                RowBox[{
+                "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+                "\[Prime]"]}], "+", "1"}]], " ", 
+            RowBox[{
+             TagBox[
+              StyleBox["(",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol], "\[MediumSpace]", GridBox[{
+               {
+                SubscriptBox["t", 
+                 RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+                FractionBox["1", "2"], 
+                SubscriptBox["t", 
+                 RowBox[{
+                 "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]},
+               {
+                SubscriptBox["m", 
+                 SubscriptBox["t", 
+                  RowBox[{"a", "\[InvisibleComma]", "b"}]]], 
+                SubscriptBox["m", 
+                 SubscriptBox["t", "c"]], 
+                RowBox[{"-", 
+                 SubscriptBox["m", 
+                  SubscriptBox["t", 
+                   RowBox[{
+                   "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", 
+                    "c"}]]]}]}
+              }], "\[MediumSpace]", 
+             TagBox[
+              StyleBox[")",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol]}], " ", 
+            RowBox[{
+             TagBox[
+              StyleBox["(",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol], "\[MediumSpace]", GridBox[{
+               {
+                FractionBox["1", "2"], 
+                FractionBox["1", "2"], 
+                SubsuperscriptBox["t", 
+                 RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"]},
+               {
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", "a"], "\[Prime]"], 
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", "b"], "\[Prime]"], 
+                RowBox[{"-", 
+                 SubsuperscriptBox["m", 
+                  SubscriptBox["t", 
+                   RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"]}]}
+              }], "\[MediumSpace]", 
+             TagBox[
+              StyleBox[")",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol]}], " ", 
+            SuperscriptBox[
+             RowBox[{"(", 
+              RowBox[{"-", "1"}], ")"}], 
+             RowBox[{
+              RowBox[{"-", 
+               SubsuperscriptBox["m", 
+                SubscriptBox["t", 
+                 RowBox[{
+                 "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+                "\[Prime]"]}], "-", 
+              SubscriptBox["m", 
+               SubscriptBox["t", 
+                RowBox[{
+                "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]], 
+              "-", 
+              SubsuperscriptBox["m", 
+               SubscriptBox["t", 
+                RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"], "-", 
+              SubscriptBox["m", 
+               SubscriptBox["t", 
+                RowBox[{"a", "\[InvisibleComma]", "b"}]]], "-", 
+              SubsuperscriptBox["t", 
+               RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"], "-", 
+              SubscriptBox["t", 
+               RowBox[{"a", "\[InvisibleComma]", "b"}]], "-", 
+              SubscriptBox["m", 
+               SubscriptBox["t", "a"]], "-", 
+              SubsuperscriptBox["m", 
+               SubscriptBox["t", "b"], "\[Prime]"], "+", "2"}]], " ", 
+            RowBox[{
+             TagBox[
+              StyleBox["(",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol], "\[MediumSpace]", GridBox[{
+               {
+                SubsuperscriptBox["t", 
+                 RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"], 
+                FractionBox["1", "2"], 
+                SubsuperscriptBox["t", 
+                 RowBox[{
+                 "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+                 "\[Prime]"]},
+               {
+                SubsuperscriptBox["m", 
+                 SubscriptBox["t", 
+                  RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"], 
+                SubscriptBox["m", 
+                 SubscriptBox["t", "c"]], 
+                RowBox[{"-", 
+                 SubsuperscriptBox["m", 
+                  SubscriptBox["t", 
+                   RowBox[{
+                   "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]],
+                   "\[Prime]"]}]}
+              }], "\[MediumSpace]", 
+             TagBox[
+              StyleBox[")",
+               SpanMaxSize->DirectedInfinity[1]],
+              ThreeJSymbol]}]}]}]}]}]}]}]}]}]}],
+   TraditionalForm],
+  TraditionalForm,
+  Editable->True]], "Print",
+ CellChangeTimes->{3.6061192455040092`*^9, 3.606123560812518*^9, 
+  3.606125390855733*^9}],
+
+Cell[BoxData[
+ TagBox[
+  FormBox[
+   RowBox[{
+    UnderscriptBox["\[Sum]", 
+     SubscriptBox["m", 
+      SubscriptBox["t", "c"]]], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      SubscriptBox["m", 
+       SubscriptBox["t", 
+        RowBox[{"a", "\[InvisibleComma]", "b"}]]]], 
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubsuperscriptBox["m", 
+        SubscriptBox["t", "a"], "\[Prime]"]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubsuperscriptBox["m", 
+         SubscriptBox["t", "b"], "\[Prime]"]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubsuperscriptBox["m", 
+          SubscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"]], 
+        RowBox[{
+         RowBox[{"-", "6"}], " ", "\[ImaginaryI]", " ", 
+         SqrtBox[
+          RowBox[{
+           RowBox[{"2", " ", 
+            SubscriptBox["t", 
+             RowBox[{"a", "\[InvisibleComma]", "b"}]]}], "+", "1"}]], " ", 
+         SqrtBox[
+          RowBox[{
+           RowBox[{"2", " ", 
+            SubscriptBox["t", 
+             RowBox[{
+             "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]}], 
+           "+", "1"}]], " ", 
+         SqrtBox[
+          RowBox[{
+           RowBox[{"2", " ", 
+            SubsuperscriptBox["t", 
+             RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"]}], "+", 
+           "1"}]], " ", 
+         SqrtBox[
+          RowBox[{
+           RowBox[{"2", " ", 
+            SubsuperscriptBox["t", 
+             RowBox[{
+             "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+             "\[Prime]"]}], "+", "1"}]], " ", 
+         RowBox[{
+          TagBox[
+           StyleBox["{",
+            SpanMaxSize->DirectedInfinity[1]],
+           SixJSymbol], "\[MediumSpace]", GridBox[{
+            {"1", 
+             FractionBox["1", "2"], 
+             FractionBox["1", "2"]},
+            {
+             SubscriptBox["t", 
+              RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+             FractionBox["1", "2"], 
+             FractionBox["1", "2"]}
+           }], "\[MediumSpace]", 
+          TagBox[
+           StyleBox["}",
+            SpanMaxSize->DirectedInfinity[1]],
+           SixJSymbol]}], " ", 
+         RowBox[{
+          TagBox[
+           StyleBox["(",
+            SpanMaxSize->DirectedInfinity[1]],
+           ThreeJSymbol], "\[MediumSpace]", GridBox[{
+            {
+             SubscriptBox["t", 
+              RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+             FractionBox["1", "2"], 
+             SubscriptBox["t", 
+              RowBox[{
+              "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]},
+            {
+             SubscriptBox["m", 
+              SubscriptBox["t", 
+               RowBox[{"a", "\[InvisibleComma]", "b"}]]], 
+             SubscriptBox["m", 
+              SubscriptBox["t", "c"]], 
+             RowBox[{"-", 
+              SubscriptBox["m", 
+               SubscriptBox["t", 
+                RowBox[{
+                "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", 
+                 "c"}]]]}]}
+           }], "\[MediumSpace]", 
+          TagBox[
+           StyleBox[")",
+            SpanMaxSize->DirectedInfinity[1]],
+           ThreeJSymbol]}], " ", 
+         RowBox[{
+          TagBox[
+           StyleBox["(",
+            SpanMaxSize->DirectedInfinity[1]],
+           ThreeJSymbol], "\[MediumSpace]", GridBox[{
+            {
+             FractionBox["1", "2"], 
+             FractionBox["1", "2"], 
+             SubsuperscriptBox["t", 
+              RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"]},
+            {
+             RowBox[{"-", 
+              SubsuperscriptBox["m", 
+               SubscriptBox["t", "a"], "\[Prime]"]}], 
+             RowBox[{"-", 
+              SubsuperscriptBox["m", 
+               SubscriptBox["t", "b"], "\[Prime]"]}], 
+             SubsuperscriptBox["m", 
+              SubscriptBox["t", 
+               RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"]}
+           }], "\[MediumSpace]", 
+          TagBox[
+           StyleBox[")",
+            SpanMaxSize->DirectedInfinity[1]],
+           ThreeJSymbol]}], " ", 
+         RowBox[{
+          TagBox[
+           StyleBox["(",
+            SpanMaxSize->DirectedInfinity[1]],
+           ThreeJSymbol], "\[MediumSpace]", GridBox[{
+            {
+             SubscriptBox["t", 
+              RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+             FractionBox["1", "2"], 
+             FractionBox["1", "2"]},
+            {
+             SubscriptBox["m", 
+              SubscriptBox["t", 
+               RowBox[{"a", "\[InvisibleComma]", "b"}]]], 
+             RowBox[{"-", 
+              SubsuperscriptBox["m", 
+               SubscriptBox["t", "b"], "\[Prime]"]}], 
+             RowBox[{"-", 
+              SubsuperscriptBox["m", 
+               SubscriptBox["t", "a"], "\[Prime]"]}]}
+           }], "\[MediumSpace]", 
+          TagBox[
+           StyleBox[")",
+            SpanMaxSize->DirectedInfinity[1]],
+           ThreeJSymbol]}], " ", 
+         SuperscriptBox[
+          RowBox[{"(", 
+           RowBox[{"-", "1"}], ")"}], 
+          RowBox[{
+           SubsuperscriptBox["m", 
+            SubscriptBox["t", 
+             RowBox[{
+             "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+            "\[Prime]"], "+", 
+           SubsuperscriptBox["t", 
+            RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}],
+             "\[Prime]"], "+", 
+           SubsuperscriptBox["m", 
+            SubscriptBox["t", 
+             RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"], "+", 
+           SubscriptBox["m", 
+            SubscriptBox["t", 
+             RowBox[{"a", "\[InvisibleComma]", "b"}]]], "+", 
+           SubsuperscriptBox["t", 
+            RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"], "+", 
+           SubsuperscriptBox["m", 
+            SubscriptBox["t", "a"], "\[Prime]"], "+", 
+           SubsuperscriptBox["m", 
+            SubscriptBox["t", "b"], "\[Prime]"], "+", 
+           SubscriptBox["m", 
+            SubscriptBox["t", "c"]]}]], " ", 
+         RowBox[{
+          TagBox[
+           StyleBox["(",
+            SpanMaxSize->DirectedInfinity[1]],
+           ThreeJSymbol], "\[MediumSpace]", GridBox[{
+            {
+             SubsuperscriptBox["t", 
+              RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"], 
+             FractionBox["1", "2"], 
+             SubsuperscriptBox["t", 
+              RowBox[{
+              "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+              "\[Prime]"]},
+            {
+             RowBox[{"-", 
+              SubsuperscriptBox["m", 
+               SubscriptBox["t", 
+                RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"]}], 
+             RowBox[{"-", 
+              SubscriptBox["m", 
+               SubscriptBox["t", "c"]]}], 
+             SubsuperscriptBox["m", 
+              SubscriptBox["t", 
+               RowBox[{
+               "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+              "\[Prime]"]}
+           }], "\[MediumSpace]", 
+          TagBox[
+           StyleBox[")",
+            SpanMaxSize->DirectedInfinity[1]],
+           ThreeJSymbol]}]}]}]}]}]}]}],
+   TraditionalForm],
+  TraditionalForm,
+  Editable->True]], "Print",
+ CellChangeTimes->{3.6061192455040092`*^9, 3.606123560812518*^9, 
+  3.6061253979623423`*^9}],
+
+Cell[BoxData[
+ TagBox[
+  FormBox[
+   RowBox[{
+    UnderscriptBox["\[Sum]", 
+     SubscriptBox["m", 
+      SubscriptBox["t", "c"]]], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      SubscriptBox["m", 
+       SubscriptBox["t", 
+        RowBox[{"a", "\[InvisibleComma]", "b"}]]]], 
+     RowBox[{"6", " ", "\[ImaginaryI]", " ", 
+      SqrtBox[
+       RowBox[{
+        RowBox[{"2", " ", 
+         SubscriptBox["t", 
+          RowBox[{
+          "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]}], "+", 
+        "1"}]], " ", 
+      SqrtBox[
+       RowBox[{
+        RowBox[{"2", " ", 
+         SubsuperscriptBox["t", 
+          RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+          "\[Prime]"]}], "+", "1"}]], " ", 
+      RowBox[{
+       TagBox[
+        StyleBox["{",
+         SpanMaxSize->DirectedInfinity[1]],
+        SixJSymbol], "\[MediumSpace]", GridBox[{
+         {"1", 
+          FractionBox["1", "2"], 
+          FractionBox["1", "2"]},
+         {
+          SubscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+          FractionBox["1", "2"], 
+          FractionBox["1", "2"]}
+        }], "\[MediumSpace]", 
+       TagBox[
+        StyleBox["}",
+         SpanMaxSize->DirectedInfinity[1]],
+        SixJSymbol]}], " ", 
+      TemplateBox[{RowBox[{
+          SubscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b"}]], ",", 
+          SubsuperscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"]}]},
+       "KroneckerDeltaSeq"], " ", 
+      RowBox[{
+       TagBox[
+        StyleBox["(",
+         SpanMaxSize->DirectedInfinity[1]],
+        ThreeJSymbol], "\[MediumSpace]", GridBox[{
+         {
+          SubscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+          FractionBox["1", "2"], 
+          SubscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]},
+         {
+          SubscriptBox["m", 
+           SubscriptBox["t", 
+            RowBox[{"a", "\[InvisibleComma]", "b"}]]], 
+          SubscriptBox["m", 
+           SubscriptBox["t", "c"]], 
+          RowBox[{"-", 
+           SubscriptBox["m", 
+            SubscriptBox["t", 
+             RowBox[{
+             "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]]}]}
+        }], "\[MediumSpace]", 
+       TagBox[
+        StyleBox[")",
+         SpanMaxSize->DirectedInfinity[1]],
+        ThreeJSymbol]}], " ", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"-", "1"}], ")"}], 
+       RowBox[{
+        SubsuperscriptBox["m", 
+         SubscriptBox["t", 
+          RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+         "\[Prime]"], "+", 
+        SubsuperscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+         "\[Prime]"], "+", 
+        SubscriptBox["m", 
+         SubscriptBox["t", 
+          RowBox[{"a", "\[InvisibleComma]", "b"}]]], "+", 
+        SubscriptBox["m", 
+         SubscriptBox["t", "c"]]}]], " ", 
+      RowBox[{
+       TagBox[
+        StyleBox["(",
+         SpanMaxSize->DirectedInfinity[1]],
+        ThreeJSymbol], "\[MediumSpace]", GridBox[{
+         {
+          SubscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+          FractionBox["1", "2"], 
+          SubsuperscriptBox["t", 
+           RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+           "\[Prime]"]},
+         {
+          RowBox[{"-", 
+           SubscriptBox["m", 
+            SubscriptBox["t", 
+             RowBox[{"a", "\[InvisibleComma]", "b"}]]]}], 
+          RowBox[{"-", 
+           SubscriptBox["m", 
+            SubscriptBox["t", "c"]]}], 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", 
+            RowBox[{
+            "a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+           "\[Prime]"]}
+        }], "\[MediumSpace]", 
+       TagBox[
+        StyleBox[")",
+         SpanMaxSize->DirectedInfinity[1]],
+        ThreeJSymbol]}]}]}]}],
+   TraditionalForm],
+  TraditionalForm,
+  Editable->True]], "Print",
+ CellChangeTimes->{3.6061192455040092`*^9, 3.606123560812518*^9, 
+  3.606125398228471*^9}],
+
+Cell[BoxData[
+ TagBox[
+  FormBox[
+   RowBox[{
+    RowBox[{"-", "6"}], " ", 
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{"-", "1"}], ")"}], 
+     SubscriptBox["t", 
+      RowBox[{"a", "\[InvisibleComma]", "b"}]]], " ", 
+    RowBox[{
+     TagBox[
+      StyleBox["{",
+       SpanMaxSize->DirectedInfinity[1]],
+      SixJSymbol], "\[MediumSpace]", GridBox[{
+       {"1", 
+        FractionBox["1", "2"], 
+        FractionBox["1", "2"]},
+       {
+        SubscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+        FractionBox["1", "2"], 
+        FractionBox["1", "2"]}
+      }], "\[MediumSpace]", 
+     TagBox[
+      StyleBox["}",
+       SpanMaxSize->DirectedInfinity[1]],
+      SixJSymbol]}], " ", 
+    TemplateBox[{RowBox[{
+        SubscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b"}]], ",", 
+        SubsuperscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"]}]},
+     "KroneckerDeltaSeq"], " ", 
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      SubscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+      SubscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+      "}"}],
+     SpanMaxSize->DirectedInfinity[1]], " ", 
+    TemplateBox[{RowBox[{
+        SubscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+        ",", 
+        SubsuperscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+         "\[Prime]"]}]},
+     "KroneckerDeltaSeq"], " ", 
+    TemplateBox[{RowBox[{
+        SubscriptBox["m", 
+         SubscriptBox["t", 
+          RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]],
+         ",", 
+        SubsuperscriptBox["m", 
+         SubscriptBox["t", 
+          RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+         "\[Prime]"]}]},
+     "KroneckerDeltaSeq"]}],
+   TraditionalForm],
+  TraditionalForm,
+  Editable->True]], "Print",
+ CellChangeTimes->{3.6061192455040092`*^9, 3.606123560812518*^9, 
+  3.60612539827872*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"-", "6"}], " ", 
+  SuperscriptBox[
+   RowBox[{"(", 
+    RowBox[{"-", "1"}], ")"}], 
+   RowBox[{"t", "[", 
+    RowBox[{"a", ",", "b"}], "]"}]], " ", 
+  RowBox[{"conTri", "[", 
+   RowBox[{
+    FractionBox["1", "2"], ",", 
+    RowBox[{"t", "[", 
+     RowBox[{"a", ",", "b"}], "]"}], ",", 
+    RowBox[{"t", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}]}], "]"}], " ", 
+  RowBox[{"KroneckerDelta", "[", 
+   RowBox[{
+    RowBox[{"mt", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+    RowBox[{"mtp", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}]}], "]"}], " ", 
+  RowBox[{"KroneckerDelta", "[", 
+   RowBox[{
+    RowBox[{"t", "[", 
+     RowBox[{"a", ",", "b"}], "]"}], ",", 
+    RowBox[{"tp", "[", 
+     RowBox[{"a", ",", "b"}], "]"}]}], "]"}], " ", 
+  RowBox[{"KroneckerDelta", "[", 
+   RowBox[{
+    RowBox[{"t", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}], ",", 
+    RowBox[{"tp", "[", 
+     RowBox[{"a", ",", "b", ",", "c"}], "]"}]}], "]"}], " ", 
+  RowBox[{"sj", "[", 
+   RowBox[{
+    RowBox[{"{", 
+     RowBox[{"1", ",", 
+      FractionBox["1", "2"], ",", 
+      FractionBox["1", "2"]}], "}"}], ",", 
+    RowBox[{"{", 
+     RowBox[{
+      RowBox[{"t", "[", 
+       RowBox[{"a", ",", "b"}], "]"}], ",", 
+      FractionBox["1", "2"], ",", 
+      FractionBox["1", "2"]}], "}"}]}], "]"}]}]], "Output",
+ CellChangeTimes->{3.606119252791333*^9, 3.606123568400893*^9, 
+  3.606125398279892*^9}]
+}, Open  ]],
+
+Cell["\<\
+Obviously, the result can be presented in a more readable way:\
+\>", "Text",
+ CellChangeTimes->{{3.6061192739076967`*^9, 3.6061192910431547`*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"result", "//", "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.6061192927034597`*^9, 3.606119294570187*^9}, {
+  3.606123563399467*^9, 3.6061235659749603`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   RowBox[{"-", "6"}], " ", 
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"-", "1"}], ")"}], 
+    SubscriptBox["t", 
+     RowBox[{"a", "\[InvisibleComma]", "b"}]]], " ", 
+   RowBox[{
+    TagBox[
+     StyleBox["{",
+      SpanMaxSize->DirectedInfinity[1]],
+     SixJSymbol], "\[MediumSpace]", GridBox[{
+      {"1", 
+       FractionBox["1", "2"], 
+       FractionBox["1", "2"]},
+      {
+       SubscriptBox["t", 
+        RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+       FractionBox["1", "2"], 
+       FractionBox["1", "2"]}
+     }], "\[MediumSpace]", 
+    TagBox[
+     StyleBox["}",
+      SpanMaxSize->DirectedInfinity[1]],
+     SixJSymbol]}], " ", 
+   TemplateBox[{RowBox[{
+       SubscriptBox["t", 
+        RowBox[{"a", "\[InvisibleComma]", "b"}]], ",", 
+       SubsuperscriptBox["t", 
+        RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"]}]},
+    "KroneckerDeltaSeq"], " ", 
+   StyleBox[
+    RowBox[{"\[EmptyUpTriangle]", "{", 
+     FractionBox["1", "2"], 
+     SubscriptBox["t", 
+      RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+     SubscriptBox["t", 
+      RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+     "}"}],
+    SpanMaxSize->DirectedInfinity[1]], " ", 
+   TemplateBox[{RowBox[{
+       SubscriptBox["t", 
+        RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+       ",", 
+       SubsuperscriptBox["t", 
+        RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+        "\[Prime]"]}]},
+    "KroneckerDeltaSeq"], " ", 
+   TemplateBox[{RowBox[{
+       SubscriptBox["m", 
+        SubscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]]], 
+       ",", 
+       SubsuperscriptBox["m", 
+        SubscriptBox["t", 
+         RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+        "\[Prime]"]}]},
+    "KroneckerDeltaSeq"]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.606119295032076*^9, 3.606123571420947*^9, 
+  3.606125410998414*^9}]
+}, Open  ]],
+
+Cell["\<\
+A warning about  this AngularMomentum framework. At the moment it has not \
+been tested thoroughly. Therefore you should expect errors. Furthermore it is \
+not finished, 9j symbols do not work yet and the rules for 6j and 3j symbols \
+are somewhat limited.
+However, I do not intend to extend this package to all possible cases, which \
+might never actually appear in a real application. Nonetheless there will be \
+updates and if you have an expression that can be simplified and this package \
+is not able to do it, let me know: schulz@theorie.ikp.physik.tu-darmstadt.de
+In all cases it is a good idea to use the simplification with Print->True and \
+double check the calculation. Again, if you find any errors, please let me \
+know.\
+\>", "Text",
+ CellChangeTimes->{{3.606119793107478*^9, 3.6061199950127077`*^9}, {
+  3.6061221522625647`*^9, 3.606122165334873*^9}, {3.6061232481034718`*^9, 
+  3.606123324230801*^9}}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Additional Remarks", "Section",
+ CellChangeTimes->{{3.606123416647088*^9, 3.606123443510784*^9}}],
+
+Cell["\<\
+It is possible to extract all the conditions from your expression. This is \
+used internally but might be helpful to do explicitely, for instance when \
+implementing a formula:\
+\>", "Text",
+ CellChangeTimes->{{3.60612345587886*^9, 3.606123519702414*^9}, {
+  3.606125592536127*^9, 3.606125593992619*^9}}],
+
+Cell["\<\
+All conditions before simplifying the expression:\
+\>", "Text",
+ CellChangeTimes->{{3.6061235426784563`*^9, 3.6061235514791307`*^9}, 
+   3.606123951143304*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"testExpr", "[", "1", "]"}], "//", "extractConditions"}], "//", 
+  "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.606123521252499*^9, 3.606123535805262*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      FractionBox["1", "2"], 
+      SubscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b"}]], "}"}],
+     SpanMaxSize->DirectedInfinity[1]], ",", 
+    TemplateBox[{RowBox[{
+        RowBox[{
+          SubscriptBox["m", 
+           SubscriptBox["t", "a"]], "+", 
+          SubscriptBox["m", 
+           SubscriptBox["t", "b"]], "-", 
+          SubscriptBox["m", 
+           SubscriptBox["t", 
+            RowBox[{"a", "\[InvisibleComma]", "b"}]]]}], ",", "0"}]},
+     "KroneckerDeltaSeq"], ",", 
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      FractionBox["1", "2"], 
+      SubsuperscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"], "}"}],
+     SpanMaxSize->DirectedInfinity[1]], ",", 
+    TemplateBox[{RowBox[{
+        RowBox[{
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", "a"], "\[Prime]"], "+", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", "b"], "\[Prime]"], "-", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", 
+            RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"]}], ",", 
+        "0"}]},
+     "KroneckerDeltaSeq"], ",", 
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      SubscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+      SubscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+      "}"}],
+     SpanMaxSize->DirectedInfinity[1]], ",", 
+    TemplateBox[{RowBox[{
+        RowBox[{
+          SubscriptBox["m", 
+           SubscriptBox["t", "c"]], "+", 
+          SubscriptBox["m", 
+           SubscriptBox["t", 
+            RowBox[{"a", "\[InvisibleComma]", "b"}]]], "-", 
+          SubscriptBox["m", 
+           SubscriptBox["t", 
+            
+            RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", 
+              "c"}]]]}], ",", "0"}]},
+     "KroneckerDeltaSeq"], ",", 
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      SubsuperscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b"}], "\[Prime]"], 
+      SubsuperscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}], 
+       "\[Prime]"], "}"}],
+     SpanMaxSize->DirectedInfinity[1]], ",", 
+    TemplateBox[{RowBox[{
+        RowBox[{
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", "c"], "\[Prime]"], "+", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", 
+            RowBox[{"a", "\[InvisibleComma]", "b"}]], "\[Prime]"], "-", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", 
+            
+            RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", 
+              "c"}]], "\[Prime]"]}], ",", "0"}]},
+     "KroneckerDeltaSeq"], ",", 
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      FractionBox["1", "2"], "1", "}"}],
+     SpanMaxSize->DirectedInfinity[1]], ",", 
+    TemplateBox[{RowBox[{
+        RowBox[{"\[Mu]", "+", 
+          SubscriptBox["m", 
+           SubscriptBox["t", "b"]], "-", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", "b"], "\[Prime]"]}], ",", "0"}]},
+     "KroneckerDeltaSeq"], ",", 
+    TemplateBox[{RowBox[{
+        RowBox[{"\[Mu]", "-", 
+          SubscriptBox["m", 
+           SubscriptBox["t", "a"]], "+", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["t", "a"], "\[Prime]"]}], ",", "0"}]},
+     "KroneckerDeltaSeq"]}], "}"}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.606123995964735*^9, 3.6061254336409397`*^9, 
+  3.606125516769183*^9}]
+}, Open  ]],
+
+Cell["\<\
+After simplifying all conditions involving sums that have been evaluated do \
+not exist anymore:\
+\>", "Text",
+ CellChangeTimes->{{3.6061235426784563`*^9, 3.6061235514791307`*^9}, {
+  3.606123951143304*^9, 3.606123994583098*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"result", "//", "extractConditions"}], "//", 
+  "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.606123521252499*^9, 3.606123535805262*^9}, {
+  3.606123999146945*^9, 3.606123999801433*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{"{", 
+   RowBox[{
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      SubscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b"}]], 
+      SubscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b", "\[InvisibleComma]", "c"}]], 
+      "}"}],
+     SpanMaxSize->DirectedInfinity[1]], ",", 
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      FractionBox["1", "2"], "1", "}"}],
+     SpanMaxSize->DirectedInfinity[1]], ",", 
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      FractionBox["1", "2"], 
+      FractionBox["1", "2"], 
+      SubscriptBox["t", 
+       RowBox[{"a", "\[InvisibleComma]", "b"}]], "}"}],
+     SpanMaxSize->DirectedInfinity[1]]}], "}"}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.6061240004545317`*^9, 3.6061254356386757`*^9, 
+  3.606125518566761*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["Behind the Scenes", "Section",
+ CellChangeTimes->{{3.60612684215379*^9, 3.606126852984652*^9}}],
+
+Cell["\<\
+This section aims at explaining the algorithm that makes the simplification \
+process possible.
+If you just want to use the simplification it is not necessary to read it.\
+\>", "Text",
+ CellChangeTimes->{{3.606126859977127*^9, 3.6061269230015287`*^9}}]
+}, Open  ]]
+},
+WindowSize->{758, 867},
+WindowMargins->{{Automatic, 58}, {24, Automatic}},
+ShowSelection->True,
+FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[579, 22, 96, 1, 79, "Section"],
+Cell[678, 25, 138, 1, 30, "Text"],
+Cell[819, 28, 398, 10, 55, "Input"],
+Cell[1220, 40, 355, 6, 68, "Text"],
+Cell[1578, 48, 212, 4, 51, "Text"],
+Cell[1793, 54, 4030, 117, 209, "Input"],
+Cell[5826, 173, 226, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[6077, 182, 164, 3, 32, "Input"],
+Cell[6244, 187, 4686, 136, 198, "Output"]
+}, Open  ]],
+Cell[10945, 326, 315, 7, 51, "Text"],
+Cell[11263, 335, 153, 3, 32, "Input"],
+Cell[11419, 340, 190, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[11634, 348, 125, 2, 32, "Input"],
+Cell[11762, 352, 1598, 47, 81, "Print"]
+}, Open  ]],
+Cell[13375, 402, 107, 1, 31, "Text"],
+Cell[CellGroupData[{
+Cell[13507, 407, 165, 3, 32, "Input"],
+Cell[13675, 412, 6023, 168, 155, "Output"]
+}, Open  ]],
+Cell[19713, 583, 458, 8, 71, "Text"],
+Cell[CellGroupData[{
+Cell[20196, 595, 166, 3, 32, "Input"],
+Cell[20365, 600, 651, 13, 59, "Message"],
+Cell[21019, 615, 636, 12, 59, "Message"],
+Cell[21658, 629, 636, 12, 59, "Message"],
+Cell[22297, 643, 564, 11, 41, "Message"],
+Cell[22864, 656, 552, 10, 61, "Message"],
+Cell[23419, 668, 847, 14, 49, "Message"],
+Cell[24269, 684, 567, 11, 61, "Message"],
+Cell[24839, 697, 570, 11, 41, "Message"],
+Cell[25412, 710, 600, 12, 81, "Message"],
+Cell[26015, 724, 600, 12, 81, "Message"],
+Cell[26618, 738, 644, 12, 63, "Message"],
+Cell[27265, 752, 567, 11, 41, "Message"]
+}, Open  ]],
+Cell[27847, 766, 647, 13, 111, "Text"],
+Cell[28497, 781, 1170, 32, 77, "Input"],
+Cell[29670, 815, 158, 2, 31, "Text"],
+Cell[CellGroupData[{
+Cell[29853, 821, 163, 3, 32, "Input"],
+Cell[30019, 826, 777, 14, 52, "Message"],
+Cell[30799, 842, 748, 13, 51, "Message"],
+Cell[31550, 857, 578, 12, 59, "Message"]
+}, Open  ]],
+Cell[32143, 872, 531, 9, 71, "Text"],
+Cell[CellGroupData[{
+Cell[32699, 885, 138, 2, 32, "Input"],
+Cell[32840, 889, 332, 7, 41, "Message"],
+Cell[33175, 898, 95, 1, 32, "Output"]
+}, Open  ]],
+Cell[33285, 902, 324, 6, 51, "Text"],
+Cell[CellGroupData[{
+Cell[33634, 912, 208, 4, 32, "Input"],
+Cell[33845, 918, 96, 1, 32, "Output"]
+}, Open  ]],
+Cell[33956, 922, 217, 4, 31, "Text"],
+Cell[34176, 928, 100, 2, 32, "Input"],
+Cell[34279, 932, 575, 11, 91, "Text"],
+Cell[CellGroupData[{
+Cell[34879, 947, 312, 7, 32, "Input"],
+Cell[CellGroupData[{
+Cell[35216, 958, 8898, 240, 215, "Print"],
+Cell[44117, 1200, 7383, 210, 174, "Print"],
+Cell[51503, 1412, 4160, 127, 120, "Print"],
+Cell[55666, 1541, 2122, 65, 61, "Print"]
+}, Open  ]],
+Cell[57803, 1609, 1452, 46, 133, "Output"]
+}, Open  ]],
+Cell[59270, 1658, 156, 3, 31, "Text"],
+Cell[CellGroupData[{
+Cell[59451, 1665, 188, 3, 32, "Input"],
+Cell[59642, 1670, 2013, 61, 86, "Output"]
+}, Open  ]],
+Cell[61670, 1734, 928, 15, 190, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[62635, 1754, 103, 1, 78, "Section"],
+Cell[62741, 1757, 314, 6, 51, "Text"],
+Cell[63058, 1765, 169, 4, 31, "Text"],
+Cell[CellGroupData[{
+Cell[63252, 1773, 209, 5, 32, "Input"],
+Cell[63464, 1780, 3743, 103, 111, "Output"]
+}, Open  ]],
+Cell[67222, 1886, 239, 5, 31, "Text"],
+Cell[CellGroupData[{
+Cell[67486, 1895, 227, 5, 32, "Input"],
+Cell[67716, 1902, 910, 26, 67, "Output"]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[68675, 1934, 101, 1, 78, "Section"],
+Cell[68779, 1937, 262, 5, 51, "Text"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)

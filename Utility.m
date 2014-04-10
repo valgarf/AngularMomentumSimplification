@@ -12,7 +12,7 @@ Arguments:
 expr1,...: sequence of expressions
 listOfElements: list of elements
 
-Returns: True if all expressions are free of all elements, False otherwise.";
+Returns: True if all expressions are free of all elements, False otherwise."
 
 FreeQAllUnsigned::usage=
 "FreeQAllUnsigned[expr1,...,listOfElements]  removes minus signs that may be in front of parameters in listOfElements, then invokes FreeQAll.
@@ -23,8 +23,7 @@ Arguments:
 expr1,...: sequence of expressions
 listOfElements: list of elements
 
-Returns: True if all expressions are free of all elements, False otherwise
-";
+Returns: True if all expressions are free of all elements, False otherwise"
 
 FreeQNone::usage=
 "FreeQNone[expr1,...,listOfElements] checks if the sequence of expressions (expr1,...) depends on all elements in listOfElements
@@ -34,8 +33,7 @@ Arguments:
 expr1,...: sequence of expressions
 listOfElements: list of elements
 
-Returns: True if {expr1,...} depends on all the elements from listOfElements, False otherwise.
-";
+Returns: True if {expr1,...} depends on all the elements from listOfElements, False otherwise."
 
 FreeQNoneUnsigned::usage=
 "FreeQNoneUnsigned[expr1,...,listOfElements] removes minus signs that may be in front of parameters in listOfSymbols, then invokes FreeQNone
@@ -46,70 +44,60 @@ Arguments:
 expr1,...: sequence of expressions
 listOfElements: list of elements
 
-Returns: True if {expr1,...} depends on all the elements from listOfElements, False otherwise.
-";
+Returns: True if {expr1,...} depends on all the elements from listOfElements, False otherwise."
 
 EvenPermutations::usage=
-"EvenPermutations[list] returns all even permutations of the input list.
-";
+"EvenPermutations[list] returns all even permutations of the input list."
 
 OddPermutations::usage=
-"OddPermutations[list] returns all odd permutations of the input list.
-";
+"OddPermutations[list] returns all odd permutations of the input list."
 
 alternative::usage=
-"denotes a set of alternative versions of an expression. All of these versions should be identical. It can be used in pattern matching: A specific pattern has to match one of the alternative versions. The function is automatically pulled out of an expression, e.g. a*alternative[b,c] becomes alternative[a*b,a*c]. All the functions alternative should be pulled out of must be listed in $altFunctionList.
-";
+"denotes a set of alternative versions of an expression. All of these versions should be identical. It can be used in pattern matching: A specific pattern has to match one of the alternative versions. The function is automatically pulled out of an expression, e.g. a*alternative[b,c] becomes alternative[a*b,a*c]. All the functions alternative should be pulled out of must be listed in $altFunctionList."
 
 $altFunctionList::usage=
 "Used to identify the functions, alternative should be pulled out of. Append your own functions to this list, if you want them to work with alternative.
 
-default: {sum}
-";
+default: {sum}"
 
 set::usage=
-"used to represent an Orderless set as opposed to a List, which imposes a specific order.
-";
+"used to represent an Orderless set as opposed to a List, which imposes a specific order. For example, set[a,b,c] is matched by the pattern set[c,b,a].
+For transforming a list, use \"@@\":
+list={a,b,c};
+set@@list (results in set[a,b,c])"
 
 tochar::usage=
-"transforms the numbers 1-26 to characters a-z
-";
+"tochar[number] transforms the numbers 1-26 to characters a-z. The characters will be in global scope."
 
 tonum::usage=
-"transforms the characters a-z to numbers 1-26
-";
+"tonum[char] transforms the characters a-z to numbers 1-26. The characters must be in global scope."
 
 removeSign::usage=
-"remove a minus sign in front of the input parameter x.
-Differs from \"abs\" as it uses pattern matching to remove the sign. If the input is -a, it will result in a.
-";
+"removeSign[symbol] removes a minus sign in front of the input symbol.
+Differs from \"abs\" as it uses pattern matching to remove the sign. If the input is -a, it will result in a."
 
 sign::usage=
-"Returns +1 or -1 depending on the sign of the input paramter x. Differs from Sign as it uses pattern matching to determine the sign.
-";
+"sign[symbol] Returns +1 or -1 depending on the sign of the input symbol. Differs from Sign as it uses pattern matching to determine the sign."
 
 sum::usage=
-"replacement for the built-in \"Sum\". This version does not try to evaluate its arguments, reducing the use of Hold / HoldForm and so on. Signs in front of summation variables are removed, e.g. sum[f[g],-g] becomes sum[f[g],g]. This behaviour is different from the built-in \"Sum\" as the latter produces an error message in such a case. This function should only be used for indefinite sums.
-";
+"replacement for the built-in \"Sum\". This version does not try to evaluate its arguments, reducing the use of Hold / HoldForm and so on. Signs in front of summation variables are removed, e.g. sum[f[g],-g] becomes sum[f[g],g]. This behaviour is different from the built-in \"Sum\" as the latter produces an error message in such a case. 
+This function should only be used for indefinite sums. Furthermore the order of the summation should be irrelevant."
 
 integrate::usage=
-"replacement for the built-in \"Integrate\". This version does not try to evaluate its arguments, reducing the use of Hold / HoldForm and so on. This function should only be used for indefinite integrals.
-";
+"replacement for the built-in \"Integrate\". This version does not try to evaluate its arguments, reducing the use of Hold / HoldForm and so on. 
+This function should only be used for indefinite integrals."
 
 invertArguments::usage=
-"returns a function which returns a list of different versions of the expression. In these versions some of the provided arguments have minus signs added. All possible cases are constructed, e.g. f[a] g[b] h[a] // invertArguments[a,b] becomes {f[a] g[b] h[a], f[-a] g[b] h[-a], f[a] g[-b] h[a], f[-a] g[-b] h[-a]} This is used for extending some of the rules with fixed arguments to their negative versions.
-";
+"invertArguments[arg1,...] returns a function which returns a list of different versions of the expression. In these versions some of the provided arguments have minus signs added. All possible cases are constructed, e.g. f[a] g[b] h[a] //invertArguments[a,b] becomes {f[a] g[b] h[a], f[-a] g[b] h[-a], f[a] g[-b] h[a], f[-a] g[-b] h[-a]} This can be used for extending some of the rules with fixed arguments to their negative versions."
 
 getAllVariables::usage=
-"Returns all the variables of an expression (It takes all objects with the Head _Symbol that can be found at the leafs of the tree-like structure that represents all Mathematica expressions. It ignores Symbols with the attribute \"Constant\", e.g. \"E\".
-";
+"getAllVariables[expr] Returns all the variables of an expression (It takes all objects with the Head _Symbol that can be found at the leafs of the tree-like structure that represents all Mathematica expressions. It ignores Symbols with the attribute \"Constant\", e.g. \"E\"."
 
 removeBlanks::usage=
-"Removes blanks (Blank[...]) from an expression, e.g. a_ becomes a.
-";
+"removeBlanks[expr] removes blanks (Blank[...]) from an expression, e.g. a_ becomes a."
 
 ruleSplit::usage=
-"splits a (delayed) rule into a list of parts. This list has three or four parts, which are from left to right:
+"ruleSplit[rule] splits a (delayed) rule into a list of parts. This list has three or four parts, which are from left to right:
 
 The type of the rule, which is one of the following:
  - \"r\": a simple rule (a->b)
@@ -119,32 +107,45 @@ The type of the rule, which is one of the following:
 
 The pattern, e.g. f[a_]:>a^2 has the pattern f[a_]
 
-The result of the rule, e.g. a^2 for the rule given above
+The result of the rule (in a surrounding Hold function), e.g. Hold[a^2] for the rule given above
 
-The condition of the rule, if there is one. In the case a:>b/;a>0 this part would be a>0
-";
+The condition of the rule (in a surrounding Hold function), if there is one. In the case a:>b/;a>0 this part would be Hold[a>0]"
 
 ruleJoin::usage=
-"Creates a (delayed) rule from its parts. This is the counterpart to ruleSplit, e.g. ruleJoin[ruleSplit[rule]]=rule, if one inputs a rule that can be splitted.
-";
+"ruleJoin[ruleParts] Creates a (delayed) rule from its parts. This is the counterpart to ruleSplit, e.g. ruleJoin[ruleSplit[rule]]=rule, if one inputs a rule that can be splitted."
 
 normalizeSumRule::usage=
-"simplifies the input rule if the rule involved a sum. It identifies factors hat are ndependent of he summation variables and moves them to the right-hand side of the rule.
-"
+"normalizeSumRule[rule] simplifies the input rule if the rule involves a sum. It identifies factors that are ndependent of he summation variables and moves them to the right-hand side of the rule."
 
-declareIndexed::usage="";
-declarePrimed::usage="";
-declareIndexedPrimed::usage="";
-declareIndexedAM::usage="";
+declareIndexed::usage=
+"declareIndexed[symbol] declares a symbol to be indexed. Afterwards expressions like symbol[a,b] will be represented with a and b as indices when using TraditionalForm"
 
-ensureSignQ::usage="";
+declarePrimed::usage=
+"declarePrimed[symbol] declares a primed symbol. For example, when using declarePrimed[a], the TraditionalForm of \"ap\" will be a'."
 
-ruleToFunction::usage="";
-ruleToFunctionRepeated::usage="";
+declareIndexedPrimed::usage="declareIndexed[symbol] declares a symbol and the primed symbol to be indexed. Using declareIndexed[f], expressions like f[a,b] will be represented with a and b as indices when using TraditionalForm. Furthermore fp[a,b] will be represented as f' with indices a and b."
 
-speM::usage="";
-unsM::usage="";
-evenPermM::usage="";
+declareIndexedAM::usage=
+"declares some symbol to be an angular momentum quantum number. This involves special TraditionalForm expressions. For instance, declareIndexedAM[t] results in special representations for {tp,t[a,b],tp[a,b,c],mt[u],mtp[d,e]}"
+
+ensureSignQ::usage=
+"ensureSignQ[positive,negative,unsigned] ensures that positive==-negative and removeSign[positive]==removeSign[negative]==unsigned. The unsigned entry is optional.
+For instance the pattern sum[f[apos_,aneg_],auns_] /;ensureSignQ[apos,aneg,auns] matches sum[f[a,-a],a] or sum[f[-b,b],b]. It does not match sum[f[b,-c],b], sum[f[a,-a],-a], sum[f[-a,-a],a] or sum[f[a,a],a]."
+
+speM::usage="speM[a] is a special pattern, which provides similar features as ensureSignQ:
+For instance the pattern f[speM[a],speM[-a]] matches f[a,-a] or f[-b,b]. It does not match f[b,-c], f[-a,-a] or f[a,a].
+For rules, either the symbol \"apos\" or \"aneg\" is defined, when the rule matches. The other is defined as Sequence[]."
+
+unsM::usage="unsM[a] is a special pattern, which extends speM to unsigned expressions:
+For instance the pattern sum[f[speM[a],speM[-a]],uns[a]] matches sum[f[a,-a],a] or sum[f[-b,b],b]. It does not match sum[f[b,-c],b], sum[f[a,-a],-a], sum[f[-a,-a],a] or sum[f[a,a],a]."
+
+evenPermM::usage=
+"evenPermM[list] matches all even permutations of the list."
+
+ruleToFunction::usage=
+"ruleToFunction[rule] returns a function that applies the rule once."
+
+ruleToFunctionRepeated::usage="ruleToFunctionRepeated[rule] returns a function that applies the rule repeatedly."
 
 
 Begin["`Private`"]
@@ -253,6 +254,8 @@ declareIndexedPrimedHelper[x_,xp_]:=Module[{},
 declareIndexedAMHelper[x_,mx_,mxp_]:=Module[{},
 	mx/:MakeBoxes[mx[a__], fmt:TraditionalForm]:=SubscriptBox[MakeBoxes[Global`m,fmt],SubscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]]]];
 	mxp/:MakeBoxes[mxp[a__], fmt:TraditionalForm]:=SubsuperscriptBox[MakeBoxes[Global`m,fmt],SubscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]]],"\[Prime]"];
+	mx/:MakeBoxes[mx, fmt:TraditionalForm]:=SubscriptBox[MakeBoxes[Global`m,fmt],MakeBoxes[x,fmt]];
+	mxp/:MakeBoxes[mxp, fmt:TraditionalForm]:=SubsuperscriptBox[MakeBoxes[Global`m,fmt],MakeBoxes[x,fmt],"\[Prime]"];
 ];
 
 SetAttributes[declareIndexedPrimed,Listable]

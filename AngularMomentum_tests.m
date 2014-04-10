@@ -45,8 +45,9 @@ testExpr[5]=sum[cg[{1/2,mt[a]},{1/2,mt[b]},{t[a,b],mt[a,b]}] cg[{1/2,mtp[a]},{1/
 testExpr[6]=sum[cg[{1/2,mt[a]},{1/2,mt[b]},{t[a,b],mt[a,b]}] cg[{1/2,mtp[a]},{1/2,mtp[b]},{tp[a,b],mtp[a,b]}] cg[{t[a,b],mt[a,b]},{1/2,mt[c]},{t[a,b,c],mt[a,b,c]}] cg[{tp[a,b],mtp[a,b]},{1/2,mtp[c]},{tp[a,b,c],mtp[a,b,c]}] KroneckerDelta[mt[a],mtp[a]] sum[3 cg[{1/2,mt[c]},{1,\[Mu]},{1/2,mtp[c]}] cg[{1/2,mtp[b]},{1,\[Mu]},{1/2,mt[b]}],\[Mu]],mt[a],mt[b],mt[c],mt[a,b],mtp[a],mtp[b],mtp[c],mtp[a,b]];
 declareIndexedAM[t]
 declarePrimed[{m,\[Mu],\[Alpha],\[Beta]}];
-declareQNHalfInteger[{a,\[Alpha],\[Alpha]p,b,\[Beta],\[Beta]p,mt[a],mt[b],mt[c],mtp[a],mtp[b],mtp[c],t[a,b,c],mt[a,b,c],tp[a,b,c],mtp[a,b,c]}];
-declareQNInteger[{d,c,\[Gamma],m,\[Mu],mp,\[Mu]p,u,up,t,tp,t[a,b],mt[a,b],tp[a,b],mtp[a,b]}];
+declareQNHalfInteger[{mt[a],mt[b],mt[c],mtp[a],mtp[b],mtp[c],t[a,b,c],mt[a,b,c],tp[a,b,c],mtp[a,b,c]}];
+declareQNInteger[{t,tp,t[a,b],mt[a,b],tp[a,b],mtp[a,b]}];
+declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],\[Tau],m,\[Mu],mp,\[Mu]p,u,up,x,xp}];
 
 (*
 addTest[simplifyAMSum[testExpr[1],Print->False],
@@ -68,9 +69,17 @@ addTest[simplifyAMSum[testExpr[4],Print->False],
 beginTestModule["Varshalovich"];
 testEqn[1][exp]=sum[(-1)^(a-\[Alpha])tj[{a,\[Alpha]},{a,-\[Alpha]},{c,\[Gamma]}],\[Alpha]];
 testEqn[1][res]=Sqrt[2 a +1] KroneckerDelta[c,0] KroneckerDelta[\[Gamma],0];
+testEqn[2][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa])tj[{a,-\[Alpha]},{p,\[Psi]},{q,\[Kappa]}]tj[{p,-\[Psi]},{q,-\[Kappa]},{ap,\[Alpha]p}],\[Psi],\[Kappa]];
+testEqn[2][res]=(-1)^(a+\[Alpha])1/(2 a +1) conTri[a,p,q] KroneckerDelta[a,ap] KroneckerDelta[\[Alpha],\[Alpha]p];
+testEqn[3][exp]=sum[(-1)^(q-\[Kappa])(2 q +1)tj[{a,-\[Alpha]},{b,-\[Beta]},{q,\[Kappa]}]tj[{q,-\[Kappa]},{a,\[Alpha]p},{b,\[Beta]p}],q,\[Kappa]];
+testEqn[3][res]=(-1)^(a+\[Alpha]+b+\[Beta]) KroneckerDelta[\[Alpha],\[Alpha]p] KroneckerDelta[\[Beta],\[Beta]p];
+testEqn[4][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa]+r-\[Rho])tj[{p,\[Psi]},{a,\[Alpha]},{q,-\[Kappa]}]tj[{q,\[Kappa]},{b,\[Beta]},{r,-\[Rho]}]tj[{r,\[Rho]},{c,\[Gamma]},{p,-\[Psi]}],\[Kappa],\[Psi],\[Rho]];
+testEqn[4][res]=(-1)^(a+b+c)tj[{a,-\[Alpha]},{c,-\[Gamma]},{b,-\[Beta]}] sj[{a,b,c},{r,p,q}];
+testEqn[5][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa]+r-\[Rho]+s-\[Sigma]+t-\[Tau])tj[{p,\[Psi]},{a,-\[Alpha]},{q,\[Kappa]}]tj[{q,-\[Kappa]},{r,\[Rho]},{t,\[Tau]}]tj[{r,-\[Rho]},{ap,\[Alpha]p},{s,\[Sigma]}]tj[{s,-\[Sigma]},{p,-\[Psi]},{t,-\[Tau]}],\[Psi],\[Kappa],\[Rho],\[Sigma],\[Tau]];
+testEqn[5][res]=(-1)^(a+\[Alpha])/(2a+1)sj[{a,p,q},{t,r,s}]KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],\[Alpha]p];
 
-addFn=addTest[simplifyAMSum[testEqn[#][exp],Print->False],testEqn[#][res]]&;
-addFn/@Table[i,{i,1}];
+addFn=(addTest[simplifyAMSum[#1,Print->False],#2]&)@@({testEqn[#][exp],testEqn[#][res]})&;
+addFn/@Table[i,{i,5}];
 
 endTestModule[];
 
@@ -117,26 +126,29 @@ conZero[\[Alpha],\[Beta],-\[Gamma]]
 (*misc*)
 
 
-testExpr[4]//TraditionalForm
+(*testExpr[4]//TraditionalForm
 SetOptions[simplifyAMSum,Print-> True];
 testExpr[4]//simplifyAMSum//TraditionalForm
-SetOptions[simplifyAMSum,Print-> False];
+SetOptions[simplifyAMSum,Print-> False];*)
 
 
+(*
 testExpr[5]//TraditionalForm
 SetOptions[simplifyAMSum,Print-> True,TimingComplete->False];
 testExpr[5]//simplifyAMSum//TraditionalForm
 SetOptions[simplifyAMSum,Print-> False,TimingComplete->False];
+*)
 
 
-
-
+(*
 testExpr[6]//TraditionalForm
 SetOptions[simplifyAMSum,Print-> True,TimingComplete->False];
 testExpr[6]//simplifyAMSum//TraditionalForm
 SetOptions[simplifyAMSum,Print-> False,TimingComplete->False];
+*)
 
 
+(*
 $ContextPath=DeleteDuplicates@Append[$ContextPath,"AngularMomentum`Private`"];
 $halfintegerQN
 $integerQN
@@ -148,14 +160,13 @@ SetOptions[simplifyAMSum,Print-> True];
 testSpeed[1]//TraditionalForm
 testSpeed[1]//simplifyAMSum//TraditionalForm
 SetOptions[simplifyAMSum,Print-> False];
+*)
 
 
-
+(*
 declareQNHalfInteger[{a,\[Alpha]}];
 declareQNInteger[{m,\[Mu]}];
 SetOptions[simplifyAMSum,Print-> True];
 sum[f[\[Beta]](-1)^(\[Alpha]) tj[{a,-\[Alpha]},{m,\[Mu]},{a,\[Alpha]}],\[Alpha],\[Beta]]//simplifyAMSum//TraditionalForm
 SetOptions[simplifyAMSum,Print-> False];
-
-
-
+*)

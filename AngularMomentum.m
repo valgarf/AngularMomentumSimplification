@@ -1,7 +1,7 @@
 (* ::Package:: *)
 
 (* ::Section:: *)
-(*Initialise*)
+(*Package Initialise*)
 
 
 BeginPackage["AngularMomentum`",{"Utility`"}]
@@ -9,66 +9,52 @@ ClearAll[Evaluate[Context[]<>"*"]];
 
 
 sh::usage=
-"Replacement for the built-in Function SphericalHarmonicY.
-";
+"sh is a replacement for the built-in Function SphericalHarmonicY."
 
 cg::usage=
-"Replacement for the built-in Function ClebschGordan.
-";
+"cg is a replacement for the built-in Function ClebschGordan."
 
 tj::usage=
-"Replacement for the built-in Function ThreeJSymbol.
-";
+"tj is a replacement for the built-in Function ThreeJSymbol."
 
 sj::usage=
-"Replacement for the built-in Function SixJSymbol.
-";
+"sj is a replacement for the built-in Function SixJSymbol."
 
 nj::usage=
-"nj[{a,b,c},{d,e,f},{g,h,i}] represents a 9j Symbol
-";
+"nj[{a,b,c},{d,e,f},{g,h,i}] represents a 9j Symbol"
 
 toCG::usage=
-"Converts all 3J symbols (tj) to Clebsch-Gordan Coefficients (cg).
-";
+"toCG[expr] converts all 3J symbols (tj) to Clebsch-Gordan Coefficients (cg)."
 
 toTJ::usage=
-"Converts all Clebsch-Gordan Coefficients (cg) to 3J symbols (tj).
-";
-
-declareQNInteger::usage=
-"Declares a quantum number to be an integer. 
-(This is used by the internal simplifaction mechanisms).
-";
-
-declareQNHalfInteger::usage=
-"Declares a quantum number to be a half-integer. 
-(This is used by the internal simplifaction mechanisms).
-";
-
-rotateSymbols::usage=
-"Rotates the 3j,6j and 9j symbols so that the given arguments are in the lower right. If a symbol depends on multiple arguments, The first argument will be in the lower-right and the second argument will be to the left or above the first one.
-";
-
-simplifyAMSum::usage=
-"
-";
+"toTJ[expr] converts all Clebsch-Gordan Coefficients (cg) to 3J symbols (tj)."
 
 conTri::usage=
-"
-";
+"conTri[a,b,c] represents a triangular condtion for a,b and c"
 
 conZero::usage=
-"
-";
+"conZero[\[Alpha],\[Beta],\[Gamma]] represents the condition \[Alpha]+\[Beta]+\[Gamma]=0."
+
+declareQNInteger::usage=
+"declareQNInteger[qn] declares a quantum number to be an integer. 
+(This information is then used by the internal simplifaction mechanisms)."
+
+declareQNHalfInteger::usage=
+"declareQNHalfInteger[qn] declares a quantum number to be a half-integer. 
+(This information is then used by the internal simplifaction mechanisms)."
+
+rotateSymbols::usage=
+"rotateSymbols[symb1,...] returns a function that rotates the 3j, 6j and 9j symbols so that the given arguments are in the lower right. If a symbol depends on multiple arguments, The first argument will be in the lower-right and the second argument will be to the left or above the first one.
+Usage: expr // rotateSymbols[symb1,symb2,...]"
+
+simplifyAMSum::usage=
+"simplifyAMSum[expr] can simplify sums of 3j, 6j, and 9j symbols. For complex expressions it might not finish. It is advised to run simplifyAMSum[expr,Print->True], which prints the expression it is working on."
 
 extractConditions::usage=
-"
-";
+"extractConditions[expr] extracts all condtions (conTri/conZero) from the expression"
 
 consistencyCheck::usage=
-"
-";
+"consistencyCheck[expr] checks the expressions for consistency using available conditions and complaining about missing information."
 
 
 Begin["`Private`"]
@@ -87,20 +73,32 @@ declareQNHalfInteger::doubledefinition="Symbol `1` has been declared an integer 
 SetAttributes[declareQNInteger,Listable];
 SetAttributes[declareQNHalfInteger,Listable];
 
-declareQNInteger[x_]:=Module[{},
+Options[declareQNInteger]={Overwrite->False};
+declareQNInteger[x_,OptionsPattern[]]:=Module[{},
 	If[MemberQ[$halfintegerQN,x],
-		Message[declareQNInteger::doubledefinition,x];
-		Return[None];
+		If[OptionValue[Overwrite],
+		(*then*)
+			$halfintegerQN=DeleteCases[$halfintegerQN,x],
+		(*else*)
+			Message[declareQNInteger::doubledefinition,x];
+			Return[None];
+		];
 	];
 	$integerQN=DeleteDuplicates@Append[$integerQN,x];
 	
 	Return[x];
 ];
 
-declareQNHalfInteger[x_]:=Module[{},
+Options[declareQNHalfInteger]={Overwrite->False};
+declareQNHalfInteger[x_,OptionsPattern[]]:=Module[{},
 	If[MemberQ[$integerQN,x],
-		Message[declareQNHalfInteger::doubledefinition,x];
-		Return[None];
+		If[OptionValue[Overwrite],
+		(*then*)
+			$integerQN=DeleteCases[$integerQN,x],
+		(*else*)
+			Message[declareQNHalfInteger::doubledefinition,x];
+			Return[None];
+		];
 	];
 	$halfintegerQN=DeleteDuplicates@Append[$halfintegerQN,x];
 	Return[x];
@@ -109,13 +107,12 @@ declareQNHalfInteger[x_]:=Module[{},
 extractConditions[expr_]:=Module[{
 		elements={}
 	},
-	elements=Cases[expr,sj[__]|tj[__]|nj[__]|cg[__]|tjOL[__]|sjOL[__]|njOL[__],{0,Infinity}];
+	elements=Cases[expr,sj[__]|tj[__]|nj[__]|cg[__]|sjOL[__]|njOL[__]|conTri[__]|conZero[__],{0,Infinity}];
 	elements=elements//.{
 			sj[{a_,b_,c_},{d_,e_,f_}]:> {conTri[a,b,c],conTri[a,e,f],conTri[d,b,f],conTri[d,e,c]},
 			tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> {conTri[a,b,c],conZero[\[Alpha],\[Beta],\[Gamma]]},
 			cg[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> {conTri[a,b,c],conZero[\[Alpha],\[Beta],-\[Gamma]]},
 			nj[{a_,b_,c_},{d_,e_,f_},{g_,h_,j_}]:> {conTri[a,b,c],conTri[d,e,f],conTri[g,h,j],conTri[a,d,g],conTri[b,e,h],conTri[c,f,j]},
-			tjOL[{{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}},__]:> {conTri[a,b,c],conZero[\[Alpha],\[Beta],\[Gamma]]},
 			sjOL[a__]:>({a}/.set-> conTri),
 			njOL[u_,set[a__]]:>({a}/.set-> conTri)
 		};
@@ -194,7 +191,6 @@ SetAttributes[zeroX,Orderless]*)
 SetAttributes[conTri,Orderless]
 SetAttributes[conZero,Orderless]
 SetAttributes[sjOL,Orderless]
-SetAttributes[tjOL,Orderless]
 
 
 (* ::Section:: *)
@@ -385,13 +381,13 @@ simplify3jmRawRules={
 		sum[(-1)^(a_+\[Alpha]_)tj[{a_,-\[Alpha]_},{a_,\[Alpha]_},{c_,\[Gamma]_}],\[Alpha]_]
 			:> Sqrt[2 a+1]KroneckerDelta[c,0]KroneckerDelta[\[Gamma],0],
 		sum[(-1)^(p_+\[Psi]_+q_+\[Kappa]_)tj[{a_,\[Alpha]_},{p_,-\[Psi]_},{q_,-\[Kappa]_}]tj[{p_,\[Psi]_},{q_,\[Kappa]_},{ap_,\[Alpha]p_}],\[Psi]_,\[Kappa]_]
-			:> (-1)^(a-\[Alpha])1/(2 a+1)KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],-\[Alpha]p],				
+			:> (-1)^(a-\[Alpha])1/(2 a+1)KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],-\[Alpha]p]conTri[a,p,q],				
 		sum[(-1)^(q_+\[Kappa]_)(2q_+1)tj[{a_,\[Alpha]_},{b_,\[Beta]_},{q_,-\[Kappa]_}]tj[{q_,\[Kappa]_},{a_,\[Alpha]p_},{b_,\[Beta]p_}],q_,\[Kappa]_]
 			:>(-1)^(a-\[Alpha]+b-\[Beta])KroneckerDelta[\[Beta],-\[Beta]p]KroneckerDelta[\[Alpha],-\[Alpha]p],				
 		sum[(-1)^(p_+q_+r_+\[Psi]_+\[Kappa]_+\[Rho]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{b_,\[Beta]_},{r_,\[Rho]_}]tj[{r_,-\[Rho]_},{c_,\[Gamma]_},{p_,\[Psi]_}],\[Kappa]_,\[Psi]_,\[Rho]_]
-			:> tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]sj[{a,b,c},{r,p,q}],
-		sum[(-1)^(p_+q_+r_+s_+t_+\[Psi]_+\[Kappa]_+\[Rho]_+\[Sigma]_+\[Tau]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,-\[Kappa]_}]tj[{q_,\[Kappa]_},{r_,-\[Rho]_},{t_,-\[Tau]_}]tj[{r_,\[Rho]_},{ap_,\[Alpha]p_},{s_,-\[Sigma]_}]tj[{s_,\[Sigma]_},{p_,\[Psi]_},{t_,\[Tau]_}],\[Psi]_,\[Kappa]_,\[Rho]_,\[Sigma]_,\[Tau]_]
-			:> (-1)^(a+\[Alpha])/(2a+1)sj[{q,p,a},{s,r,t}]KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],-\[Alpha]p]				
+			:> tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]sj[{a,b,c},{r,p,q}]
+(*,	sum[(-1)^(p_+q_+r_+s_+t_+\[Psi]_+\[Kappa]_+\[Rho]_+\[Sigma]_+\[Tau]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,-\[Kappa]_}]tj[{q_,\[Kappa]_},{r_,-\[Rho]_},{t_,-\[Tau]_}]tj[{r_,\[Rho]_},{ap_,\[Alpha]p_},{s_,-\[Sigma]_}]tj[{s_,\[Sigma]_},{p_,\[Psi]_},{t_,\[Tau]_}],\[Psi]_,\[Kappa]_,\[Rho]_,\[Sigma]_,\[Tau]_]
+			:> (-1)^(a+\[Alpha])/(2a+1)sj[{q,p,a},{s,r,t}]KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],-\[Alpha]p]*)
 	};
 
 
@@ -610,16 +606,6 @@ FullForm]\)]:>speM[#]}&;
 (*Expanded Rules*)
 
 
-(*simplifySymbolRules=Join[
-			simplify6jRawRules,
-			Flatten[createAlternativeRules3jm/@simplify3jmRawRules,1]
-		]//.
-		Join[prepareFactorRules,prepareSumRules,prepareSymbolOrderlessRules]//.
-		Join[simplifyFactorRules]//
-		normalizeSumRule;
-simplifySymbolRulesDispatch=Dispatch[simplifySymbolRules];
-simplifySymbolRules//TraditionalForm;
-Length[simplifySymbolRules]*)
 simplifySymbolRules=refineSymbolRule/@Join[
 		simplify6jRawRules,
 		Flatten[createAlternativeRules3jm/@simplify3jmRawRules,1]
@@ -676,7 +662,7 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 
 
 (* ::Section:: *)
-(*Cleanup*)
+(*Package Cleanup*)
 
 
 End[]

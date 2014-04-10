@@ -1,0 +1,24 @@
+
+TODO:
+- Documentation for Utility` and AngularMomentum` package (Utility_examples.nb, AngularMomentum_examples.nb)
+- Implementing 9j symbols
+- Implementing rules that result in a new sum, e.g. sum[f[x,y,z],x,y] :> sum[g[x,y,z],z]
+	Chose constant? Add to integerQN / halfintegerQN lists? What about rules that make the expression more complex?
+
+
+KNOWN ISSUES:
+
+- UnitTesting: initialiseTests[]
+	Never finishes when evaluating a second time. Aborting and reevaluating the cell solves it.
+
+- AngularMomentum: Loading package (<<AngularMomentum`)
+	Never finishes when evaluating a second time. Aborting and reevaluating the cell solves it.
+
+- AngularMomentum: simplifyAMSum
+	Takes a very long time (forever?) to ensure that no pattern can match. If a match exists it is usually quite fast.
+	This results in the function never finishing, as the final result might be to complex to check...
+	Maybe using some kind of time limit?
+
+- AngularMomentum: simplifyAMSum
+	Complains about missing information (symbol X has not been declared) but still works and produces incorrect results (usually the factors are wrong).
+	Abort after error messages? Warn about incorrect result? Search for reason for incorrect results?
