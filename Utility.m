@@ -180,7 +180,7 @@ tochar[jj_]:={Global`a,Global`b,Global`c,Global`d,Global`e,Global`f,Global`g,Glo
 
 tonum[jj_]:=Position[{Global`a,Global`b,Global`c,Global`d,Global`e,Global`f,Global`g,Global`h,Global`i,Global`j,Global`k,Global`l,Global`m,Global`n,Global`o,Global`p,Global`q,Global`r,Global`s,Global`t,Global`u,Global`v,Global`w,Global`x,Global`y,Global`z},jj][[1]][[1]]
 
-removeSign[x_]:= x/.- u_:> u;
+removeSign[x_]:= Replace[x,-u_:> u];
 
 sign[x_]:= If[MatchQ[x,-_],-1,1];
 
