@@ -1,10 +1,13 @@
 
 TODO:
-- Documentation for Utility` and AngularMomentum` package (Utility_examples.nb, AngularMomentum_examples.nb)
+- Documentation AngularMomentum` package 
+	-> AngularMomentum_examples.nb "Behind the Scenes" section
 - Implementing 9j symbols
 - Implementing rules that result in a new sum, e.g. sum[f[x,y,z],x,y] :> sum[g[x,y,z],z]
 	Chose constant? Add to integerQN / halfintegerQN lists? What about rules that make the expression more complex?
-
+- fix consistencyCheck bug
+- fix similar named symbols bug
+- exploit information of conZero[a,b,0] (a=-b)
 
 KNOWN ISSUES:
 
@@ -22,3 +25,10 @@ KNOWN ISSUES:
 - AngularMomentum: simplifyAMSum
 	Complains about missing information (symbol X has not been declared) but still works and produces incorrect results (usually the factors are wrong).
 	Abort after error messages? Warn about incorrect result? Search for reason for incorrect results?
+
+- AngularMomentum: consistencyCheck
+	does not identify numbers, e.g. 0
+
+- AngularMomentum: simplifyAMSum
+	identical symbols with and without indices cause problems, e.g. t[1], t[2] and t
+	especially KroneckerDelta[t,X] KroneckerDelta[t[1],Y] sometimes results in KroneckerDelta[X[1],Y]

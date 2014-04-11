@@ -201,10 +201,6 @@ SetAttributes[sjOL,Orderless]
 (*Preparation*)
 
 
-prepareFactorRules={
-		(-1)^(a_):>mX[a]
-	};
-
 prepareSumRules={
 		sum[a_,b___]:> sum[a,set[b]] /;FreeQ[{b},set]
 	};
@@ -482,7 +478,7 @@ refineSymbolRule[rule_]:=Module[{
 			tmpList,tmpRule,tmpFunc,countMX,counts
 		},
 (*preparing factors and the sum expression*)
-	result=rule//.Join[prepareFactorRules,prepareSumRules]//.simplifyFactorRules//.prepareSymbolOrderlessRules;
+	result=rule//.prepareSumRules//.simplifyFactorRules//.prepareSymbolOrderlessRules;
 
 (*splitting the rule into individual parts*)
 	ruleList=ruleSplit[result];
@@ -621,7 +617,7 @@ simplifySymbolRulesDispatch=Dispatch[simplifySymbolRules];
 Options[simplifyAMSum]={Print->False,Timing-> False,TimingComplete-> False};
 simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 		prev,result,
-		prepareRules=Join[prepareFactorRules,prepareSumRules,prepareSymbolOrderlessRules,simplifyCollectSumRules,simplifySumRules],
+		prepareRules=Join[prepareSumRules,prepareSymbolOrderlessRules,simplifyCollectSumRules,simplifySumRules],
 		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifyConditionOrderlessRules],
 		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules],
 		t1,t2,t3,t4,tmp
