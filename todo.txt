@@ -8,6 +8,7 @@ TODO:
 - fix consistencyCheck bug
 - fix similar named symbols bug
 - exploit information of conZero[a,b,0] (a=-b)
+- add option to ignore some sums (and according symbols)
 
 KNOWN ISSUES:
 

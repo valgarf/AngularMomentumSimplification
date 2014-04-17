@@ -145,7 +145,11 @@ evenPermM::usage=
 ruleToFunction::usage=
 "ruleToFunction[rule] returns a function that applies the rule once."
 
-ruleToFunctionRepeated::usage="ruleToFunctionRepeated[rule] returns a function that applies the rule repeatedly."
+ruleToFunctionRepeated::usage=
+"ruleToFunctionRepeated[rule] returns a function that applies the rule repeatedly."
+
+simplifySumRules=
+"A set of rules to simplify sums (using \"sum\" instead of the built-in Sum)"
 
 
 Begin["`Private`"]
@@ -350,6 +354,13 @@ unsM[a_]:=Module[{
 
 evenPermM[l_]:=(Alternatives@@EvenPermutations[l]);
 evenPermM[l__]:=(Sequence/@Alternatives@@EvenPermutations[{l}]);
+
+simplifySumRules={
+		KroneckerDelta[-a_,-b_]:> KroneckerDelta[a,b],
+		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[b_,d___]]:> sum[(a/.b-> c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]],
+		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[d___]]:> sum[(a/.b-> c) KroneckerDelta[b,c],set[d]]/;FreeQAll[{d},{b,c}]&&!FreeQ[a,b]&&!FreeQ[a,c]&&(!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]),
+		sum[a_ sum[b_,set[c___]],set[d___]]:> sum[a b,set[c,d]]
+};
 
 
 End[]

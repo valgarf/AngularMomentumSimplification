@@ -233,13 +233,6 @@ simplifyFactorRules={
 		mX[-1/2]->(-I)		
 	};
 
-simplifySumRules={
-		KroneckerDelta[-a_,-b_]:> KroneckerDelta[a,b],
-		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[b_,d___]]:> sum[(a/.b-> c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]],
-		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[d___]]:> sum[(a/.b-> c) KroneckerDelta[b,c],set[d]]/;FreeQAll[{d},{b,c}]&&!FreeQ[a,b]&&!FreeQ[a,c]&&(!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]),
-		sum[a_ sum[b_,set[c___]],set[d___]]:> sum[a b,set[c,d]]
-	};
-
 simplifyCollectSumRules={
 		a_ sum[b_,set[c___]]:> sum[a b,set[c]]/;FreeQAll[{a},{c}],
 		sum[a_,set[u___]] sum[b_,set[v___]]:> sum[a b,set[u,v]]/;FreeQAll[{a},{v}]&&FreeQAll[{b},{u}]
