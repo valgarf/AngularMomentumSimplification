@@ -41,29 +41,15 @@ testExpr[2]=sum[(-1)^\[Mu] (2u+1)(2 \[Mu]+1)sj[{a,b,\[Mu]},{a,b,u}]sj[{a,b,\[Mu]
 testExpr[3]=sum[cg[{a,\[Alpha]},{b,\[Beta]},{m,\[Mu]}]cg[{a,\[Alpha]},{b,\[Beta]},{mp,\[Mu]p}],\[Alpha],\[Beta]];
 testExpr[4]=sum[cg[{a,\[Alpha]},{b,\[Beta]},{m,\[Mu]}]cg[{a,\[Alpha]p},{b,\[Beta]p},{m,\[Mu]}],m,\[Mu]];
 *)
-testExpr[5]=sum[cg[{1/2,mt[a]},{1/2,mt[b]},{t[a,b],mt[a,b]}] cg[{1/2,mtp[a]},{1/2,mtp[b]},{tp[a,b],mtp[a,b]}] cg[{t[a,b],mt[a,b]},{1/2,mt[c]},{t[a,b,c],mt[a,b,c]}] cg[{tp[a,b],mtp[a,b]},{1/2,mtp[c]},{tp[a,b,c],mtp[a,b,c]}] KroneckerDelta[mt[c],mtp[c]] sum[3 cg[{1/2,mt[b]},{1,\[Mu]},{1/2,mtp[b]}] cg[{1/2,mtp[a]},{1,\[Mu]},{1/2,mt[a]}],\[Mu]],mt[a],mt[b],mt[c],mt[a,b],mtp[a],mtp[b],mtp[c],mtp[a,b]];
+(*testExpr[5]=sum[cg[{1/2,mt[a]},{1/2,mt[b]},{t[a,b],mt[a,b]}] cg[{1/2,mtp[a]},{1/2,mtp[b]},{tp[a,b],mtp[a,b]}] cg[{t[a,b],mt[a,b]},{1/2,mt[c]},{t[a,b,c],mt[a,b,c]}] cg[{tp[a,b],mtp[a,b]},{1/2,mtp[c]},{tp[a,b,c],mtp[a,b,c]}] KroneckerDelta[mt[c],mtp[c]] sum[3 cg[{1/2,mt[b]},{1,\[Mu]},{1/2,mtp[b]}] cg[{1/2,mtp[a]},{1,\[Mu]},{1/2,mt[a]}],\[Mu]],mt[a],mt[b],mt[c],mt[a,b],mtp[a],mtp[b],mtp[c],mtp[a,b]];
 testExpr[6]=sum[cg[{1/2,mt[a]},{1/2,mt[b]},{t[a,b],mt[a,b]}] cg[{1/2,mtp[a]},{1/2,mtp[b]},{tp[a,b],mtp[a,b]}] cg[{t[a,b],mt[a,b]},{1/2,mt[c]},{t[a,b,c],mt[a,b,c]}] cg[{tp[a,b],mtp[a,b]},{1/2,mtp[c]},{tp[a,b,c],mtp[a,b,c]}] KroneckerDelta[mt[a],mtp[a]] sum[3 cg[{1/2,mt[c]},{1,\[Mu]},{1/2,mtp[c]}] cg[{1/2,mtp[b]},{1,\[Mu]},{1/2,mt[b]}],\[Mu]],mt[a],mt[b],mt[c],mt[a,b],mtp[a],mtp[b],mtp[c],mtp[a,b]];
+*)
+(*declareQNHalfInteger[{mt[a],mt[b],mt[c],mtp[a],mtp[b],mtp[c],t[a,b,c],mt[a,b,c],tp[a,b,c],mtp[a,b,c]}];*)
+(*declareQNInteger[{t,tp,t[a,b],mt[a,b],tp[a,b],mtp[a,b]}];*)
 declareIndexedAM[t]
 declarePrimed[{m,\[Mu],\[Alpha],\[Beta]}];
-declareQNHalfInteger[{mt[a],mt[b],mt[c],mtp[a],mtp[b],mtp[c],t[a,b,c],mt[a,b,c],tp[a,b,c],mtp[a,b,c]}];
-declareQNInteger[{t,tp,t[a,b],mt[a,b],tp[a,b],mtp[a,b]}];
-declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],\[Tau],m,\[Mu],mp,\[Mu]p,u,up,x,xp}];
+declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,\[Delta],p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],t,tp,\[Tau],m,\[Mu],mp,\[Mu]p,u,up,x,xp}];
 
-(*
-addTest[simplifyAMSum[testExpr[1],Print->False],
-	sum[(-1)^(t+tp) sj[{a,c,tp},{b,d,t}],set[t]]
-];
-addTest[simplifyAMSum[testExpr[2],Print->False],
-	(-1)^(a+b) Sqrt[2a+1] Sqrt[2b+1] KroneckerDelta[0,up]
-];
-
-addTest[simplifyAMSum[testExpr[3],Print->False],
-	KroneckerDelta[\[Mu],\[Mu]p]KroneckerDelta[m,mp]
-];
-
-addTest[simplifyAMSum[testExpr[4],Print->False],
-	KroneckerDelta[\[Alpha],\[Alpha]p]KroneckerDelta[\[Beta],\[Beta]p]
-];*)
 
 
 beginTestModule["Varshalovich"];
@@ -77,9 +63,13 @@ testEqn[4][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa]+r-\[Rho])tj[{p,\[Psi]},{a,\[Alpha]
 testEqn[4][res]=(-1)^(a+b+c)tj[{a,-\[Alpha]},{c,-\[Gamma]},{b,-\[Beta]}] sj[{a,b,c},{r,p,q}];
 testEqn[5][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa]+r-\[Rho]+s-\[Sigma]+t-\[Tau])tj[{p,\[Psi]},{a,-\[Alpha]},{q,\[Kappa]}]tj[{q,-\[Kappa]},{r,\[Rho]},{t,\[Tau]}]tj[{r,-\[Rho]},{ap,\[Alpha]p},{s,\[Sigma]}]tj[{s,-\[Sigma]},{p,-\[Psi]},{t,-\[Tau]}],\[Psi],\[Kappa],\[Rho],\[Sigma],\[Tau]];
 testEqn[5][res]=(-1)^(a+\[Alpha])/(2a+1)sj[{a,p,q},{t,r,s}]KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],\[Alpha]p];
+testEqn[6][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa]+r-\[Rho]+s-\[Sigma])tj[{p,\[Psi]},{a,\[Alpha]},{q,-\[Kappa]}]tj[{q,\[Kappa]},{b,\[Beta]},{r,-\[Rho]}]tj[{r,\[Rho]},{s,\[Sigma]},{p,-\[Psi]}]tj[{s,-\[Sigma]},{c,\[Gamma]},{d,\[Delta]}],\[Psi],\[Kappa],\[Rho],\[Sigma]];
+testEqn[6][res]=sum[(-1)^(a+b+c+d+s+\[Sigma])sj[{a,b,s},{r,p,q}]tj[{a,-\[Alpha]},{s,-\[Sigma]},{b,-\[Beta]}]tj[{s,\[Sigma]},{c,-\[Gamma]},{d,-\[Delta]}],set[\[Sigma]]];
+testEqn[7][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa]+r-\[Rho]+s-\[Sigma])tj[{p,\[Psi]},{a,\[Alpha]},{q,-\[Kappa]}]tj[{q,\[Kappa]},{b,\[Beta]},{r,-\[Rho]}]tj[{r,\[Rho]},{c,\[Gamma]},{s,-\[Sigma]}]tj[{s,\[Sigma]},{d,\[Delta]},{p,-\[Psi]}],\[Psi],\[Kappa],\[Rho],\[Sigma]];
+testEqn[7][res]=sum[(-1)^(s+a+d+q+AngularMomentum`Private`varK[1]+AngularMomentum`Private`varK[2])(2 AngularMomentum`Private`varK[1]+1)sj[{a,AngularMomentum`Private`varK[1],d},{s,p,q}]sj[{b,AngularMomentum`Private`varK[1],c},{s,r,q}]sj[{a,\[Alpha]},{AngularMomentum`Private`varK[1],-AngularMomentum`Private`varK[2]},{d,\[Delta]}]tj[{b,\[Beta]},{AngularMomentum`Private`varK[1],AngularMomentum`Private`varK[2]},{c,\[Gamma]}],set[AngularMomentum`Private`varK[1],AngularMomentum`Private`varK[2]]];
 
 addFn=(addTest[simplifyAMSum[#1,Print->False],#2]&)@@({testEqn[#][exp],testEqn[#][res]})&;
-addFn/@Table[i,{i,5}];
+addFn/@Table[i,{i,7}];
 
 endTestModule[];
 
@@ -119,6 +109,8 @@ nj[{a,b,c},{d,sh[l,m,\[Theta],\[Phi]],f},{g,h,i}]
 conTri[a,b,c]
 %//TraditionalForm
 conZero[\[Alpha],\[Beta],-\[Gamma]]
+%//TraditionalForm
+AngularMomentum`Private`varK[3]
 %//TraditionalForm
 
 

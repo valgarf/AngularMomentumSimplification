@@ -67,6 +67,7 @@ ClearAll[Evaluate[Context[]<>"*"]];
 
 $integerQN={1};
 $halfintegerQN={1/2,Global`half};
+$offset=0;
 
 declareQNInteger::doubledefinition="Symbol `1` has been declared a half-integer quantum number already";
 declareQNHalfInteger::doubledefinition="Symbol `1` has been declared an integer quantum number already";
@@ -123,7 +124,14 @@ extractConditions[expr_]:=Module[{
 consistencyCheck::projection="Symbols \"`1`\" and \"`2`\" have not been declared consistently, e.g. one might be an integer and the other is a half-integer";
 consistencyCheck::notfound="Symbol \"`1`\" has not been declared an integer or half-integer quantum number. Please use the functions declareQNInteger and declareQNHalfInteger.";
 consistencyCheck::halfinteger="Condition \"`1`\" cannot be fulfilled as the sum of the arguments cannot yield an integer";
-consistencyCheck[expr_]:=Module[{conditions,symbols,notfound},
+(*consistencyCheck::multiplesums="Expression has multiple sums. Cannot prepare factors";*)
+consistencyCheck[expr_]:=Module[{conditions,symbols,notfound,sums,result=True},
+(*	sums=Cases[expr,sum[__],{0,Infinity}];
+	If[Length[sums]>1,
+		Message[consistencyCheck::multiplesums];
+		result=False;
+	];
+*)
 	conditions=extractConditions[expr];
 	symbols=DeleteDuplicates@(removeSign/@Flatten[conditions//.{conTri[a__]:>{a}, conZero[a__]:>{a}}]);
 
@@ -142,6 +150,7 @@ consistencyCheck[expr_]:=Module[{conditions,symbols,notfound},
 		{1}
 	];
 
+	If[Length[notfound]>0,result=False];
 	Do[Message[consistencyCheck::halfinteger,TraditionalForm[conditions[[i]]]],{i,notfound}];
 
 	(*Check that angular momentum quantum number and the correspondng
@@ -157,10 +166,13 @@ consistencyCheck[expr_]:=Module[{conditions,symbols,notfound},
 				{conX[___]-> False},
 			False];
 	conditions=conditions/.{conX[a_,b_]:> {a,b}};
+	If[Length[notfound]>0,result=False];
 	Do[Message[consistencyCheck::projection,
 			TraditionalForm[conditions[[i]][[1]]],
 			TraditionalForm[conditions[[i]][[2]]]
 		],{i,notfound}];	
+
+	Return[result];
 ];
 
 toTJ[expr_]:=expr//.{
@@ -180,6 +192,8 @@ StyleBox[RowBox[{"{",GridBox[Map[MakeBoxes[#,fmt]&,{a},{2}]],"}"}],SpanMaxSize->
 conTri/:MakeBoxes[conTri[a__], fmt:TraditionalForm]:=
 StyleBox[RowBox[{"\[EmptyUpTriangle]","{",Sequence@@(MakeBoxes[#,fmt]&/@{a}),"}"}],SpanMaxSize->\[Infinity]];
 conZero/:MakeBoxes[conZero[a_,b_,c_], fmt:TraditionalForm]:=MakeBoxes[KroneckerDelta[a+b+c,0],fmt];
+
+varK/: MakeBoxes[varK[a_], fmt:TraditionalForm]:=SubscriptBox["K",a];
 
 
 sj/:MakeBoxes[sj[a__], fmt:TraditionalForm]:=MakeBoxes[SixJSymbol[a],fmt];
@@ -222,8 +236,8 @@ simplifyFactorRules={
 		mX[n_Integer a_]:> mX[a]^n,
 		mX[n_Integer]:> mX[1]^n /; n<-1 || n>1,
 		mX[-a_]^n_:> mX[a]^(-n),
-		mX[a_]^n_:> mX[a]^Mod[n,2] /; n!=0 && n!=1 && MemberQ[$integerQN,Verbatim[a]],
-		mX[a_]^n_:> (-1)^(Floor[n/2])mX[a]^Mod[n,2] /; n!=0 && n!=1 && MemberQ[$halfintegerQN,Verbatim[a]],
+		mX[a_]^n_:> mX[a]^Mod[n,2] /; n!=0 && n!=1 && (MemberQ[$integerQN,Verbatim[a]] || IntegerQ[a]),
+		mX[a_]^n_:> (-1)^(Floor[n/2])mX[a]^Mod[n,2] /; n!=0 && n!=1 && (MemberQ[$halfintegerQN,Verbatim[a]] || (IntegerQ[2 a] && !IntegerQ[a])),
 		mX[a_]^0:> 1,
 		mX[]-> 1,
 		mX[0]-> 1,
@@ -374,7 +388,9 @@ simplify3jmRawRules={
 		sum[(-1)^(q_+\[Kappa]_)(2q_+1)tj[{a_,\[Alpha]_},{b_,\[Beta]_},{q_,-\[Kappa]_}]tj[{q_,\[Kappa]_},{a_,\[Alpha]p_},{b_,\[Beta]p_}],q_,\[Kappa]_]
 			:>(-1)^(a-\[Alpha]+b-\[Beta])KroneckerDelta[\[Beta],-\[Beta]p]KroneckerDelta[\[Alpha],-\[Alpha]p],				
 		sum[(-1)^(p_+q_+r_+\[Psi]_+\[Kappa]_+\[Rho]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{b_,\[Beta]_},{r_,\[Rho]_}]tj[{r_,-\[Rho]_},{c_,\[Gamma]_},{p_,\[Psi]_}],\[Kappa]_,\[Psi]_,\[Rho]_]
-			:> tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]sj[{a,b,c},{r,p,q}]
+			:> tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]sj[{a,b,c},{r,p,q}],
+		sum[(-1)^(p_+q_+r_+s_+\[Psi]_+\[Kappa]_+\[Rho]_+\[Sigma]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{b_,\[Beta]_},{r_,\[Rho]_}]tj[{r_,-\[Rho]_},{c_,\[Gamma]_},{s_,\[Sigma]_}]tj[{s_,-\[Sigma]_},{d_,\[Delta]_},{p_,\[Psi]_}],\[Kappa]_,\[Psi]_,\[Rho]_,\[Sigma]_]
+			:> sum[(-1)^(s-a-d-q+var[1]-var[2])(2 var[1]+1)tj[{a,\[Alpha]},{var[1],-var[2]},{d,\[Delta]}]tj[{b,\[Beta]},{var[1],var[2]},{c,\[Gamma]}]sj[{a,var[1],d},{s,p,q}]sj[{b,var[1],c},{s,r,q}],var[1],var[2]]
 (*,	sum[(-1)^(p_+q_+r_+s_+t_+\[Psi]_+\[Kappa]_+\[Rho]_+\[Sigma]_+\[Tau]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,-\[Kappa]_}]tj[{q_,\[Kappa]_},{r_,-\[Rho]_},{t_,-\[Tau]_}]tj[{r_,\[Rho]_},{ap_,\[Alpha]p_},{s_,-\[Sigma]_}]tj[{s_,\[Sigma]_},{p_,\[Psi]_},{t_,\[Tau]_}],\[Psi]_,\[Kappa]_,\[Rho]_,\[Sigma]_,\[Tau]_]
 			:> (-1)^(a+\[Alpha])/(2a+1)sj[{q,p,a},{s,r,t}]KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],-\[Alpha]p]*)
 	};
@@ -425,7 +441,7 @@ prepare3jmSignAll[expr_,l_]:=Module[{tmpFunc,tmpRule,result,transFunc,compFunc},
 ];
 
 prepare3jmFactor::multiplesums="Expression has multiple sums. Cannot prepare factors";
-prepare3jmFactor[expr_]:=Module[{variableList,sumExpr,finalSumExpr,transFunc,factorList,compFunc,functions},
+prepare3jmFactor[expr_]:=Module[{variableList,sumExpr,finalSumExpr,transFunc,factorList,compFunc2,functions},
 	variableList=Cases[expr,sum[__],{0,Infinity}];
 	If[Length[variableList]>1,Message[prepare3jmFactor::multiplesums];Return[expr]];
 	If[Length[variableList]==0,Return[expr]];
@@ -436,11 +452,32 @@ prepare3jmFactor[expr_]:=Module[{variableList,sumExpr,finalSumExpr,transFunc,fac
 	transFunc[i_]:=(#/.
 					{sum[a_,set[b__]]:>sum[a factorList[[i]],set[b]] }//.
 					simplifyFactorRules)&;
-	compFunc[newexpr_]:=-20 Count[newexpr,x_/;MemberQ[(mX/@variableList),x],{0,Infinity}]+LeafCount[newexpr];
+	compFunc2[newexpr_]:=-20 Count[newexpr,x_/;MemberQ[(mX/@variableList),x],{0,Infinity}]+LeafCount[newexpr];
 	functions=Table[transFunc[i],{i,Length[factorList]}];
-	finalSumExpr=Simplify[sumExpr,TransformationFunctions->functions,ComplexityFunction->compFunc];
+	finalSumExpr=Simplify[sumExpr,TransformationFunctions->functions,ComplexityFunction->compFunc2];
 	Return[expr/.sumExpr->finalSumExpr];
 ];
+
+cleanupNewVariables[expr_]:=Module[{addOffset,result,constants,conditions},
+	addOffset=Length[DeleteDuplicates@Cases[expr,var[_],{0,Infinity}]];
+	result=expr/.{var[i_]:> varK[i+$offset]};
+	$offset=$offset+addOffset;
+	constants=DeleteDuplicates@Cases[result,varK[_],{0,Infinity}];
+	conditions=Select[extractConditions[result],!FreeQ[#,varK]&];
+	(*While[Length[conditions]>0,*)
+		conditions=conditions//.{
+			conZero[u__]:> conTri[u],
+			conTri[a_,b__]:> conTri[iX,b] /; (MemberQ[$integerQN,Verbatim[a]] || IntegerQ[a]),
+			conTri[a_,b__]:> conTri[hX,b] /; (MemberQ[$halfintegerQN,Verbatim[a]] || (IntegerQ[2*a] && !IntegerQ[a])),
+			conTri[hX,hX,varK[i_]]:> Module[{},declareQNInteger[varK[i]];Sequence[]],
+			conTri[iX,iX,varK[i_]]:> Module[{},declareQNInteger[varK[i]];Sequence[]],
+			conTri[iX,hX,varK[i_]]:> Module[{},declareQNHalfInteger[varK[i]];Sequence[]]
+		};
+	(*];*)
+(*Select[,con_/;!FreeQ[con,constantK]];*)
+
+	Return[result];
+]
 
 createAlternativeRules3jm::error="Could not process rule `1`";
 createAlternativeRules3jm[rule_]:=Module[{ruleList,rulePattern,ruleResult,rulePatternList},
@@ -607,19 +644,52 @@ simplifySymbolRulesDispatch=Dispatch[simplifySymbolRules];
 (*Functions*)
 
 
-Options[simplifyAMSum]={Print->False,Timing-> False,TimingComplete-> False};
+Options[simplifyAMSum]={Print->False,Timing-> False,TimingComplete->False,IgnoreSums->{}};
 simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
-		prev,result,
-		prepareRules=Join[prepareSumRules,prepareSymbolOrderlessRules,simplifyCollectSumRules,simplifySumRules],
+		prev,result,ignoredPart,ignored,summation,used,
+		prepareRules=Join[prepareSumRules,prepareSymbolOrderlessRules,simplifyCollectSumRules,simplifySumRules,simplifyFactorRules],
 		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifyConditionOrderlessRules],
 		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules],
+		cleanupFn,
 		t1,t2,t3,t4,tmp
 	},
+	cleanupFn=If[Length[ignored]==0,
+		#//.simplifyRules//.cleanupRules,
+		ignoredPart/.{sum[a_,set[u___]]:> sum[a #,set[u]]}//.simplifyRules//.cleanupRules
+		]&;
 	consistencyCheck[expr];
-	result=toTJ[expr]//.prepareRules;		
+	result=toTJ[expr]//.prepareRules;
+	ignored=OptionValue[IgnoreSums];
+	summation=Flatten[Cases[result,sum[a_,set[u__]]:> {u},{0,Infinity}]];
+	ignored=Intersection[summation,ignored];
+	used=Complement[summation,ignored];
+	(*Print[summation];
+	Print[ignored];
+	Print[used];	*)
+	If[Length[ignored]>0,
+		
+		tmp={result/.sum[a_,set[u___]]:>a,sum[1,set@@used],sum[1,set@@ignored]};
+		tmp=tmp//.{
+				{Shortest[x_] y_.,sum[a_,set[u___]],sum[b_,set[v___]]}:>{y,sum[a,set[u]],sum[x b,set[v]]}/;FreeQAll[x,used],
+				{Shortest[x_] y_.,sum[a_,set[u___]],sum[b_,set[v___]]}:>{y,sum[x a,set[u]],sum[b,set[v]]}/;!FreeQAll[x,used]
+			};
+		result=tmp[[2]];
+		ignoredPart=tmp[[3]]
+(*		Print[TraditionalForm[tmp[[1]]]];
+		Print[TraditionalForm[tmp[[2]]]];
+		Print[TraditionalForm[tmp[[3]]]];
+		Print[TraditionalForm[result]];
+		Return[expr];
+		Print[TraditionalForm[result]];
+		Print[TraditionalForm[ignoredPart]];*)
+	];		
 	prev=None;
 	While[prev=!=result,
-		If[OptionValue[Print],Print[TraditionalForm[result//.cleanupRules]]];
+		If[OptionValue[Print],Print[
+			TraditionalForm[cleanupFn[result]],
+			"working on:",
+			TraditionalForm[result//.cleanupRules]
+		]];
 		prev=result;
 		tmp=Timing[prepare3jmSign[prev]];
 		t1=tmp[[1]];
@@ -634,7 +704,7 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 		result=tmp[[2]];
 		If[OptionValue[TimingComplete],Print[StringForm["pre-simplification :`` ",t3]]];
 		If[OptionValue[TimingComplete],Print[StringForm["`` ",result]]];
-		tmp=Timing[result/.simplifySymbolRulesDispatch];		
+		tmp=Timing[cleanupNewVariables[result/.simplifySymbolRulesDispatch]];		
 		t4=tmp[[1]];
 		result=tmp[[2]];
 		If[OptionValue[Timing]||OptionValue[TimingComplete],
@@ -646,7 +716,7 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 		];
 		result=result//.simplifyRules;
 	];	
-	Return[result//.cleanupRules];
+	Return[cleanupFn[result]];
 ];
 
 
