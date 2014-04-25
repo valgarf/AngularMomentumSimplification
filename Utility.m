@@ -163,9 +163,9 @@ SetAttributes[rX,{HoldRest,SequenceHold}]
 SetAttributes[rdX,{HoldRest,SequenceHold}]
 SetAttributes[alternative,{Orderless,Flat,OneIdentity}]
 
-FreeQAll[a___,b_]:=And@@(FreeQ[{a},#]&/@b);
+FreeQAll[a___,b_]:=And@@((FreeQ[{a},#]&)/@(b));
 
-FreeQNone[a___,b_]:=And@@(!FreeQ[{a},#]&/@b);
+FreeQNone[a___,b_]:=And@@((!FreeQ[{a},#]&)/@(b));
 
 FreeQAllUnsigned[a___,b_]:=FreeQAll[a,removeSign/@b];
 

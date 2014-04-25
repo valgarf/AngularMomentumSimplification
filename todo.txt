@@ -1,14 +1,13 @@
 
 TODO:
+- option to only check for 3j or 6j symbols
+- option to ignore newly added sums
 - Documentation AngularMomentum` package 
 	-> AngularMomentum_examples.nb "Behind the Scenes" section
 - Implementing 9j symbols
-- Implementing rules that result in a new sum, e.g. sum[f[x,y,z],x,y] :> sum[g[x,y,z],z]
-	Chose constant? Add to integerQN / halfintegerQN lists? What about rules that make the expression more complex?
-- fix consistencyCheck bug
 - fix similar named symbols bug
 - exploit information of conZero[a,b,0] (a=-b)
-- add option to ignore some sums (and according symbols)
+- How to handle rules that do not reduce (or even increase) the number of sums?
 
 KNOWN ISSUES:
 
@@ -17,6 +16,9 @@ KNOWN ISSUES:
 
 - AngularMomentum: Loading package (<<AngularMomentum`)
 	Never finishes when evaluating a second time. Aborting and reevaluating the cell solves it.
+
+- AngularMomentum: Loading package (<<AngularMomentum`)
+	Takes a long time. Possible to speed this up by improving the pattern creation functions?
 
 - AngularMomentum: simplifyAMSum
 	Takes a very long time (forever?) to ensure that no pattern can match. If a match exists it is usually quite fast.
@@ -27,9 +29,15 @@ KNOWN ISSUES:
 	Complains about missing information (symbol X has not been declared) but still works and produces incorrect results (usually the factors are wrong).
 	Abort after error messages? Warn about incorrect result? Search for reason for incorrect results?
 
-- AngularMomentum: consistencyCheck
-	does not identify numbers, e.g. 0
-
 - AngularMomentum: simplifyAMSum
 	identical symbols with and without indices cause problems, e.g. t[1], t[2] and t
 	especially KroneckerDelta[t,X] KroneckerDelta[t[1],Y] sometimes results in KroneckerDelta[X[1],Y]
+
+SHOULD BE FIXED:
+
+- add option to ignore some sums (and according symbols)
+- fix consistencyCheck bug
+- AngularMomentum: consistencyCheck
+	does not identify numbers, e.g. 0
+- Implementing rules that result in a new sum, e.g. sum[f[x,y,z],x,y] :> sum[g[x,y,z],z]
+	constant is always AngularMomentum`Private`varK[<number>], which is added to $integerQN / $halfintegerQN automatically
