@@ -418,7 +418,11 @@ simplify6jRawRules={
 		sum[(-1)^(a_+b_+c_+d_+e_+f_+p_+q_+r_+x_)(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{e_,f_,q_}]sj[{e_,f_,x_},{b_,a_,r_}],x_]
 			:> sj[{p,q,r},{e,a,d}]sj[{p,q,r},{f,b,c}],
 		sum[(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{e_,f_,q_}]sj[{e_,f_,x_},{a_,b_,r_}],x_]
-			:> facX[x] nj[{a,f,r},{d,q,e},{p,c,b}]
+			:> facX[x] nj[{a,f,r},{d,q,e},{p,c,b}],
+		sum[(-1)^(a_+b_+c_+d_+e_+f_+g_+h_+p_+q_+r_+s_+x_)(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{e_,f_,q_}]sj[{e_,f_,x_},{g_,h_,r_}]sj[{g_,h_,x_},{b_,a_,s_}],x_]
+			:> sum[(-1)^(2*var[1]+a+b+e+f)(2 var[1]+1)facX[x] nj[{s,a,b},{g,r,f},{a,e,var[1]}]sj[{b,f,var[1]},{q,p,c}]sj[{a,e,var[1]},{q,p,d}],var[1]],
+		sum[(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{e_,f_,q_}]sj[{e_,f_,x_},{g_,h_,r_}]sj[{g_,h_,x_},{a_,b_,s_}],x_]
+			:> sum[(2 var[1]+1) nj[{a,f,var[1]},{d,q,e},{p,c,b}]nj[{a,f,var[1]},{h,r,e},{s,g,b}],var[1]]
 	};
 
 
