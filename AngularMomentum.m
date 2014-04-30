@@ -59,6 +59,9 @@ consistencyCheck::usage=
 getLastExpression::usage=
 "Returns the last expression the simplify function worked on."
 
+simplifySHIntegral::usage=
+""
+
 
 Begin["`Private`"]
 ClearAll[Evaluate[Context[]<>"*"]];
@@ -70,7 +73,7 @@ ClearAll[Evaluate[Context[]<>"*"]];
 
 $integerQN={1};
 $halfintegerQN={1/2,Global`half};
-$offset=0;
+Utility`Private`$offset[varK]=0;
 
 declareQNInteger::doubledefinition="Symbol `1` has been declared a half-integer quantum number already";
 declareQNHalfInteger::doubledefinition="Symbol `1` has been declared an integer quantum number already";
@@ -139,7 +142,7 @@ consistencyCheck[expr_]:=Module[{conditions,symbols,notfound,sums,result=True},
 	symbols=DeleteDuplicates@(removeSign/@Flatten[conditions//.{conTri[a__]:>{a}, conZero[a__]:>{a}}]);
 
 	(*check for undeclared symbols*)
-	notfound=Flatten@Position[(MemberQ[$integerQN,#]||MemberQ[$halfintegerQN,#]&)/@symbols,False];
+	notfound=Flatten@Position[(MemberQ[$integerQN,#]|| MemberQ[$halfintegerQN,#] || IntegerQ[2 #]&)/@symbols,False];
 	Do[Message[consistencyCheck::notfound,symbols[[i]]],{i,notfound}];
 
 	(*Check that a+b+c is an integer for conTri[a,b,c] and conZero[a,b,c]*)
@@ -165,7 +168,11 @@ consistencyCheck[expr_]:=Module[{conditions,symbols,notfound,sums,result=True},
 		}];
 	notfound=Flatten@Position[
 			conditions//.
-				{conX[a_,\[Alpha]_]:>True /; Or@@(MemberQ[#,a] && MemberQ[#,\[Alpha]]&)/@{$integerQN,$halfintegerQN}}/.
+				{conX[a_,\[Alpha]_]:>True /;
+		((MemberQ[$halfintegerQN,Verbatim[a]] || (IntegerQ[2 a] && !IntegerQ[a])) && (MemberQ[$halfintegerQN,Verbatim[\[Alpha]]] || (IntegerQ[2 \[Alpha]] && !IntegerQ[\[Alpha]]))) ||
+		((MemberQ[$integerQN,Verbatim[a]] || IntegerQ[a] ) && (MemberQ[$integerQN,Verbatim[\[Alpha]]] || IntegerQ[\[Alpha]] ))
+		(*Or@@(MemberQ[#,a] && MemberQ[#,\[Alpha]]&)/@{$integerQN,$halfintegerQN}*)
+				}/. 
 				{conX[___]-> False},
 			False];
 	conditions=conditions/.{conX[a_,b_]:> {a,b}};
@@ -197,6 +204,8 @@ StyleBox[RowBox[{"\[EmptyUpTriangle]","{",Sequence@@(MakeBoxes[#,fmt]&/@{a}),"}"
 conZero/:MakeBoxes[conZero[a_,b_,c_], fmt:TraditionalForm]:=MakeBoxes[KroneckerDelta[a+b+c,0],fmt];
 
 varK/: MakeBoxes[varK[a_], fmt:TraditionalForm]:=SubscriptBox["K",a];
+varL/: MakeBoxes[varL[a_], fmt:TraditionalForm]:=SubscriptBox["L",a];
+varM/: MakeBoxes[varM[a_], fmt:TraditionalForm]:=SubscriptBox["M",SubscriptBox["L",a]];
 
 
 sj/:MakeBoxes[sj[a__], fmt:TraditionalForm]:=MakeBoxes[SixJSymbol[a],fmt];
@@ -222,9 +231,17 @@ prepareSumRules={
 		sum[a_,b___]:> sum[a,set[b]] /;FreeQ[{b},set]
 	};
 
+prepareIntegrateRules={
+		integrate[a_,b___]:> integrate[a,set[b]] /;FreeQ[{b},set]
+	};
+
 prepareSymbolOrderlessRules={
 		sj[{a_,b_,c_},{d_,e_,f_}]:> sjOL[set[a,b,c],set[a,e,f],set[d,b,f],set[d,e,c]],
 		nj[{a_,b_,c_},{d_,e_,f_},{g_,h_,j_}]:> njOL[set[set[a,e,j],set[b,f,g],set[c,d,h]],set[set[a,b,c],set[d,e,f],set[g,h,j],set[a,d,g],set[b,e,h],set[c,f,j]]]
+	};
+
+prepareSHRules={
+		Conjugate[sh[l_,ml_,\[Theta]_,\[Phi]_]]:> (-1)^ml sh[l,-ml,\[Theta],\[Phi]]
 	};
 
 
@@ -251,8 +268,13 @@ simplifyFactorRules={
 	};
 
 simplifyCollectSumRules={
-		a_ sum[b_,set[c___]]:> sum[a b,set[c]]/;FreeQAll[{a},{c}],
-		sum[a_,set[u___]] sum[b_,set[v___]]:> sum[a b,set[u,v]]/;FreeQAll[{a},{v}]&&FreeQAll[{b},{u}]
+		(*Shortest[a_] sum[b_,set[c__]]:> sum[a b,set[c]]/;FreeQAll[{a},{c}],*)
+		sum[a_,set[u__]] sum[b_,set[v__]]:> sum[a b,set[u,v]]/;FreeQAll[{a},{v}]&&FreeQAll[{b},{u}]
+	};
+
+simplifyCollectIntegrateRules={
+		a_ integrate[b_,set[c___]]:> integrate[a b,set[c]]/;FreeQAll[{a},{c}],
+		integrate[a_,set[u___]] integrate[b_,set[v___]]:> integrate[a b,set[u,v]]/;FreeQAll[{a},{v}]&&FreeQAll[{b},{u}]
 	};
 
 simplifyConditionOrderlessRules={
@@ -384,6 +406,7 @@ simplify6jRawRulesOLD={
 
 
 simplify3jmRawRules={
+		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{0,0}]:> KroneckerDelta[a,b]KroneckerDelta[\[Alpha],-\[Beta]]/Sqrt[2 a+1] (-1)^(a-\[Alpha]),
 		sum[(-1)^(a_+\[Alpha]_)tj[{a_,-\[Alpha]_},{a_,\[Alpha]_},{c_,\[Gamma]_}],\[Alpha]_]
 			:> Sqrt[2 a+1]KroneckerDelta[c,0]KroneckerDelta[\[Gamma],0],
 		sum[(-1)^(p_+\[Psi]_+q_+\[Kappa]_)tj[{a_,\[Alpha]_},{p_,-\[Psi]_},{q_,-\[Kappa]_}]tj[{p_,\[Psi]_},{q_,\[Kappa]_},{ap_,\[Alpha]p_}],\[Psi]_,\[Kappa]_]
@@ -393,12 +416,14 @@ simplify3jmRawRules={
 		sum[(-1)^(p_+q_+r_+\[Psi]_+\[Kappa]_+\[Rho]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{b_,\[Beta]_},{r_,\[Rho]_}]tj[{r_,-\[Rho]_},{c_,\[Gamma]_},{p_,\[Psi]_}],\[Kappa]_,\[Psi]_,\[Rho]_]
 			:> tj[{a,-\[Alpha]},{b,-\[Beta]},{c,-\[Gamma]}]sj[{a,b,c},{r,p,q}],
 		sum[(-1)^(p_+q_+r_+s_+\[Psi]_+\[Kappa]_+\[Rho]_+\[Sigma]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{b_,\[Beta]_},{r_,\[Rho]_}]tj[{r_,-\[Rho]_},{c_,\[Gamma]_},{s_,\[Sigma]_}]tj[{s_,-\[Sigma]_},{d_,\[Delta]_},{p_,\[Psi]_}],\[Kappa]_,\[Psi]_,\[Rho]_,\[Sigma]_]
-			:> sum[(-1)^(s-a-d-q+var[1]-var[2])(2 var[1]+1)tj[{a,\[Alpha]},{var[1],-var[2]},{d,\[Delta]}]tj[{b,\[Beta]},{var[1],var[2]},{c,\[Gamma]}]sj[{a,var[1],d},{s,p,q}]sj[{b,var[1],c},{s,r,q}],var[1],var[2]],
-		sum[(-1)^(p_+q_+r_+s_+t_+\[Psi]_+\[Kappa]_+\[Rho]_+\[Sigma]_+\[Tau]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{b_,\[Beta]_},{r_,\[Rho]_}]tj[{r_,-\[Rho]_},{c_,\[Gamma]_},{s_,\[Sigma]_}]tj[{s_,-\[Sigma]_},{d_,\[Delta]_},{t_,\[Tau]_}]tj[{t_,-\[Tau]_},{e_,\[Epsilon]_},{p_,\[Psi]_}],\[Kappa]_,\[Psi]_,\[Rho]_,\[Sigma]_,\[Tau]_]
+			:> sum[(-1)^(s-a-d-q+var[1]-var[2])(2 var[1]+1)tj[{a,\[Alpha]},{var[1],-var[2]},{d,\[Delta]}]tj[{b,\[Beta]},{var[1],var[2]},{c,\[Gamma]}]sj[{a,var[1],d},{s,p,q}]sj[{b,var[1],c},{s,r,q}],var[1],var[2]]
+(*the last one takes a very long time when loading the package:*)
+		(*,sum[(-1)^(p_+q_+r_+s_+t_+\[Psi]_+\[Kappa]_+\[Rho]_+\[Sigma]_+\[Tau]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{b_,\[Beta]_},{r_,\[Rho]_}]tj[{r_,-\[Rho]_},{c_,\[Gamma]_},{s_,\[Sigma]_}]tj[{s_,-\[Sigma]_},{d_,\[Delta]_},{t_,\[Tau]_}]tj[{t_,-\[Tau]_},{e_,\[Epsilon]_},{p_,\[Psi]_}],\[Kappa]_,\[Psi]_,\[Rho]_,\[Sigma]_,\[Tau]_]
 			:> sum[(-1)^(t-p-b-a-d-c+var[1]-var[2]+var[3]-var[4])(2 var[1]+1)(2 var[3]+1)
 					tj[{a,\[Alpha]},{b,\[Beta]},{var[1],var[2]}]tj[{var[1],-var[2]},{e,\[Epsilon]},{var[3],-var[4]}]tj[{var[3],var[4]},{c,\[Gamma]},{d,\[Delta]}]
 					sj[{a,b,var[1]},{r,p,q}]sj[{var[1],e,var[3]},{t,r,p}]sj[{var[3],c,d},{s,t,r}],
-				var[1],var[2],var[3],var[4]]
+				var[1],var[2],var[3],var[4]]*)
+
 	};
 
 
@@ -431,6 +456,15 @@ simplify6jRawRules={
 (*Private Helper Functions Involving 3jm, 6j or 9j symbols*)
 
 
+addConditions[expr_]:=Module[{},
+	expr/.{tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:>tj[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}]conZero[\[Alpha],\[Beta],\[Gamma]]/;\[Alpha]==0 || \[Beta]==0 || \[Gamma]==0
+		}//.conZero[0,a_,b_]:>KroneckerDelta[a,b]
+(*		
+	conditions=extractConditions[expr];
+	conditions=Cases[conditions,conTri[0,a_,b_]:> KroneckerDelta[a,b]];
+	conditions=Select[conditions,FreeQ[expr,#]&&FreeQ[expr,(#/.KroneckerDelta[a_,b_]:>KroneckerDelta[-a,-b])]&];	
+*)
+];
 (*
 prepare3jmSignAll[expr_,{}]:=expr;
 prepare3jmSign[expr_]:=expr/.{sum[a_,set[b___]]:>sum[prepare3jmSignAll[a,{b}],set[b]]};
@@ -534,9 +568,10 @@ prepare3jmFactor[expr_]:=Module[{variableList,sumExpr,finalSumExpr,transFunc,fac
 
 cleanupNewVariables::undeclared="Cannot resolve the following conditions ``";
 cleanupNewVariables[expr_]:=Module[{addOffset,result,constants,conditions},
-	addOffset=Length[DeleteDuplicates@Cases[expr,var[_],{0,Infinity}]];
+	result=replaceUnique[expr,var,varK];	
+	(*addOffset=Length[DeleteDuplicates@Cases[expr,var[_],{0,Infinity}]];
 	result=expr/.{var[i_]:> varK[i+$offset]};
-	$offset=$offset+addOffset;
+	$offset=$offset+addOffset;*)
 	constants=DeleteDuplicates@Cases[result,varK[_],{0,Infinity}];
 	conditions=Select[extractConditions[result],!FreeQ[#,varK]&];
 	(*While[Length[conditions]>0,*)
@@ -611,7 +646,11 @@ If no condition is present we will surely add one during this function*)
 
 (*Add condition: All other variables must be free of the summation variables*)
 	variables=getAllVariables[rulePattern];
-	summation=removeBlanks/@(rulePattern/.sum[a_,set[b___]]:> {b});
+	If[FreeQ[rulePattern,sum],
+		summation={},
+		(*else*)
+		summation=removeBlanks/@(rulePattern/.sum[a_,set[b___]]:> {b})
+	];
 	AppendTo[variables,m];AppendTo[variables,u];
 	variables=Complement[variables,summation];
 	AppendTo[ruleConditionList,fqa[variables,summation]/.
@@ -619,6 +658,9 @@ If no condition is present we will surely add one during this function*)
 	];
 
 (*We add "m_." and "u___" that match additional unrelated factors and summation variables, respectively*)
+	If[FreeQ[rulePattern,sum],
+		rulePattern=sum[rulePattern,set[]];
+	];
 	rulePattern=rulePattern/.
 		sum[a_,set[b___]]:>sum[Optional[pat[m,Blank[]]]a,set[b,pat[u,BlankNullSequence[]]]]/.
 		pat-> Pattern;
@@ -736,10 +778,10 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 		cleanupFn,
 		t1,t2,t3,t4,tmp
 	},
-	cleanupFn=If[Length[ignored]==0,
-		#//.simplifyRules//.cleanupRules,
+	cleanupFn=(*If[Length[ignored]==0,
+		#//.simplifyRules//.cleanupRules,*)
 		ignoredPart/.{sum[a_,set[u___]]:> sum[a #,set[u]]}//.simplifyRules//.cleanupRules
-		]&;
+		(*]*)&;
 	consistencyCheck[expr];
 	result=toTJ[expr]//.prepareRules;
 	ignored=OptionValue[IgnoreSums];
@@ -749,7 +791,7 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 	(*Print[summation];
 	Print[ignored];
 	Print[used];	*)
-	If[Length[ignored]>0,
+	(*If[Length[ignored]>0,*)
 		
 		tmp={result/.sum[a_,set[u___]]:>a,sum[1,set@@used],sum[1,set@@ignored]};
 		tmp=tmp//.{
@@ -757,7 +799,7 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 				{Shortest[x_] y_.,sum[a_,set[u___]],sum[b_,set[v___]]}:>{y,sum[x a,set[u]],sum[b,set[v]]}/;!FreeQAll[x,used]
 			};
 		result=tmp[[2]];
-		ignoredPart=tmp[[3]]
+		ignoredPart=tmp[[3]];
 (*		Print[TraditionalForm[tmp[[1]]]];
 		Print[TraditionalForm[tmp[[2]]]];
 		Print[TraditionalForm[tmp[[3]]]];
@@ -765,24 +807,26 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 		Return[expr];
 		Print[TraditionalForm[result]];
 		Print[TraditionalForm[ignoredPart]];*)
-	];		
+(*	];	*)
 	prev=None;
 	While[prev=!=result,
+		(*result=addConditions[result];*)
 		$lastexpression=cleanupFn[result];
 		If[OptionValue[Print],
-			If[Length[ignored]>0,
+			(*If[Length[ignored]>0,*)
 				Print[
 					TraditionalForm[$lastexpression],
 					"working on:",
 					TraditionalForm[result//.cleanupRules]
-				],
+				](*,
 				Print[TraditionalForm[$lastexpression]]
-			]
+			]*)
 		];
 		prev=result;
 		tmp=Timing[prepare3jmSign[prev]];
 		t1=tmp[[1]];
 		result=tmp[[2]];
+		(*result=addConditions[result];*)
 		If[OptionValue[TimingComplete],Print[StringForm["prepared 3jm signs :`` ",t1]]];
 		tmp=Timing[result//.simplifyRules];		
 		t2=tmp[[1]];
@@ -805,6 +849,127 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 ];
 
 getLastExpression:=$lastexpression;
+
+
+(* ::Section:: *)
+(*Simplifying Integrals with Spherical Harmonics*)
+
+
+(* ::Subsection:: *)
+(*Raw Rules*)
+
+
+simplifySHRawRules={
+	integrate[sh[l_,ml_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> Sqrt[4 \[Pi]] KroneckerDelta[l,0]KroneckerDelta[ml,0]
+};
+
+
+(* ::Subsection:: *)
+(*Private Helper Functions*)
+
+
+cleanupNewSHVariables[expr_]:=Module[{result,variables},
+	result=replaceUnique[expr,varl,varL];
+	result=replaceUnique[result,varm,varM];	
+	declareQNInteger[Cases[result,varL[_] || varM[_],{0,Infinity}]];
+	Return[result];
+];
+
+refineSHRule::ruletype="Cannot handle a non-delayed rule";
+refineSHRule[rule_]:=Module[{
+			ruleList,ruleType,rulePattern,ruleResult,ruleConditon,ruleConditionList,
+			m,u,
+			variables,integration,result			
+		},
+(*preparing factors and the sum expression*)
+	result=rule//.prepareIntegrateRules;
+
+(*splitting the rule into individual parts*)
+	ruleList=ruleSplit[result];
+	ruleType=ruleList[[1]];
+	rulePattern=ruleList[[2]];
+	ruleResult=ruleList[[3]];
+
+(*We can only handle delayed rules with / without a condition. 
+If no condition is present we will surely add one during this function*)
+	If[ruleType=="r" || ruleType=="rc",
+		Message[refineSHRule::ruletype]; 
+		Return[result];
+	];
+	If[ruleType=="rdc",
+		ruleConditionList={ruleList[[4]]};
+	,
+		ruleConditionList={};
+		If[ruleType=="rd", ruleType="rdc"]; (*rule type must handle a condition*)
+	];
+
+(*Add condition: All other variables must be free of the summation variables*)
+	variables=getAllVariables[rulePattern];
+	integration=removeBlanks/@(rulePattern/.integrate[a_,set[b___]]:> {b});
+	AppendTo[variables,m];AppendTo[variables,u];
+	variables=Complement[variables,integration];
+	AppendTo[ruleConditionList,fqa[variables,integration]/.
+			{fqa[a_,b_]:> Hold[FreeQAll[a,b]]}
+	];
+
+(*We add "m_." and "u___" that match additional unrelated factors and summation variables, respectively*)
+	rulePattern=rulePattern/.
+		integrate[a_,set[b___]]:>integrate[Optional[pat[m,Blank[]]]a,set[b,pat[u,BlankNullSequence[]]]]/.
+		pat-> Pattern;
+	If[FreeQ[ruleResult,integrate],
+		ruleResult=Replace[ruleResult,Hold[a_]:> Hold[integrate[a,set[]]]];
+	];
+	ruleResult=ruleResult/.
+		integrate[a_,set[b___]]:>integrate[m a,set[b,u]];
+
+(*Construct the condition and the resulting rule*)		
+	ruleConditon=First[ruleConditionList//.{Hold[a_],Hold[b_],c___}:> {Hold[(a) && (b)],c}];
+	result=ruleJoin[{ruleType,rulePattern,ruleResult,ruleConditon}];	
+	
+(*Return result *)	
+	Return[result];	
+];
+
+
+(* ::Subsection:: *)
+(*Expanded Rules*)
+
+
+simplifySHRules=Join[refineSHRule/@simplifySHRawRules,{
+	sh[l1_,m1_,\[Theta]_,\[Phi]_]sh[l2_,m2_,\[Theta]_,\[Phi]_]:>
+		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
+		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
+		sh[varl[1],varm[1],\[Theta],\[Phi]],set[varl[1],varm[1]]],
+	sh[l1_,m1_,\[Theta]_[a_ r_],\[Phi]_[a_ r_]]:>sh[l1,m1,\[Theta][r],\[Phi][r]],
+	sh[l1_,m1_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]:>
+		sum[sh[varl[1],varm[1],\[Theta][r1],\[Phi][r1]]sh[l1-varl[1],varm[2],\[Theta][r2],\[Phi][r2]]
+		Sqrt[4\[Pi]/(2 varl[1]+1)Binomial[2 l1 +1,2 varl[1]]]
+		r1^varl[1] r2^(l1-varl[1])Abs[r1+r2]^(-l1)
+		cg[{varl[1],varm[1]},{l1-varl[1],varm[2]},{l1,m1}]
+			,set[varl[1],varm[1],varm[2]]]
+}];
+
+
+(* ::Subsection:: *)
+(*Functions*)
+
+
+simplifySHIntegral[expr_]:=Module[{
+		prepareRules=Join[prepareIntegrateRules,prepareSumRules,prepareSHRules],
+		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifyIntegrateRules,simplifyConditionOrderlessRules],
+		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules],
+		result,prev
+	},
+	result=expr//.prepareRules//.simplifyRules;
+	prev=None;
+	While[prev=!=result,
+		prev=result;
+		result=result/.simplifySHRules;
+		result=cleanupNewSHVariables[result];
+		result=result//.simplifyRules;		
+	];
+	Return[result//.cleanupRules];
+];
 
 
 (* ::Section:: *)

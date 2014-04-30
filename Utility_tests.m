@@ -131,3 +131,16 @@ sp
 
 
 
+
+
+(* ::Subsection:: *)
+(*Misc*)
+
+
+declareIndexed[{u,v,a}]
+(testExpr=sum[f[v[1],v[2],u[1],u[2]],u[2],v[1]])//TraditionalForm
+(testExpr=replaceUnique[testExpr,v,a])//TraditionalForm
+(testExpr=replaceUnique[testExpr,u,a])//TraditionalForm
+
+
+

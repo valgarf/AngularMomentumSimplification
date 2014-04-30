@@ -148,8 +148,20 @@ ruleToFunction::usage=
 ruleToFunctionRepeated::usage=
 "ruleToFunctionRepeated[rule] returns a function that applies the rule repeatedly."
 
-simplifySumRules=
+simplifySumRules::usage=
 "A set of rules to simplify sums (using \"sum\" instead of the built-in Sum)"
+
+simplifyIntegrateRules::usage=
+""
+
+simplifySeperateIntegrateRules::usage=
+""
+
+simplifySeperateIntegrate::usage=
+""
+
+replaceUnique::usage=
+""
 
 
 Begin["`Private`"]
@@ -357,10 +369,32 @@ evenPermM[l__]:=(Sequence/@Alternatives@@EvenPermutations[{l}]);
 
 simplifySumRules={
 		KroneckerDelta[-a_,-b_]:> KroneckerDelta[a,b],
+		KroneckerDelta[a_,-b_]:> KroneckerDelta[-a,b]/;NumericQ[a]&&!NumericQ[b],
 		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[b_,d___]]:> sum[(a/.b-> c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]],
 		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[d___]]:> sum[(a/.b-> c) KroneckerDelta[b,c],set[d]]/;FreeQAll[{d},{b,c}]&&!FreeQ[a,b]&&!FreeQ[a,c]&&(!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]),
 		sum[a_ sum[b_,set[c___]],set[d___]]:> sum[a b,set[c,d]]
 };
+
+simplifyIntegrateRules={
+		integrate[a_ integrate[b_,set[c___]],set[d___]]:> integrate[a b,set[c,d]],
+		integrate[a_ sum[b_,set[c___]],set[d___]]:> sum[integrate[a b,set[d]],set[c]]/;FreeQAll[{c},{d}]
+};
+
+checkDependence[a_,b_,c__]:= (And@@(FreeQ[{a},#]||FreeQ[b,#]&/@{c}));
+getDependent[a_,c__]:=Select[{c},(!FreeQ[{a},#])&];
+getIndependent[a_,c__]:=Select[{c},(FreeQ[{a},#])&];
+simplifySeperateIntegrateRules={
+	integrate[Shortest[a_] b_.,set[c__]]:> a integrate[b,set[c]]/;FreeQAll[a,{c}],	
+	integrate[Shortest[a_] b_,set[c__]]/;checkDependence[a,b,c] :> integrate[a,set@@getDependent[a,c]]integrate[b,set@@getIndependent[a,c]]
+};
+
+$offset[x_]:=0;
+replaceUnique[expr_,old_,new_]:=Module[{addOffset,result},
+	addOffset=Length[DeleteDuplicates@Cases[expr,old[_],{0,Infinity}]];
+	result=expr//.old[i_]:> new[i+$offset[new]];
+	$offset[new]=$offset[new]+addOffset;
+	Return[result];
+]
 
 
 End[]
