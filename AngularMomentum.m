@@ -131,24 +131,24 @@ consistencyCheck::projection="Symbols \"`1`\" and \"`2`\" have not been declared
 consistencyCheck::notfound="Symbol \"`1`\" has not been declared an integer or half-integer quantum number. Please use the functions declareQNInteger and declareQNHalfInteger.";
 consistencyCheck::halfinteger="Condition \"`1`\" cannot be fulfilled as the sum of the arguments cannot yield an integer";
 (*consistencyCheck::multiplesums="Expression has multiple sums. Cannot prepare factors";*)
-consistencyCheck[expr_]:=Module[{conditions,symbols,notfound,sums,result=True},
+consistencyCheck[expr_]:=Module[{conditions,symbols,notfound,sums,replaceknownsymbols,result=True},
 (*	sums=Cases[expr,sum[__],{0,Infinity}];
 	If[Length[sums]>1,
 		Message[consistencyCheck::multiplesums];
 		result=False;
 	];
 *)
+	replaceknownsymbols=Join[(#->1/2)&/@$halfintegerQN,(#->0)&/@$integerQN];
 	conditions=extractConditions[expr];
 	symbols=DeleteDuplicates@(removeSign/@Flatten[conditions//.{conTri[a__]:>{a}, conZero[a__]:>{a}}]);
 
 	(*check for undeclared symbols*)
-	notfound=Flatten@Position[(MemberQ[$integerQN,#]|| MemberQ[$halfintegerQN,#] || IntegerQ[2 #]&)/@symbols,False];
+	notfound=Flatten@Position[ (IntegerQ[Abs[2 #/.replaceknownsymbols]]&)/@symbols,False];
 	Do[Message[consistencyCheck::notfound,symbols[[i]]],{i,notfound}];
 
 	(*Check that a+b+c is an integer for conTri[a,b,c] and conZero[a,b,c]*)
 	notfound=Drop[#,1]&@Flatten@Position[
-		conditions/.
-			Join[(#->1/2)&/@$halfintegerQN,(#->0)&/@$integerQN]/.
+		conditions/.replaceknownsymbols/.
 			{conTri[a__]:> Total[{a}], conZero[a__]:> Total[{a}]}
 		,
 		x_/;!EvenQ[2*x]
@@ -167,10 +167,10 @@ consistencyCheck[expr_]:=Module[{conditions,symbols,notfound,sums,result=True},
 			cg[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]:> conX@@@Map[removeSign,{{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}},{2}]
 		}];
 	notfound=Flatten@Position[
-			conditions//.
+			conditions//.replaceknownsymbols//.
 				{conX[a_,\[Alpha]_]:>True /;
-		((MemberQ[$halfintegerQN,Verbatim[a]] || (IntegerQ[2 a] && !IntegerQ[a])) && (MemberQ[$halfintegerQN,Verbatim[\[Alpha]]] || (IntegerQ[2 \[Alpha]] && !IntegerQ[\[Alpha]]))) ||
-		((MemberQ[$integerQN,Verbatim[a]] || IntegerQ[a] ) && (MemberQ[$integerQN,Verbatim[\[Alpha]]] || IntegerQ[\[Alpha]] ))
+		((IntegerQ[2 a] && !IntegerQ[a]) && (IntegerQ[2 \[Alpha]] && !IntegerQ[\[Alpha]])) ||
+		(IntegerQ[a]  &&  IntegerQ[\[Alpha]])
 		(*Or@@(MemberQ[#,a] && MemberQ[#,\[Alpha]]&)/@{$integerQN,$halfintegerQN}*)
 				}/. 
 				{conX[___]-> False},
@@ -251,6 +251,7 @@ prepareSHRules={
 
 
 simplifyFactorRules={
+		(-1 b_)^a_:> mX[a](b)^a,
 		(-1)^(a_):>mX[a],
 		mX[a_ + b_]:> mX[a] mX[b],
 		mX[n_Integer a_]:> mX[a]^n,
@@ -264,7 +265,10 @@ simplifyFactorRules={
 		mX[1]->(-1),
 		mX[-1]->(-1),
 		mX[1/2]->(I),
-		mX[-1/2]->(-I)		
+		mX[-1/2]->(-I),
+		Sqrt[a_./(2 x_+1)]:>Sqrt[a]/Sqrt[2 x+1],
+		Sqrt[(2 x_+1)/a_]:>Sqrt[2 x+1]/Sqrt[a],
+		Sqrt[(2 x_+1)(2 y_+1)]:>Sqrt[2 x+1]Sqrt[2 y+1]
 	};
 
 simplifyCollectSumRules={
@@ -520,7 +524,7 @@ prepare3jmSignAll[expr_,solved_,todo_]:=Module[{possible,i,chosen,succeed,result
 				mX[a$X]mX[b$X]mX[c$X]tj[{a$X,-\[Alpha]$X},{b$X,-\[Beta]$X},{c$X,-\[Gamma]$X}]tj[{ap$X,\[Alpha]p$X},{bp$X,\[Beta]p$X},{cp$X,\[Gamma]p$X}]/;					
 					!Xor[FreeQ[{\[Alpha]$X,\[Beta]$X,\[Gamma]$X},-chosen],FreeQ[{\[Alpha]p$X,\[Beta]p$X,\[Gamma]p$X},-chosen]]
 			}//.simplifyFactorRules;
-		tmp=Cases[result,
+		tmp=Cases[result,X$X_
 			(tj[{a$X_,\[Alpha]$X_},{b$X_,\[Beta]$X_},{c$X_,\[Gamma]$X_}]/;!FreeQ[{\[Alpha]$X,\[Beta]$X,\[Gamma]$X},chosen])
 			(tj[{ap$X_,\[Alpha]p$X_},{bp$X_,\[Beta]p$X_},{cp$X_,\[Gamma]p$X_}]/;!FreeQ[{\[Alpha]p$X,\[Beta]p$X,\[Gamma]p$X},chosen])/;					
 					!Xor[FreeQ[{\[Alpha]$X,\[Beta]$X,\[Gamma]$X},-chosen],FreeQ[{\[Alpha]p$X,\[Beta]p$X,\[Gamma]p$X},-chosen]],
@@ -535,16 +539,17 @@ prepare3jmSignAll[expr_,solved_,todo_]:=Module[{possible,i,chosen,succeed,result
 				mX[\[Alpha]$X]mX[\[Beta]$X]mX[\[Gamma]$X]tj[{a$X,\[Alpha]$X},{b$X,\[Beta]$X},{c$X,\[Gamma]$X}]tj[{ap$X,\[Alpha]p$X},{bp$X,\[Beta]p$X},{cp$X,\[Gamma]p$X}]
 			};
 		];
-(*Print[TraditionalForm[result]];*)
+(*Print[StringForm["solved: `` -> ``",chosen,TraditionalForm[result]]];*)
 		tmp=prepare3jmSignAll[result,Append[solved,chosen],DeleteCases[todo,chosen]];
 		If[tmp[[1]]==True,
 			succeed=True;
 			result=tmp[[2]];
+			(*,Print[StringForm["my bad, try again: ``",chosen]];*)
 		];
 	];
-	If [!succeed,
-		Return[{False,expr}],
-		Return[{True,result}]
+	If [succeed,
+		Return[{True,result}],
+		Return[{False,expr}]		
 	];
 ];
 (*
@@ -769,9 +774,9 @@ simplifySymbolRulesDispatch=Dispatch[simplifySymbolRules];
 (*Functions*)
 
 
-Options[simplifyAMSum]={Print->False,Timing-> False,TimingComplete->False,IgnoreSums->{}};
+Options[simplifyAMSum]={Print->False,Timing-> False,TimingComplete->False,IgnoreSums->{},OnlySums->{}};
 simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
-		prev,result,ignoredPart,ignored,summation,used,
+		prev,result,ignoredPart,ignored,onlysums,summation,used,
 		prepareRules=Join[prepareSumRules,prepareSymbolOrderlessRules,simplifyCollectSumRules,simplifySumRules,simplifyFactorRules],
 		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifyConditionOrderlessRules],
 		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules],
@@ -785,7 +790,11 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 	consistencyCheck[expr];
 	result=toTJ[expr]//.prepareRules;
 	ignored=OptionValue[IgnoreSums];
+	onlysums=OptionValue[OnlySums];
 	summation=Flatten[Cases[result,sum[a_,set[u__]]:> {u},{0,Infinity}]];
+	If[Length[onlysums]>0,
+		ignored=Complement[summation,onlysums];
+	];
 	ignored=Intersection[summation,ignored];
 	used=Complement[summation,ignored];
 	(*Print[summation];
@@ -851,7 +860,7 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 getLastExpression:=$lastexpression;
 
 
-(* ::Section:: *)
+(* ::Section::Closed:: *)
 (*Simplifying Integrals with Spherical Harmonics*)
 
 
@@ -871,7 +880,7 @@ simplifySHRawRules={
 cleanupNewSHVariables[expr_]:=Module[{result,variables},
 	result=replaceUnique[expr,varl,varL];
 	result=replaceUnique[result,varm,varM];	
-	declareQNInteger[Cases[result,varL[_] || varM[_],{0,Infinity}]];
+	declareQNInteger[DeleteDuplicates@Cases[result,varL[_]|varM[_],{0,Infinity}]];
 	Return[result];
 ];
 
@@ -940,11 +949,12 @@ simplifySHRules=Join[refineSHRule/@simplifySHRawRules,{
 		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
 		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
 		sh[varl[1],varm[1],\[Theta],\[Phi]],set[varl[1],varm[1]]],
-	sh[l1_,m1_,\[Theta]_[a_ r_],\[Phi]_[a_ r_]]:>sh[l1,m1,\[Theta][r],\[Phi][r]],
+	sh[l1_,m1_,\[Theta]_[a_ r_],\[Phi]_[a_ r_]]:>sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
+	sh[l1_,m1_,\[Theta]_[- a_. r_],\[Phi]_[- a_. r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
 	sh[l1_,m1_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]:>
 		sum[sh[varl[1],varm[1],\[Theta][r1],\[Phi][r1]]sh[l1-varl[1],varm[2],\[Theta][r2],\[Phi][r2]]
 		Sqrt[4\[Pi]/(2 varl[1]+1)Binomial[2 l1 +1,2 varl[1]]]
-		r1^varl[1] r2^(l1-varl[1])Abs[r1+r2]^(-l1)
+		Abs[r1]^varl[1] Abs[r2]^(l1-varl[1])Abs[r1+r2]^(-l1)
 		cg[{varl[1],varm[1]},{l1-varl[1],varm[2]},{l1,m1}]
 			,set[varl[1],varm[1],varm[2]]]
 }];
