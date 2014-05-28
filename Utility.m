@@ -163,6 +163,12 @@ simplifySeperateIntegrate::usage=
 replaceUnique::usage=
 ""
 
+seperateIntegrate::usage=
+""
+
+seperateFunction::usage=
+""
+
 
 Begin["`Private`"]
 ClearAll[Evaluate[Context[]<>"*"]];
@@ -368,25 +374,45 @@ evenPermM[l_]:=(Alternatives@@EvenPermutations[l]);
 evenPermM[l__]:=(Sequence/@Alternatives@@EvenPermutations[{l}]);
 
 simplifySumRules={
+		KroneckerDelta[a_,b_]^n_:> KroneckerDelta[a,b]/;n>1,
 		KroneckerDelta[-a_,-b_]:> KroneckerDelta[a,b],
 		KroneckerDelta[a_,-b_]:> KroneckerDelta[-a,b]/;NumericQ[a]&&!NumericQ[b],
-		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[b_,d___]]:> sum[(a/.b-> c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]],
+		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[b_,d___]]:> sum[(a/.b-> c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]||FreeQ[{d},c],
 		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[d___]]:> sum[(a/.b-> c) KroneckerDelta[b,c],set[d]]/;FreeQAll[{d},{b,c}]&&!FreeQ[a,b]&&!FreeQ[a,c]&&(!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]),
-		sum[a_ sum[b_,set[c___]],set[d___]]:> sum[a b,set[c,d]]
+		sum[a_. sum[b_,set[c___]],set[d___]]:> sum[a b,set[c,d]]/;FreeQAll[a,{c}],
+		sum[a_. sum[b_,set[c___]]+m_,set[d___]]:> sum[a b,set[c,d]]+sum[m,set[d]]/;FreeQAll[a,{c}],
+		sum[a_. (sum[b_,set[c___]]+n_)+m_.,set[d___]]:> sum[a b,set[c,d]]+sum[a n+m,set[d]]/;FreeQAll[a,{c}]
 };
 
 simplifyIntegrateRules={
 		integrate[a_ integrate[b_,set[c___]],set[d___]]:> integrate[a b,set[c,d]],
-		integrate[a_ sum[b_,set[c___]],set[d___]]:> sum[integrate[a b,set[d]],set[c]]/;FreeQAll[{c},{d}]
+		integrate[a_ sum[b_,set[c___]],set[d___]]:> sum[integrate[a b,set[d]],set[c]]/;FreeQAll[{c},{d}]&&FreeQAll[{a},{c}],
+		integrate[a_ (sum[b_,set[c___]]+ m_.)+n_. ,set[d___]]:> sum[integrate[a b,set[d]],set[c]]+integrate[a m+n,set[d]]/;FreeQAll[{c},{d}]&&FreeQAll[{a},{c}],
+		integrate[0,set[___]]-> 0
 };
 
-checkDependence[a_,b_,c__]:= (And@@(FreeQ[{a},#]||FreeQ[b,#]&/@{c}));
+checkDependence[a_,b_,c__]:= (And@@(FreeQ[{a},#]||FreeQ[{b},#]&/@{c}));
 getDependent[a_,c__]:=Select[{c},(!FreeQ[{a},#])&];
 getIndependent[a_,c__]:=Select[{c},(FreeQ[{a},#])&];
 simplifySeperateIntegrateRules={
-	integrate[Shortest[a_] b_.,set[c__]]:> a integrate[b,set[c]]/;FreeQAll[a,{c}],	
+	integrate[Shortest[a_] b_.,set[c__]]:> a integrate[b,set[c]]/;FreeQAll[a,{c}],
 	integrate[Shortest[a_] b_,set[c__]]/;checkDependence[a,b,c] :> integrate[a,set@@getDependent[a,c]]integrate[b,set@@getIndependent[a,c]]
 };
+
+seperateIntegrate[expr_]:=expr/.{
+			integrate[a_,set[u__]]->  integrateDepen [1,set[u]] integrateUnso [a,set[u]]
+		}//.{
+			integrateUnso[Shortest[a_] b_.,set[c__]]integrateDepen[x_,set[c__]] :>
+				If[FreeQAll[{a},{c}],
+					(*then*)
+					a integrateUnso[b,set[c]]integrateDepen[x,set[c]],
+					(*else*)
+					integrateUnso[ b,set[c]]integrateDepen[x a,set[c]]
+				]
+		}//.{
+			integrateUnso[1,set[__]]:>1,
+			integrateDepen-> integrate
+		};
 
 $offset[x_]:=0;
 replaceUnique[expr_,old_,new_]:=Module[{addOffset,result},
@@ -395,6 +421,11 @@ replaceUnique[expr_,old_,new_]:=Module[{addOffset,result},
 	$offset[new]=$offset[new]+addOffset;
 	Return[result];
 ]
+
+seperateFunctionHelper[expr_,pattern_]:=Module[{result},
+	result=expr//.simplifyIntegrateRules//.simplifySumRules;
+	result={result,1};
+];
 
 
 End[]

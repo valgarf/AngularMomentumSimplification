@@ -768,13 +768,14 @@ simplifySymbolRules=refineSymbolRule/@Join[
 		Flatten[createAlternativeRules3jm/@simplify3jmRawRules,1]
 	];
 simplifySymbolRulesDispatch=Dispatch[simplifySymbolRules];
+(*simplifySymbolRules//TraditionalForm*)
 
 
 (* ::Subsection:: *)
 (*Functions*)
 
 
-Options[simplifyAMSum]={Print->False,Timing-> False,TimingComplete->False,IgnoreSums->{},OnlySums->{}};
+Options[simplifyAMSum]={Print->False,Timing-> False,TimingComplete->False,IgnoreSums->{},OnlySums->{},NoSymbols->False};
 simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 		prev,result,ignoredPart,ignored,onlysums,summation,used,
 		prepareRules=Join[prepareSumRules,prepareSymbolOrderlessRules,simplifyCollectSumRules,simplifySumRules,simplifyFactorRules],
@@ -783,6 +784,9 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 		cleanupFn,
 		t1,t2,t3,t4,tmp
 	},
+	If[OptionValue[NoSymbols],
+		Return[toTJ[expr]//.prepareRules//.simplifyRules//.cleanupRules];
+	];
 	cleanupFn=(*If[Length[ignored]==0,
 		#//.simplifyRules//.cleanupRules,*)
 		ignoredPart/.{sum[a_,set[u___]]:> sum[a #,set[u]]}//.simplifyRules//.cleanupRules
