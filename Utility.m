@@ -169,6 +169,9 @@ seperateIntegrate::usage=
 seperateFunction::usage=
 ""
 
+seperateFunction::vec=
+""
+
 
 Begin["`Private`"]
 ClearAll[Evaluate[Context[]<>"*"]];
@@ -376,6 +379,7 @@ evenPermM[l__]:=(Sequence/@Alternatives@@EvenPermutations[{l}]);
 simplifySumRules={
 		KroneckerDelta[a_,b_]^n_:> KroneckerDelta[a,b]/;n>1,
 		KroneckerDelta[-a_,-b_]:> KroneckerDelta[a,b],
+		KroneckerDelta[a_,-a_]:> KroneckerDelta[a,0],
 		KroneckerDelta[a_,-b_]:> KroneckerDelta[-a,b]/;NumericQ[a]&&!NumericQ[b],
 		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[b_,d___]]:> sum[(a/.b-> c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]||FreeQ[{d},c],
 		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[d___]]:> sum[(a/.b-> c) KroneckerDelta[b,c],set[d]]/;FreeQAll[{d},{b,c}]&&!FreeQ[a,b]&&!FreeQ[a,c]&&(!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]),
@@ -385,9 +389,11 @@ simplifySumRules={
 };
 
 simplifyIntegrateRules={
-		integrate[a_ integrate[b_,set[c___]],set[d___]]:> integrate[a b,set[c,d]],
-		integrate[a_ sum[b_,set[c___]],set[d___]]:> sum[integrate[a b,set[d]],set[c]]/;FreeQAll[{c},{d}]&&FreeQAll[{a},{c}],
-		integrate[a_ (sum[b_,set[c___]]+ m_.)+n_. ,set[d___]]:> sum[integrate[a b,set[d]],set[c]]+integrate[a m+n,set[d]]/;FreeQAll[{c},{d}]&&FreeQAll[{a},{c}],
+		DiracDelta[-a_-b_]:> DiracDelta[a+b],
+		integrate[a_ DiracDelta[Except[_?NumberQ,b_]+c_],set[b_,d___]]:> integrate[(a/.b-> -c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]||FreeQ[{d},c],
+		integrate[a_. integrate[b_,set[c___]],set[d___]]:> integrate[a b,set[c,d]],
+		integrate[a_. sum[b_,set[c___]],set[d___]]:> sum[integrate[a b,set[d]],set[c]]/;FreeQAll[{c},{d}]&&FreeQAll[{a},{c}],
+		integrate[a_. (sum[b_,set[c___]]+ m_.)+n_. ,set[d___]]:> sum[integrate[a b,set[d]],set[c]]+integrate[a m+n,set[d]]/;FreeQAll[{c},{d}]&&FreeQAll[{a},{c}],
 		integrate[0,set[___]]-> 0
 };
 
@@ -426,6 +432,9 @@ seperateFunctionHelper[expr_,pattern_]:=Module[{result},
 	result=expr//.simplifyIntegrateRules//.simplifySumRules;
 	result={result,1};
 ];
+
+sphvec[a_]:=sphvec[a,\[Theta][a],\[Phi][a]]
+sum/:MakeBoxes[sphvec[a_,\[Theta][a_],\[Phi][a_]], fmt:TraditionalForm]:=MakeBoxes[OverVector[a],fmt];
 
 
 End[]

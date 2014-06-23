@@ -48,7 +48,7 @@ testExpr[6]=sum[cg[{1/2,mt[a]},{1/2,mt[b]},{t[a,b],mt[a,b]}] cg[{1/2,mtp[a]},{1/
 (*declareQNInteger[{t,tp,t[a,b],mt[a,b],tp[a,b],mtp[a,b]}];*)
 declareIndexedAM[t]
 declarePrimed[{m,\[Mu],\[Alpha],\[Beta]}];
-declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,\[Delta],e,f,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],t,tp,\[Tau],m,\[Mu],mp,\[Mu]p,u,up,x,xp}];
+declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,\[Delta],e,f,g,h,j,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],t,tp,\[Tau],m,\[Mu],mp,\[Mu]p,u,up,x,xp,y}];
 
 
 
@@ -136,6 +136,15 @@ AngularMomentum`Private`varK[3]
 
 (* ::Subsection:: *)
 (*misc*)
+
+
+simplifyAMSum[sum[(2x+1)nj[{a,f,x},{d,q,e},{p,c,b}]sj[{a,f,x},{e,b,s}],x],Print->False]//TraditionalForm
+simplifyAMSum[sum[(-1)^x(2x+1)nj[{a,f,x},{d,q,e},{p,c,b}]sj[{a,f,x},{b,e,s}],x],Print->False]//TraditionalForm
+simplifyAMSum[sum[(-1)^x(2x+1)nj[{d,q,e},{a,f,x},{p,c,b}]sj[{a,f,x},{e,b,s}],x],Print->False]//TraditionalForm
+simplifyAMSum[sum[(2 x+1)(2 y+1) nj[{a,b,x},{c,d,y},{e,f,j}]nj[{a,b,x},{c,d,y},{g,h,j}],x,y],Print->False]//TraditionalForm
+simplifyAMSum[sum[(-1)^(y)(2x+1)(2y+1)nj[{a,b,x},{c,d,y},{e,f,j}]nj[{a,b,x},{c,d,y},{g,h,j}],x,y],Print->False]//TraditionalForm
+simplifyAMSum[sum[(-1)^(y)(2x+1)(2y+1)nj[{a,b,x},{c,d,y},{p,q,r}]sj[{x,y,r},{j,h,g}]sj[{a,b,x},{h,g,e}]sj[{c,d,y},{j,g,f}],x,y],Print->False]//TraditionalForm
+
 
 
 (*testExpr[4]//TraditionalForm

@@ -283,6 +283,7 @@ simplifyCollectIntegrateRules={
 
 simplifyConditionOrderlessRules={
 		sjOL[set[a_,b_,c_],u__]conTri[a_,b_,c_]:> sjOL[set[a,b,c],u],
+		njOL[u__,set[set[a_,b_,c_],v__]]conTri[a_,b_,c_]:> njOL[u,set[set[a,b,c],v]],
 		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]conTri[a_,b_,c_]:> tj[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}],
 		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{c_,\[Gamma]_}]conZero[\[Alpha]_,\[Beta]_,\[Gamma]_]:> tj[{a,\[Alpha]},{b,\[Beta]},{c,\[Gamma]}]
 	};
@@ -410,7 +411,8 @@ simplify6jRawRulesOLD={
 
 
 simplify3jmRawRules={
-		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{0,0}]:> KroneckerDelta[a,b]KroneckerDelta[\[Alpha],-\[Beta]]/Sqrt[2 a+1] (-1)^(a-\[Alpha]),
+		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{0,0}]^n_.:> KroneckerDelta[a,b]KroneckerDelta[\[Alpha],-\[Beta]]/(Sqrt[2 a+1])^n (-1)^(n a - n \[Alpha]),		
+		tj[{a_,\[Alpha]_},{b_,\[Beta]_},{0,\[Gamma]_}]^n_.:> KroneckerDelta[\[Gamma],0] KroneckerDelta[a,b]KroneckerDelta[\[Alpha],-\[Beta]]/(Sqrt[2 a+1])^n (-1)^(n a - n \[Alpha]),
 		sum[(-1)^(a_+\[Alpha]_)tj[{a_,-\[Alpha]_},{a_,\[Alpha]_},{c_,\[Gamma]_}],\[Alpha]_]
 			:> Sqrt[2 a+1]KroneckerDelta[c,0]KroneckerDelta[\[Gamma],0],
 		sum[(-1)^(p_+\[Psi]_+q_+\[Kappa]_)tj[{a_,\[Alpha]_},{p_,-\[Psi]_},{q_,-\[Kappa]_}]tj[{p_,\[Psi]_},{q_,\[Kappa]_},{ap_,\[Alpha]p_}],\[Psi]_,\[Kappa]_]
@@ -449,11 +451,27 @@ simplify6jRawRules={
 		sum[(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{e_,f_,q_}]sj[{e_,f_,x_},{a_,b_,r_}],x_]
 			:> facX[x] nj[{a,f,r},{d,q,e},{p,c,b}],
 		sum[(-1)^(a_+b_+c_+d_+e_+f_+g_+h_+p_+q_+r_+s_+x_)(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{e_,f_,q_}]sj[{e_,f_,x_},{g_,h_,r_}]sj[{g_,h_,x_},{b_,a_,s_}],x_]
-			:> sum[(-1)^(2*var[1]+a+b+e+f)(2 var[1]+1)facX[x] nj[{s,a,b},{g,r,f},{a,e,var[1]}]sj[{b,f,var[1]},{q,p,c}]sj[{a,e,var[1]},{q,p,d}],var[1]],
+			:> sum[(-1)^(2*var[1]+a+b+e+f)(2 var[1]+1)facX[x] nj[{s,h,b},{g,r,f},{a,e,var[1]}]sj[{b,f,var[1]},{q,p,c}]sj[{a,e,var[1]},{q,p,d}],var[1]],
 		sum[(2 x_+1)sj[{a_,b_,x_},{c_,d_,p_}]sj[{c_,d_,x_},{e_,f_,q_}]sj[{e_,f_,x_},{g_,h_,r_}]sj[{g_,h_,x_},{a_,b_,s_}],x_]
 			:> sum[(2 var[1]+1) nj[{a,f,var[1]},{d,q,e},{p,c,b}]nj[{a,f,var[1]},{h,r,e},{s,g,b}],var[1]]
 	};
 
+
+
+(* ::Subsubsection:: *)
+(*9J*)
+
+
+simplify9jRawRules={
+		sum[(2 x_+1)nj[{a_,f_,x_},{d_,q_,e_},{p_,c_,b_}]sj[{a_,f_,x_},{e_,b_,s_}],x_]
+			:> (-1)^(2s)sj[{a,b,s},{c,d,p}]sj[{c,d,s},{e,f,q}],
+		sum[(2 x_+1)(2 y_+1) nj[{a_,b_,x_},{c_,d_,y_},{e_,f_,j_}]nj[{a_,b_,x_},{c_,d_,y_},{g_,h_,j_}],x_,y_]
+			:> 1/((2e+1)(2f+1))KroneckerDelta[e,g]KroneckerDelta[f,h]conTri[a,c,e]conTri[b,d,h]conTri[g,f,j],
+		sum[(-1)^(y_)(2 x_+1)(2 y_+1) nj[{a_,b_,x_},{c_,d_,y_},{e_,f_,j_}]nj[{a_,b_,x_},{c_,d_,y_},{g_,h_,j_}],x_,y_]
+			:> (-1)^(2b+f+h)nj[{a,d,g},{c,b,h},{e,f,j}],
+		sum[(-1)^(y_)(2 x_+1)(2 y_+1)nj[{a_,b_,x_},{c_,d_,y_},{p_,q_,r_}]sj[{x_,y_,r_},{j_,h_,g_}]sj[{a_,b_,x_},{h_,g_,e_}]sj[{c_,d_,y_},{j_,g_,f_}],x_,y_]
+			:> (-1)^(a-b+d+e-j-p+r)nj[{e,b,h},{f,d,j},{p,q,r}]sj[{a,c,p},{f,e,g}]
+};
 
 
 (* ::Subsection:: *)
@@ -614,6 +632,21 @@ createAlternativeRules3jm[rule_]:=Module[{ruleList,rulePattern,ruleResult,rulePa
 	];
 ];
 
+createAlternativeRules9j::error="Could not process rule `1`";
+createAlternativeRules9j[rule_]:=Module[{ruleList,rulePattern,ruleResult,rulePatternList},
+	ruleList=ruleSplit[rule];
+	rulePattern=ruleList[[2]];
+	rulePatternList=rulePattern/.
+		{nj[{a_,b_,c_},{d_,e_,f_},{g_,h_,j_}]:> alternative[nj[{a,b,c},{d,e,f},{g,h,j}],(-1)^(a+b+c+d+e+f+g+h+j)nj[{a,b,c},{g,h,j},{d,e,f}]]}/.
+		alternative-> List;
+	If[Head[rulePatternList]===List,
+		Return[ruleJoin[ReplacePart[ruleList,2-> #]]&/@rulePatternList];			
+		,
+		Message[createAlternativeRules9j::error,rule];
+		Return[{rule}];
+	];
+];
+
 facX[]:=1;
 facX[a_]:=1/;MemberQ[$integerQN,Verbatim[a]];
 facX[a_]:=-1/;MemberQ[$halfintegerQN,Verbatim[a]];
@@ -765,6 +798,7 @@ FullForm]\)]:>speM[#]}&;
 
 simplifySymbolRules=refineSymbolRule/@Join[
 		simplify6jRawRules,
+		Flatten[createAlternativeRules9j/@simplify9jRawRules,1],
 		Flatten[createAlternativeRules3jm/@simplify3jmRawRules,1]
 	];
 simplifySymbolRulesDispatch=Dispatch[simplifySymbolRules];
@@ -873,7 +907,10 @@ getLastExpression:=$lastexpression;
 
 
 simplifySHRawRules={
-	integrate[sh[l_,ml_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> Sqrt[4 \[Pi]] KroneckerDelta[l,0]KroneckerDelta[ml,0]
+	integrate[sh[l_,ml_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> Sqrt[4 \[Pi]] KroneckerDelta[l,0]KroneckerDelta[ml,0],
+	integrate[sh[l1_,ml1_,\[Theta]_,\[Phi]_]sh[l2_,ml2_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> (-1)^ml2 KroneckerDelta[l1,l2]KroneckerDelta[ml1,-ml2],
+	integrate[sh[l1_,ml1_,\[Theta]_,\[Phi]_]sh[l2_,ml2_,\[Theta]_,\[Phi]_]sh[l3_,ml3_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> Sqrt[(2l1+1)(2l2+1)(2l3+1)/(4\[Pi])]tj[{l1,ml1},{l2,ml2},{l3,ml3}]tj[{l1,0},{l2,0},{l3,0}],
+    integrate[Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> 4 \[Pi]
 };
 
 
@@ -948,11 +985,12 @@ If no condition is present we will surely add one during this function*)
 (*Expanded Rules*)
 
 
-simplifySHRules=Join[refineSHRule/@simplifySHRawRules,{
-	sh[l1_,m1_,\[Theta]_,\[Phi]_]sh[l2_,m2_,\[Theta]_,\[Phi]_]:>
+simplifySHRulesIntegrate=refineSHRule/@simplifySHRawRules;
+simplifySHRules={
+	sh[l1_,m1_,\[Theta]_,\[Phi]_]sh[l2_,m2_,\[Theta]_,\[Phi]_]sh[l3_,m3_,\[Theta]_,\[Phi]_]sh[l4_,m4_,\[Theta]_,\[Phi]_]:>
 		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
 		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
-		sh[varl[1],varm[1],\[Theta],\[Phi]],set[varl[1],varm[1]]],
+		sh[varl[1],varm[1],\[Theta],\[Phi]]sh[l3,m3,\[Theta],\[Phi]]sh[l4,m4,\[Theta],\[Phi]],set[varl[1],varm[1]]],
 	sh[l1_,m1_,\[Theta]_[a_ r_],\[Phi]_[a_ r_]]:>sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
 	sh[l1_,m1_,\[Theta]_[- a_. r_],\[Phi]_[- a_. r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
 	sh[l1_,m1_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]:>
@@ -961,24 +999,28 @@ simplifySHRules=Join[refineSHRule/@simplifySHRawRules,{
 		Abs[r1]^varl[1] Abs[r2]^(l1-varl[1])Abs[r1+r2]^(-l1)
 		cg[{varl[1],varm[1]},{l1-varl[1],varm[2]},{l1,m1}]
 			,set[varl[1],varm[1],varm[2]]]
-}];
+};
 
 
 (* ::Subsection:: *)
 (*Functions*)
 
 
-simplifySHIntegral[expr_]:=Module[{
+Options[simplifySHIntegral]={Integrate->False};
+simplifySHIntegral[expr_,OptionsPattern[]]:=Module[{
 		prepareRules=Join[prepareIntegrateRules,prepareSumRules,prepareSHRules],
 		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifyIntegrateRules,simplifyConditionOrderlessRules],
 		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules],
-		result,prev
+		result,prev,rulesInUse
 	},
+	If[OptionValue[Integrate],
+		rulesInUse=Join[simplifySHRules,simplifySHRulesIntegrate],
+		rulesInUse=simplifySHRules];
 	result=expr//.prepareRules//.simplifyRules;
 	prev=None;
 	While[prev=!=result,
 		prev=result;
-		result=result/.simplifySHRules;
+		result=result/.rulesInUse;
 		result=cleanupNewSHVariables[result];
 		result=result//.simplifyRules;		
 	];
