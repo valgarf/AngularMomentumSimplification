@@ -152,25 +152,26 @@ simplifySumRules::usage=
 "A set of rules to simplify sums (using \"sum\" instead of the built-in Sum)"
 
 simplifyIntegrateRules::usage=
-""
+"A set of rules to simplify integrals (using \"integrate\" instead of the built-in Integrate)"
 
 simplifySeperateIntegrateRules::usage=
-""
-
-simplifySeperateIntegrate::usage=
-""
+"Slow version! Use the \"seperateIntegrate\" function instead! 
+A set of rules to simplify integrals by splitting integrals if possible(using \"integrate\" instead of the built-in Integrate)"
 
 replaceUnique::usage=
-""
+"replaceUnique[expr,oldSymbol,uniqueSymbol] replaces all instances of oldSymbol[_] with a unique symbol (by keeping an internal counter, so that uniqueSymbol[index] will always have an index that is larger than for any previously used symbols)."
 
 seperateIntegrate::usage=
-""
+"seperateIntegrate[expr] simplifies integrals in the expression by seperating them into seperate integrals if possible."
 
-seperateFunction::usage=
-""
+simplifySumIntegrate::usage=
+"simplifySumIntegrate[expr] completely simplifies expression involving sums and integrals (Using \"sum\" and \"integrate\" instead of the built-in versions)."
 
-seperateFunction::vec=
-""
+Inactivate::usage==
+"Unfinished!"
+
+Activate::usage==
+"Unfinished!"
 
 
 Begin["`Private`"]
@@ -420,6 +421,7 @@ seperateIntegrate[expr_]:=expr/.{
 			integrateDepen-> integrate
 		};
 
+simplifySumIntegrate[expr_]:=(seperateIntegrate[expr//.Join[simplifySumRules,simplifyIntegrateRules]])//.Join[simplifySumRules,simplifyIntegrateRules];
 $offset[x_]:=0;
 replaceUnique[expr_,old_,new_]:=Module[{addOffset,result},
 	addOffset=Length[DeleteDuplicates@Cases[expr,old[_],{0,Infinity}]];
@@ -428,13 +430,16 @@ replaceUnique[expr_,old_,new_]:=Module[{addOffset,result},
 	Return[result];
 ]
 
+(*
 seperateFunctionHelper[expr_,pattern_]:=Module[{result},
 	result=expr//.simplifyIntegrateRules//.simplifySumRules;
 	result={result,1};
 ];
 
-sphvec[a_]:=sphvec[a,\[Theta][a],\[Phi][a]]
+*)
+(*sphvec[a_]:=sphvec[a,\[Theta][a],\[Phi][a]]
 sum/:MakeBoxes[sphvec[a_,\[Theta][a_],\[Phi][a_]], fmt:TraditionalForm]:=MakeBoxes[OverVector[a],fmt];
+*)
 
 
 End[]

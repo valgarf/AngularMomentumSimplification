@@ -41,7 +41,7 @@ addTest[tochar[tonum[k]],k];
 addTest[removeSign[-a],a];
 addTest[removeSign[a],a];
 addTest[removeSign[-f[-a]],f[-a]];
-addTest[removeSign[f[-a]],f[a]];
+addTest[removeSign[f[-a]],f[-a]];
 addTest[sign[-a],-1];
 addTest[sign[a],1];
 addTest[sign[-f[a]],-1];
@@ -99,6 +99,8 @@ addTest[f[d,a,c,b]/.testSpecialMatchingRule[2],g[a,b,c,d]];
 addTest[f[a,b,d,c]/.testSpecialMatchingRule[2],f[a,b,d,c]];
 addTest[f[a,c,b,d]/.testSpecialMatchingRule[2],f[a,c,b,d]];
 addTest[f[b,a,c,d]/.testSpecialMatchingRule[2],f[b,a,c,d]];
+testIntegration[0]=sum[f[a,b]e[c]integrate[g[u,v]sum[i[d],set[d]],set[u,v,w]],set[a,b,c]]
+addTest[simplifySumIntegrate[testIntegration[0]],sum[e[c] f[a,b] i[d] integrate[g[u,v],set[u,v,w]],set[a,b,c,d]]];
 endTestModule[];
 
 
@@ -137,10 +139,13 @@ sp
 (*Misc*)
 
 
-declareIndexed[{u,v,a}]
+declareIndexed[{u,v,a}];
 (testExpr=sum[f[v[1],v[2],u[1],u[2]],u[2],v[1]])//TraditionalForm
 (testExpr=replaceUnique[testExpr,v,a])//TraditionalForm
 (testExpr=replaceUnique[testExpr,u,a])//TraditionalForm
+
+
+
 
 
 

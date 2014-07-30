@@ -4,6 +4,7 @@
 (*Package Initialise*)
 
 
+$Path=DeleteDuplicates@Append[$Path,ToFileName[{NotebookDirectory[]}]];
 BeginPackage["AngularMomentum`",{"Utility`"}]
 ClearAll[Evaluate[Context[]<>"*"]];
 
@@ -438,6 +439,7 @@ simplify3jmRawRules={
 
 
 simplify6jRawRules={
+		sj[{a_,b_,0},{d_,e_,f_}]^n_.:> KroneckerDelta[a,b]KroneckerDelta[d,e]/(Sqrt[2 a+1]Sqrt[2d+1])^n (-1)^(n (a +e +f)),		
 		sum[(2 x_+1)sj[{a_,b_,x_},{a_,b_,c_}],x_]
 			:> (-1)^(2c)conTri[a,b,c],				
 		sum[(-1)^(a_+b_+x_)(2 x_+1)sj[{a_,b_,x_},{b_,a_,c_}],x_]
@@ -470,7 +472,13 @@ simplify9jRawRules={
 		sum[(-1)^(y_)(2 x_+1)(2 y_+1) nj[{a_,b_,x_},{c_,d_,y_},{e_,f_,j_}]nj[{a_,b_,x_},{c_,d_,y_},{g_,h_,j_}],x_,y_]
 			:> (-1)^(2b+f+h)nj[{a,d,g},{c,b,h},{e,f,j}],
 		sum[(-1)^(y_)(2 x_+1)(2 y_+1)nj[{a_,b_,x_},{c_,d_,y_},{p_,q_,r_}]sj[{x_,y_,r_},{j_,h_,g_}]sj[{a_,b_,x_},{h_,g_,e_}]sj[{c_,d_,y_},{j_,g_,f_}],x_,y_]
-			:> (-1)^(a-b+d+e-j-p+r)nj[{e,b,h},{f,d,j},{p,q,r}]sj[{a,c,p},{f,e,g}]
+			:> (-1)^(a-b+d+e-j-p+r)nj[{e,b,h},{f,d,j},{p,q,r}]sj[{a,c,p},{f,e,g}],
+(* infinite loop:*)
+		sum[(-1)^(p_+q_-e_-f_)(2 x_+1)nj[{a_,b_,p_},{c_,d_,q_},{e_,f_,x_}]sj[{p_,q_,x_},{k_,l_,g_}]sj[{e_,f_,x_},{k_,l_,h_}],x_]
+			:> sum[(-1)^(b+g-c-h)(2 var[1]+1) nj[{d,f,b},{q,k,g},{c,h,var[1]}]sj[{b,g,var[1]},{l,a,p}]sj[{c,h,var[1]},{l,a,e}],var[1]],
+		sum[(-1)^(p_+q_-r_-s_)(2 x_+1)nj[{a_,b_,p_},{c_,d_,q_},{r_,s_,x_}]nj[{e_,f_,p_},{g_,h_,q_},{r_,s_,x_}],x_]
+			:> sum[(-1)^(b+g-c-f)(2 var[1]+1) nj[{a,p,b},{r,e,g},{c,f,var[1]}]nj[{d,s,b},{q,h,g},{c,f,var[1]}],var[1]]
+
 };
 
 
@@ -859,6 +867,19 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 	While[prev=!=result,
 		(*result=addConditions[result];*)
 		$lastexpression=cleanupFn[result];
+		If[Length[onlysums]>0,
+			summation=Flatten[Cases[result,sum[a_,set[u__]]:> {u},{0,Infinity}]];
+			ignored=Complement[summation,onlysums];
+			ignored=Intersection[summation,ignored];
+			used=Complement[summation,ignored];
+			tmp={result/.sum[a_,set[u___]]:>a,sum[1,set@@used],ignoredPart/.{sum[a_,set[u___]]:> sum[a ,set@@Union[{u},ignored]]} };
+			tmp=tmp//.{
+				{Shortest[x_] y_.,sum[a_,set[u___]],sum[b_,set[v___]]}:>{y,sum[a,set[u]],sum[x b,set[v]]}/;FreeQAll[x,used],
+				{Shortest[x_] y_.,sum[a_,set[u___]],sum[b_,set[v___]]}:>{y,sum[x a,set[u]],sum[b,set[v]]}/;!FreeQAll[x,used]
+			};
+			result=tmp[[2]];
+			ignoredPart=tmp[[3]];
+		];
 		If[OptionValue[Print],
 			(*If[Length[ignored]>0,*)
 				Print[
@@ -898,7 +919,7 @@ simplifyAMSum[expr_,OptionsPattern[]]:=Module[{
 getLastExpression:=$lastexpression;
 
 
-(* ::Section::Closed:: *)
+(* ::Section:: *)
 (*Simplifying Integrals with Spherical Harmonics*)
 
 
@@ -991,8 +1012,14 @@ simplifySHRules={
 		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
 		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
 		sh[varl[1],varm[1],\[Theta],\[Phi]]sh[l3,m3,\[Theta],\[Phi]]sh[l4,m4,\[Theta],\[Phi]],set[varl[1],varm[1]]],
+	sh[l1_,m1_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]sh[l2_,m2_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]:>
+		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
+		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
+		sh[varl[1],varm[1],\[Theta][r1+r2],\[Phi][r1+r2]],set[varl[1],varm[1]]],
 	sh[l1_,m1_,\[Theta]_[a_ r_],\[Phi]_[a_ r_]]:>sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
-	sh[l1_,m1_,\[Theta]_[- a_. r_],\[Phi]_[- a_. r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
+	sh[l1_,m1_,\[Theta]_[a_ r_],\[Phi]_[a_ r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a<0,
+	sh[l1_,m1_,\[Theta]_[-a_. r_],\[Phi]_[-a_. r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
+	sh[l1_,m1_,\[Theta]_[-r_],\[Phi]_[-r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]],
 	sh[l1_,m1_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]:>
 		sum[sh[varl[1],varm[1],\[Theta][r1],\[Phi][r1]]sh[l1-varl[1],varm[2],\[Theta][r2],\[Phi][r2]]
 		Sqrt[4\[Pi]/(2 varl[1]+1)Binomial[2 l1 +1,2 varl[1]]]

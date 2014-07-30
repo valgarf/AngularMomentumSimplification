@@ -48,7 +48,7 @@ testExpr[6]=sum[cg[{1/2,mt[a]},{1/2,mt[b]},{t[a,b],mt[a,b]}] cg[{1/2,mtp[a]},{1/
 (*declareQNInteger[{t,tp,t[a,b],mt[a,b],tp[a,b],mtp[a,b]}];*)
 declareIndexedAM[t]
 declarePrimed[{m,\[Mu],\[Alpha],\[Beta]}];
-declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,\[Delta],e,f,g,h,j,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],t,tp,\[Tau],m,\[Mu],mp,\[Mu]p,u,up,x,xp,y}];
+declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,\[Delta],e,f,g,h,j,k,l,m,n,o,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],t,tp,\[Tau],m,\[Mu],mp,\[Mu]p,u,up,v,w,x,xp,y}];
 
 
 
@@ -112,7 +112,7 @@ AngularMomentum`Private`cleanupNewVariables[
 ];
 
 
-(* ::Subsection::Closed:: *)
+(* ::Subsection:: *)
 (*TraditionalForm Output*)
 
 
@@ -146,11 +146,30 @@ simplifyAMSum[sum[(-1)^(y)(2x+1)(2y+1)nj[{a,b,x},{c,d,y},{e,f,j}]nj[{a,b,x},{c,d
 simplifyAMSum[sum[(-1)^(y)(2x+1)(2y+1)nj[{a,b,x},{c,d,y},{p,q,r}]sj[{x,y,r},{j,h,g}]sj[{a,b,x},{h,g,e}]sj[{c,d,y},{j,g,f}],x,y],Print->False]//TraditionalForm
 
 
+declareIndexedAM[t]
+declarePrimed[{m,\[Mu],\[Alpha],\[Beta]}];
+declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,\[Delta],e,f,g,h,j,k,l,m,n,o,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],t,tp,\[Tau],m,\[Mu],mp,\[Mu]p,u,up,v,w,x,xp,y}];
+simplifyAMSum[sum[(-1)^(p+q-e-f)(2 x+1)nj[{a,b,p},{c,d,q},{e,f,x}]sj[{p,q,x},{k,l,g}]sj[{e,f,x},{k,l,h}],x],OnlySums->{x},Print->True]//TraditionalForm
 
-(*testExpr[4]//TraditionalForm
-SetOptions[simplifyAMSum,Print-> True];
-testExpr[4]//simplifyAMSum//TraditionalForm
-SetOptions[simplifyAMSum,Print-> False];*)
+
+declareIndexed[{l,m}];
+(res[0]=integrate[sh[l[1],m[1],\[Theta],\[Phi]]sh[l[2],m[2],\[Theta],\[Phi]]sh[l[3],m[3],\[Theta],\[Phi]]sh[l[4],m[4],\[Theta],\[Phi]]Sin[\[Theta]],set[\[Phi],\[Theta],x]])//TraditionalForm
+i=1;(res[i]=simplifySHIntegral[res[i-1],Integrate->True])//TraditionalForm
+i=2;res[i-1]//toTJ//TraditionalForm
+
+
+declareIndexedAM[{k,x,v,z,l}];
+declareQNInteger[{k,kp,v,mk[1],mkp[1],mk[2],mkp[2],mv,x,xp,mx,mxp,l,lp,ml,mlp,z,mz}];
+expr[0]=sum[(-1)^(x+xp+mx+mxp+mv+mz+ml+mlp+l+lp)tj[{k,mk[1]},{kp,mkp[1]},{v,-mv}]tj[{x,-mx},{xp,-mxp},{v,mv}]
+tj[{l-k,mk[2]},{lp-kp,mkp[2]},{z,-mz}]tj[{x,mx},{xp,mxp},{z,mz}]
+tj[{k,mk[1]},{l-k,mk[2]},{l,-ml}]tj[{kp,mkp[1]},{lp-kp,mkp[2]},{lp,-mlp}]
+,set[mk[1],mkp[1],mk[2],mkp[2],mx,mxp,mz,mv]];
+
+expr[0]//TraditionalForm
+(expr[1]=simplifyAMSum[expr[0],OnlySums->{mx,mxp},Print->False])//TraditionalForm
+(expr[2]=simplifyAMSum[expr[1],OnlySums->{mk[1],mkp[1],mkp[2],mk[2]},Print->False])//TraditionalForm
+(expr[3]=simplifyAMSum[expr[2],OnlySums->{AngularMomentum`Private`varK[2],mz},Print->False])//TraditionalForm
+simplifyAMSum[expr[3],Print->False]//TraditionalForm
 
 
 (*
