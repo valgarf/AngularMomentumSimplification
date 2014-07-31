@@ -48,11 +48,13 @@ testExpr[6]=sum[cg[{1/2,mt[a]},{1/2,mt[b]},{t[a,b],mt[a,b]}] cg[{1/2,mtp[a]},{1/
 (*declareQNInteger[{t,tp,t[a,b],mt[a,b],tp[a,b],mtp[a,b]}];*)
 declareIndexedAM[t]
 declarePrimed[{m,\[Mu],\[Alpha],\[Beta]}];
-declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],,\[Gamma]p,d,dp,\[Delta],e,f,g,h,j,k,l,m,n,o,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],t,tp,\[Tau],m,\[Mu],mp,\[Mu]p,u,up,v,w,x,xp,y}];
+declareQNInteger[{a,ap,\[Alpha],\[Alpha]p,b,bp,\[Beta],\[Beta]p,c,cp,\[Gamma],\[Gamma]p,d,dp,\[Delta],\[Delta]p,e,f,g,h,j,k,l,m,n,o,p,\[Psi],q,\[Kappa],r,\[Rho],s,\[Sigma],t,tp,\[Tau],m,\[Mu],mp,\[Mu]p,u,up,v,w,x,xp,y}];
 
 
 
 beginTestModule["Varshalovich"];
+testEqn[14][exp]=sum[tj[{a,\[Alpha]},{b,\[Beta]},{0,\[Gamma]}]^3,set[\[Gamma]]];
+testEqn[14][res]= KroneckerDelta[a,b]KroneckerDelta[\[Alpha],-\[Beta]]/(Sqrt[2 a+1])^3 (-1)^(a + \[Alpha]);
 testEqn[1][exp]=sum[(-1)^(a-\[Alpha])tj[{a,\[Alpha]},{a,-\[Alpha]},{c,\[Gamma]}],\[Alpha]];
 testEqn[1][res]=Sqrt[2 a +1] KroneckerDelta[c,0] KroneckerDelta[\[Gamma],0];
 testEqn[2][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa])tj[{a,-\[Alpha]},{p,\[Psi]},{q,\[Kappa]}]tj[{p,-\[Psi]},{q,-\[Kappa]},{ap,\[Alpha]p}],\[Psi],\[Kappa]];
@@ -70,6 +72,8 @@ testEqn[7][exp]=sum[(-1)^(p-\[Psi]+q-\[Kappa]+r-\[Rho]+s-\[Sigma])tj[{p,\[Psi]},
 testEqn[7][res]=sum[(-1)^(r+c+d+p+AngularMomentum`Private`varK[1]+AngularMomentum`Private`varK[2])(2 AngularMomentum`Private`varK[1]+1)sj[{a,b,AngularMomentum`Private`varK[1]},{r,p,q}]sj[{c,d,AngularMomentum`Private`varK[1]},{p,r,s}]tj[{a,\[Alpha]},{AngularMomentum`Private`varK[1],-AngularMomentum`Private`varK[2]},{b,\[Beta]}]tj[{d,\[Delta]},{AngularMomentum`Private`varK[1],AngularMomentum`Private`varK[2]},{c,\[Gamma]}],set[AngularMomentum`Private`varK[1],AngularMomentum`Private`varK[2]]];
 
 (*6j symbols *)
+testEqn[15][exp]=sum[sj[{a,b,0},{d,e,f}]^4,set[f]];
+testEqn[15][res]=sum[conTri[a,d,f]KroneckerDelta[a,b]KroneckerDelta[d,e]/(Sqrt[2 a+1]Sqrt[2d+1])^3 (-1)^(a +e +f),set[f]];		
 testEqn[8][exp]=sum[(2x+1)sj[{a,b,x},{a,b,c}],x];
 testEqn[8][res]= conTri[a,b,c];
 testEqn[9][exp]=sum[(-1)^(a+b+x)(2x+1)sj[{a,b,x},{b,a,c}],x];
@@ -82,10 +86,35 @@ testEqn[12][exp]=sum[(-1)^(a+b+c+d+e+f+p+q+r+x)(2x+1)sj[{a,b,x},{c,d,p}]sj[{c,d,
 testEqn[12][res]=sj[{a,d,p},{q,r,e}]sj[{b,c,p},{q,r,f}];
 testEqn[13][exp]=sum[(-1)^(2x)(2x+1)sj[{a,b,x},{c,d,p}]sj[{c,d,x},{e,f,q}]sj[{e,f,x},{a,b,r}],x];
 testEqn[13][res]=nj[{a,r,f},{p,b,c},{d,e,q}];
+testEqn[16][exp]=sum[(-1)^(a+b+c+d+e+f+g+h+p+q+r+s+x)(2 x+1)sj[{a,b,x},{c,d,p}]sj[{c,d,x},{e,f,q}]sj[{e,f,x},{g,h,r}]sj[{g,h,x},{b,a,s}],x];
+testEqn[16][res]=(sum[(-1)^(2*var[1]+a+b+e+f)(2 var[1]+1)facX[x] nj[{s,h,b},{g,r,f},{a,e,var[1]}]sj[{b,f,var[1]},{q,p,c}]sj[{a,e,var[1]},{q,p,d}],var[1]]/.{var[1]->AngularMomentum`Private`varK[2]});
+testEqn[17][exp]=sum[(2 x+1)sj[{a,b,x},{c,d,p}]sj[{c,d,x},{e,f,q}]sj[{e,f,x},{g,h,r}]sj[{g,h,x},{a,b,s}],x];
+testEqn[17][res]=(sum[(2 var[1]+1) nj[{a,f,var[1]},{d,q,e},{p,c,b}]nj[{a,f,var[1]},{h,r,e},{s,g,b}],var[1]]/.{var[1]->AngularMomentum`Private`varK[2]});
+
+(*9j symbols *)
+testEqn[18][exp]=;
+testEqn[18][res]=;
+testEqn[19][exp]=;
+testEqn[19][res]=;
+testEqn[20][exp]=;
+testEqn[20][res]=;
+testEqn[18][exp]=;
+testEqn[18][res]=;
+testEqn[18][exp]=;
+testEqn[18][res]=;
+testEqn[18][exp]=;
+testEqn[18][res]=;
+testEqn[18][exp]=;
+testEqn[18][exp]=;
+testEqn[18][res]=;
+testEqn[18][exp]=;
+testEqn[18][res]=;
+testEqn[18][exp]=;
+testEqn[18][res]=;
 
 
 addFn=(addTest[simplifyAMSum[#1,Print->False],#2]&)@@({testEqn[#][exp],testEqn[#][res]})&;
-addFn/@Table[i,{i,13}];
+addFn/@Table[i,{i,17}];
 
 endTestModule[];
 
@@ -93,26 +122,26 @@ endTestModule[];
 runTests[msgSuccess->None];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*Should yield error messages*)
 
 
 declarePrimed[u];
-declareQNHalfInteger[{a,b,c,d,\[Alpha],\[Beta],\[Gamma]}];
-declareQNInteger[{u,up,\[Mu],\[Xi],t,tp}];
+declareQNHalfInteger[{hi1,hi2,hi3,hi4,hi5,hi6}];
+declareQNInteger[{i1,i2,i3,i4,i5,i6}];
 Print["should yield an undeclared symbol (consistencyCheck::notfound) error"];
-testExpr[2]*tj[{a,\[Alpha]},{b,\[Beta]},{X,\[Xi]}]//consistencyCheck;
-Print["should yield an error due to unfulfilled triangular condition for {a,b,c} and {\[Alpha],\[Beta],\[Beta]}"];
-testExpr[2]*tj[{a,\[Alpha]},{b,\[Beta]},{c,\[Beta]}]//consistencyCheck;
-Print["should yield an error as {b,\[Mu]} and {u,\[Beta]} do not match"];
-testExpr[2]*tj[{a,\[Alpha]},{b,\[Mu]},{u,\[Beta]}]//consistencyCheck;
+testExpr[2]*tj[{hi1,hi2},{hi3,hi4},{UNDEC,i}]//consistencyCheck;
+Print["should yield an error due to unfulfilled triangular condition for {hi1,,hi2,hi3} and {hi4,hi5,hi6}"];
+testExpr[2]*tj[{hi1,hi4},{hi2,hi5},{hi3,hi6}]//consistencyCheck;
+Print["should yield an error as {hi2,i2} and {i1,hi4} do not match"];
+testExpr[2]*tj[{hi1,hi3},{hi2,i2},{i1,hi4}]//consistencyCheck;
 Print["should complain about conditions that cannot be fulfilled. The reason are undefined symbols (axx,bxx,\[Alpha]xx,\[Beta]xx)"];
 AngularMomentum`Private`cleanupNewVariables[
 	tj[{axx,\[Alpha]xx},{bxx,\[Beta]xx},{var[1],var[2]}]//.var[i_]:> AngularMomentum`Private`var[i]
 ];
 
 
-(* ::Subsection:: *)
+(* ::Subsection::Closed:: *)
 (*TraditionalForm Output*)
 
 

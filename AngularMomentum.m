@@ -49,7 +49,19 @@ rotateSymbols::usage=
 Usage: expr // rotateSymbols[symb1,symb2,...]"
 
 simplifyAMSum::usage=
-"simplifyAMSum[expr] can simplify sums of 3j, 6j, and 9j symbols. For complex expressions it might not finish. It is advised to run simplifyAMSum[expr,Print->True], which prints the expression it is working on."
+"simplifyAMSum[expr] can simplify sums of 3j, 6j, and 9j symbols. For complex expressions it might not finish. It is advised to run simplifyAMSum[expr,Print->True], which prints the expression it is working on.
+Possible options:
+  Print            -> True|False (default: False)
+  TimingComplete   -> True|False (default: False)
+  IgnoreSums       -> list of summation indices (default: {})
+  OnlySums         -> list of summation indices (default: all occurring sums)
+  NoSymbols        -> True|False (default: False)
+Print: Setting this option to \"True\" prints all intermediate expressions used during the simplification
+TimingComplete: Setting this option to \"True\" prints times needed for various steps (useful for profiling only)
+IgnoreSums: None of the summation indices given in this list are considered
+OnlySums: If this option is supplied only the summation indices given are considered
+NoSymbols: Setting this option to \"True\" prevents simplification of any 3j,6j or 9j symbol.
+ "
 
 extractConditions::usage=
 "extractConditions[expr] extracts all condtions (conTri/conZero) from the expression"
@@ -58,10 +70,21 @@ consistencyCheck::usage=
 "consistencyCheck[expr] checks the expressions for consistency using available conditions and complaining about missing information."
 
 getLastExpression::usage=
-"Returns the last expression the simplify function worked on."
+"Returns the last expression the simplifyAMSum function worked on."
 
 simplifySHIntegral::usage=
-""
+"simplifySHIntegral[expr] can simplify integrals of spherical harmonics. Most likely the Integrate->True option should be supplied.
+Possible options:
+  Integrate        -> True|False (default: False)
+  IgnoreIntegrals  -> list of integration variables (default: {})
+  OnlyIntegrals    -> list of integration variables (default: all occurring sums)  
+  ReduceProducts   -> Ture|False (default: False)
+  
+Integrate: Setting this option to \"True\" performs integrals if possible
+IgnoreIntegrals: None of the integration variables are considered
+OnlyIntegrals: If this option is supplied only the integration variables given are considered
+ReduceProducts: Setting this option to \"True\" simplifies products of spherical harmonics without integrating them. Should only be used when Integrate->False
+"
 
 
 Begin["`Private`"]
@@ -439,7 +462,7 @@ simplify3jmRawRules={
 
 
 simplify6jRawRules={
-		sj[{a_,b_,0},{d_,e_,f_}]^n_.:> KroneckerDelta[a,b]KroneckerDelta[d,e]/(Sqrt[2 a+1]Sqrt[2d+1])^n (-1)^(n (a +e +f)),		
+		sj[{a_,b_,0},{d_,e_,f_}]^n_.:> conTri[a,d,f] KroneckerDelta[a,b]KroneckerDelta[d,e]/(Sqrt[2 a+1]Sqrt[2d+1])^n (-1)^(n (a +e +f)),		
 		sum[(2 x_+1)sj[{a_,b_,x_},{a_,b_,c_}],x_]
 			:> (-1)^(2c)conTri[a,b,c],				
 		sum[(-1)^(a_+b_+x_)(2 x_+1)sj[{a_,b_,x_},{b_,a_,c_}],x_]
@@ -1007,6 +1030,12 @@ If no condition is present we will surely add one during this function*)
 
 
 simplifySHRulesIntegrate=refineSHRule/@simplifySHRawRules;
+simplifySHRulesProduct={
+	sh[l1_,m1_,\[Theta]_,\[Phi]_]sh[l2_,m2_,\[Theta]_,\[Phi]_]:>
+		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
+		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
+		sh[varl[1],varm[1],\[Theta],\[Phi]],set[varl[1],varm[1]]],
+};
 simplifySHRules={
 	sh[l1_,m1_,\[Theta]_,\[Phi]_]sh[l2_,m2_,\[Theta]_,\[Phi]_]sh[l3_,m3_,\[Theta]_,\[Phi]_]sh[l4_,m4_,\[Theta]_,\[Phi]_]:>
 		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
@@ -1033,16 +1062,20 @@ simplifySHRules={
 (*Functions*)
 
 
-Options[simplifySHIntegral]={Integrate->False};
+Options[simplifySHIntegral]={Integrate->False,IgnoreIntegrals->{},OnlyIntegrals->{},ReduceProducts->False};
 simplifySHIntegral[expr_,OptionsPattern[]]:=Module[{
 		prepareRules=Join[prepareIntegrateRules,prepareSumRules,prepareSHRules],
 		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifyIntegrateRules,simplifyConditionOrderlessRules],
 		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules],
 		result,prev,rulesInUse
 	},
+	rulesInUse=simplifySHRules;	
 	If[OptionValue[Integrate],
-		rulesInUse=Join[simplifySHRules,simplifySHRulesIntegrate],
-		rulesInUse=simplifySHRules];
+		rulesInUse=Join[rulesInUse,simplifySHRulesIntegrate];
+	];
+	If[OptionValue[ReduceProducts],
+		rulesInUse=Join[rulesInUse,simplifySHRulesProduct];
+	];
 	result=expr//.prepareRules//.simplifyRules;
 	prev=None;
 	While[prev=!=result,
