@@ -181,6 +181,7 @@ consistencyCheck[expr_]:=Module[{conditions,symbols,notfound,sums,replaceknownsy
 	];
 
 	If[Length[notfound]>0,result=False];
+
 	Do[Message[consistencyCheck::halfinteger,TraditionalForm[conditions[[i]]]],{i,notfound}];
 
 	(*Check that angular momentum quantum number and the correspondng
@@ -953,7 +954,7 @@ getLastExpression:=$lastexpression;
 simplifySHRawRules={
 	integrate[sh[l_,ml_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> Sqrt[4 \[Pi]] KroneckerDelta[l,0]KroneckerDelta[ml,0],
 	integrate[sh[l1_,ml1_,\[Theta]_,\[Phi]_]sh[l2_,ml2_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> (-1)^ml2 KroneckerDelta[l1,l2]KroneckerDelta[ml1,-ml2],
-	integrate[sh[l1_,ml1_,\[Theta]_,\[Phi]_]sh[l2_,ml2_,\[Theta]_,\[Phi]_]sh[l3_,ml3_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> Sqrt[(2l1+1)(2l2+1)(2l3+1)/(4\[Pi])]tj[{l1,ml1},{l2,ml2},{l3,ml3}]tj[{l1,0},{l2,0},{l3,0}],
+	integrate[sh[l1_,ml1_,\[Theta]_,\[Phi]_]sh[l2_,ml2_,\[Theta]_,\[Phi]_]sh[l3_,ml3_,\[Theta]_,\[Phi]_]Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> Sqrt[2l1+1]Sqrt[2l2+1]Sqrt[2l3+1]/Sqrt[4\[Pi]]tj[{l1,ml1},{l2,ml2},{l3,ml3}]tj[{l1,0},{l2,0},{l3,0}],
     integrate[Sin[\[Theta]_],\[Theta]_,\[Phi]_]:> 4 \[Pi]
 };
 
@@ -1032,17 +1033,17 @@ If no condition is present we will surely add one during this function*)
 simplifySHRulesIntegrate=refineSHRule/@simplifySHRawRules;
 simplifySHRulesProduct={
 	sh[l1_,m1_,\[Theta]_,\[Phi]_]sh[l2_,m2_,\[Theta]_,\[Phi]_]:>
-		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
+		sum[1/Sqrt[4\[Pi]]Sqrt[2l1+1]Sqrt[2l2+1]/Sqrt[2 varl[1]+1]
 		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
-		sh[varl[1],varm[1],\[Theta],\[Phi]],set[varl[1],varm[1]]],
+		sh[varl[1],varm[1],\[Theta],\[Phi]],set[varl[1],varm[1]]]
 };
 simplifySHRules={
 	sh[l1_,m1_,\[Theta]_,\[Phi]_]sh[l2_,m2_,\[Theta]_,\[Phi]_]sh[l3_,m3_,\[Theta]_,\[Phi]_]sh[l4_,m4_,\[Theta]_,\[Phi]_]:>
-		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
+		sum[1/Sqrt[4\[Pi]]Sqrt[2l1+1]Sqrt[2l2+1]/Sqrt[2 varl[1]+1]
 		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
 		sh[varl[1],varm[1],\[Theta],\[Phi]]sh[l3,m3,\[Theta],\[Phi]]sh[l4,m4,\[Theta],\[Phi]],set[varl[1],varm[1]]],
 	sh[l1_,m1_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]sh[l2_,m2_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]:>
-		sum[Sqrt[(2l1+1)(2l2+1)/((2 varl[1]+1)4\[Pi])]
+		sum[1/Sqrt[4\[Pi]]Sqrt[2l1+1]Sqrt[2l2+1]/Sqrt[2 varl[1]+1]
 		cg[{l1,0},{l2,0},{varl[1],0}]cg[{l1,m1},{l2,m2},{varl[1],varm[1]}]
 		sh[varl[1],varm[1],\[Theta][r1+r2],\[Phi][r1+r2]],set[varl[1],varm[1]]],
 	sh[l1_,m1_,\[Theta]_[a_ r_],\[Phi]_[a_ r_]]:>sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
@@ -1051,7 +1052,7 @@ simplifySHRules={
 	sh[l1_,m1_,\[Theta]_[-r_],\[Phi]_[-r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]],
 	sh[l1_,m1_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]:>
 		sum[sh[varl[1],varm[1],\[Theta][r1],\[Phi][r1]]sh[l1-varl[1],varm[2],\[Theta][r2],\[Phi][r2]]
-		Sqrt[4\[Pi]/(2 varl[1]+1)Binomial[2 l1 +1,2 varl[1]]]
+		Sqrt[4\[Pi] Binomial[2 l1 +1,2 varl[1]]]/Sqrt[2 varl[1]+1]
 		Abs[r1]^varl[1] Abs[r2]^(l1-varl[1])Abs[r1+r2]^(-l1)
 		cg[{varl[1],varm[1]},{l1-varl[1],varm[2]},{l1,m1}]
 			,set[varl[1],varm[1],varm[2]]]
@@ -1067,8 +1068,11 @@ simplifySHIntegral[expr_,OptionsPattern[]]:=Module[{
 		prepareRules=Join[prepareIntegrateRules,prepareSumRules,prepareSHRules],
 		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifyIntegrateRules,simplifyConditionOrderlessRules],
 		cleanupRules=Join[cleanupSumRules,cleanupFactorRules,cleanupSymbolOrderlessRules],
-		result,prev,rulesInUse
+		result,prev,rulesInUse,
+		ignoreIntegrals,onlyIntegrals
 	},
+	ignoreIntegrals=OptionValue[IgnoreIntegrals];
+	onlyIntegrals=OptionValue[OnlyIntegrals];
 	rulesInUse=simplifySHRules;	
 	If[OptionValue[Integrate],
 		rulesInUse=Join[rulesInUse,simplifySHRulesIntegrate];
@@ -1076,11 +1080,15 @@ simplifySHIntegral[expr_,OptionsPattern[]]:=Module[{
 	If[OptionValue[ReduceProducts],
 		rulesInUse=Join[rulesInUse,simplifySHRulesProduct];
 	];
-	result=expr//.prepareRules//.simplifyRules;
+	result=toTJ[expr//.prepareRules//.simplifyRules];
 	prev=None;
 	While[prev=!=result,
 		prev=result;
-		result=result/.rulesInUse;
+		If[Length[onlyIntegrals]>0,
+			result=keepNotInvolving[result,Sequence@@onlyIntegrals,OnlyHeads->{sh}],
+			result=keepInvolving[result,Sequence@@ignoreIntegrals,OnlyHeads->{sh}]
+		];
+		result=toTJ[keepClean[result/.rulesInUse]];	
 		result=cleanupNewSHVariables[result];
 		result=result//.simplifyRules;		
 	];

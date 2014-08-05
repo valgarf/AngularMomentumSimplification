@@ -117,6 +117,9 @@ ruleJoin::usage=
 normalizeSumRule::usage=
 "normalizeSumRule[rule] simplifies the input rule if the rule involves a sum. It identifies factors that are ndependent of he summation variables and moves them to the right-hand side of the rule."
 
+$indexed::usage=
+"List of all indexed symbols for use in other functions, e.g. \"getAllVariables\"";
+
 declareIndexed::usage=
 "declareIndexed[symbol] declares a symbol to be indexed. Afterwards expressions like symbol[a,b] will be represented with a and b as indices when using TraditionalForm"
 
@@ -167,11 +170,20 @@ seperateIntegrate::usage=
 simplifySumIntegrate::usage=
 "simplifySumIntegrate[expr] completely simplifies expression involving sums and integrals (Using \"sum\" and \"integrate\" instead of the built-in versions)."
 
-Inactivate::usage==
-"Unfinished!"
+keepNotInvolving::usage=
+"Encloses all function heads that do not depend on any of the variables supplied in Utility`Private`KEEP
+Options: 
+  IgnoreHeads: list of symbols, these heads are not enclosed.
+  OnlyHeads: list of symbols, only heads from this list are enclosed";
 
-Activate::usage==
-"Unfinished!"
+keepInvolving::usage=
+"Encloses all function heads that depend on any of the variables supplied in Utility`Private`KEEP
+Options: 
+  IgnoreHeads: list of symbols, these heads are not enclosed.
+  OnlyHeads: list of symbols, only heads from this list are enclosed";
+
+keepClean::usage=
+"Removes Utility`Private`KEEP";
 
 
 Begin["`Private`"]
@@ -179,6 +191,7 @@ ClearAll[Evaluate[Context[]<>"*"]];
 
 
 $altFunctionList={sum};
+$indexed=<||>;
 SetAttributes[set,Orderless]
 SetAttributes[conX,HoldAll]
 SetAttributes[rX,{HoldRest,SequenceHold}]
@@ -222,7 +235,8 @@ invertArgumentsHelper[expr_,arg_]:= Flatten[expr/.{{arg-> arg},{arg-> -arg}},1];
 invertArgumentsHelper[expr_,arg_,remainder__]:=invertArgumentsHelper[ Flatten[expr/.{{arg-> arg},{arg-> -arg}},1],remainder];
 invertArguments[arg___]:=invertArgumentsHelper[#,arg]&;
 
-getAllVariables[expr___]:=DeleteDuplicates@Cases[{expr},x_Symbol/;FreeQ[Attributes[x],Constant],Infinity];
+(*getAllVariables[expr___]:=DeleteDuplicates@Cases[{expr},x_Symbol/;FreeQ[Attributes[x],Constant],Infinity];*)
+getAllVariables[expr___]:=DeleteDuplicates@Cases[{expr},x_Symbol?(FreeQ[Attributes[#],Constant]&)|x_Symbol?(Lookup[Utility`$indexed,#,False]&)[__],Infinity];
 
 removeBlanks[a___]:= a/.Pattern-> pat//.pat[x_,Blank[]]:> x/.pat-> Pattern;
 
@@ -266,6 +280,7 @@ normalizeSumRule[rule_]:=Module[{ruleList,rulePattern,ruleResult,ruleParts,resul
 
 SetAttributes[declareIndexed,Listable]
 declareIndexed[x_]:=Module[{},
+	$indexed[x]=True;
 	x/:MakeBoxes[x[a__], fmt:TraditionalForm]:=SubscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]]];
 ];
 
@@ -274,10 +289,13 @@ declarePrimedHelper[x_,xp_]:=Module[{},
 ];
 
 declareIndexedPrimedHelper[x_,xp_]:=Module[{},
+	$indexed[xp]=True;
 	xp/:MakeBoxes[xp[a__], fmt:TraditionalForm]:=SubsuperscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]],"\[Prime]"];
 ];
 
 declareIndexedAMHelper[x_,mx_,mxp_]:=Module[{},
+	$indexed[mx]=True;
+	$indexed[mxp]=True;
 	mx/:MakeBoxes[mx[a__], fmt:TraditionalForm]:=SubscriptBox[MakeBoxes[Global`m,fmt],SubscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]]]];
 	mxp/:MakeBoxes[mxp[a__], fmt:TraditionalForm]:=SubsuperscriptBox[MakeBoxes[Global`m,fmt],SubscriptBox[MakeBoxes[x,fmt],RowBox[Riffle[MakeBoxes[#,fmt]&/@{a},"\[InvisibleComma]"]]],"\[Prime]"];
 	mx/:MakeBoxes[mx, fmt:TraditionalForm]:=SubscriptBox[MakeBoxes[Global`m,fmt],MakeBoxes[x,fmt]];
@@ -440,6 +458,28 @@ seperateFunctionHelper[expr_,pattern_]:=Module[{result},
 (*sphvec[a_]:=sphvec[a,\[Theta][a],\[Phi][a]]
 sum/:MakeBoxes[sphvec[a_,\[Theta][a_],\[Phi][a_]], fmt:TraditionalForm]:=MakeBoxes[OverVector[a],fmt];
 *)
+
+Options[keepInvolving]={IgnoreHeads->{},OnlyHeads->{}};
+Options[keepNotInvolving]={IgnoreHeads->{},OnlyHeads->{}};
+
+keepHelperGetCheckFunc[onlyHeads_,ignoreHeads_]:=
+If[Length[onlyHeads]>0,
+(MemberQ[onlyHeads,#]&&FreeQ[{#},KEEP]&&!Lookup[$indexed,#,False]&),
+(!MemberQ[ignoreHeads,#]&&FreeQ[{#},KEEP]&&!Lookup[$indexed,#,False]&)
+];
+
+keepNotInvolving[expr_,vars___,opts:OptionsPattern[]]:=
+Module[{tmpCheckFunc},
+tmpCheckFunc=keepHelperGetCheckFunc[OptionValue[OnlyHeads],OptionValue[IgnoreHeads]];
+expr//.{f_?(tmpCheckFunc)[u__?(FreeQAll[{#},{vars}]&)]:>KEEP[f][u]}
+];
+keepInvolving[expr_,vars___,opts:OptionsPattern[]]:=
+Module[{tmpCheckFunc},
+tmpCheckFunc=keepHelperGetCheckFunc[OptionValue[OnlyHeads],OptionValue[IgnoreHeads]];
+expr//.{f_?(tmpCheckFunc)[u__/;!FreeQAll[{u},{vars}]]:>KEEP[f][u]}
+];
+(*keepNotInvolving[expr,Sequence@@Complement[getAllVariables[expr],{vars}]];*)
+keepClean[expr_]:=expr//.KEEP[x_]:> x;
 
 
 End[]

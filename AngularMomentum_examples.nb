@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    136718,       3851]
-NotebookOptionsPosition[    131075,       3675]
-NotebookOutlinePosition[    131433,       3691]
-CellTagsIndexPosition[    131390,       3688]
+NotebookDataLength[    136643,       3834]
+NotebookOptionsPosition[    131001,       3658]
+NotebookOutlinePosition[    131356,       3674]
+CellTagsIndexPosition[    131313,       3671]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -603,27 +603,24 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Symbol \\\"\[NoBreak]\\!\\(t[\\(\\(a, \
-b\\)\\)]\\)\[NoBreak]\\\" has not been declared an integer or half-integer \
-quantum number. Please use the functions declareQNInteger and \
-declareQNHalfInteger. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
-ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
-ButtonData:>\\\"paclet:ref/message/General/notfound\\\", ButtonNote -> \
-\\\"AngularMomentum`consistencyCheck::notfound\\\"]\\)\"\>"}]], "Message", \
-"MSG",
+   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], ":", 
+  " ", "\<\"Symbol \\\"\[NoBreak]\\!\\(t[\\(\\(a, b\\)\\)]\\)\[NoBreak]\\\" \
+has not been declared an integer or half-integer quantum number. Please use \
+the functions declareQNInteger and declareQNHalfInteger. \
+\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
+ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/notfound\\\", \
+ButtonNote -> \\\"AngularMomentum`consistencyCheck::notfound\\\"]\\)\"\>"}]], \
+"Message", "MSG",
  CellChangeTimes->{3.606111315405006*^9, 3.60612537914675*^9, 
   3.606211232477311*^9}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Symbol \\\"\[NoBreak]\\!\\(mt[a]\\)\[NoBreak]\\\" has not \
-been declared an integer or half-integer quantum number. Please use the \
-functions declareQNInteger and declareQNHalfInteger. \\!\\(\\*ButtonBox[\\\"\
+   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], ":", 
+  " ", "\<\"Symbol \\\"\[NoBreak]\\!\\(mt[a]\\)\[NoBreak]\\\" has not been \
+declared an integer or half-integer quantum number. Please use the functions \
+declareQNInteger and declareQNHalfInteger. \\!\\(\\*ButtonBox[\\\"\
 \[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
 ButtonData:>\\\"paclet:ref/message/General/notfound\\\", ButtonNote -> \
 \\\"AngularMomentum`consistencyCheck::notfound\\\"]\\)\"\>"}]], "Message", \
@@ -634,11 +631,10 @@ ButtonData:>\\\"paclet:ref/message/General/notfound\\\", ButtonNote -> \
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Symbol \\\"\[NoBreak]\\!\\(mt[b]\\)\[NoBreak]\\\" has not \
-been declared an integer or half-integer quantum number. Please use the \
-functions declareQNInteger and declareQNHalfInteger. \\!\\(\\*ButtonBox[\\\"\
+   RowBox[{"consistencyCheck", "::", "notfound"}], "MessageName"], ":", 
+  " ", "\<\"Symbol \\\"\[NoBreak]\\!\\(mt[b]\\)\[NoBreak]\\\" has not been \
+declared an integer or half-integer quantum number. Please use the functions \
+declareQNInteger and declareQNHalfInteger. \\!\\(\\*ButtonBox[\\\"\
 \[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
 ButtonData:>\\\"paclet:ref/message/General/notfound\\\", ButtonNote -> \
 \\\"AngularMomentum`consistencyCheck::notfound\\\"]\\)\"\>"}]], "Message", \
@@ -649,54 +645,53 @@ ButtonData:>\\\"paclet:ref/message/General/notfound\\\", ButtonNote -> \
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"General", "::", "stop"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Further output of \
-\[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck :: notfound\\), \
-\\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this calculation. \
-\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
-ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
-ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+   RowBox[{"General", "::", "stop"}], "MessageName"], ":", 
+  " ", "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck \
+:: notfound\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during \
+this calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.606111315405006*^9, 3.60612537914675*^9, 
   3.6062112326432667`*^9}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
-\\`\\*StyleBox[\\(\[EmptyUpTriangle] {1\\/2 1\\/2 t\\_\\(a \[InvisibleComma] \
-b\\)}\\), Rule[SpanMaxSize, DirectedInfinity[1]]]\\), TraditionalForm, \
-Rule[Editable, True]]\\)\[NoBreak]\\\" cannot be fulfilled as the sum of the \
-arguments cannot yield an integer\"\>"}]], "Message", "MSG",
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], ":", 
+  " ", "\<\"Condition \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`\\*StyleBox[\\(\
+\[EmptyUpTriangle] {1\\/2 1\\/2 t\\_\\(a \[InvisibleComma] b\\)}\\), \
+Rule[SpanMaxSize, DirectedInfinity[1]]]\\), TraditionalForm, Rule[Editable, \
+True]]\\)\[NoBreak]\\\" cannot be fulfilled as the sum of the arguments \
+cannot yield an integer\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.606111315405006*^9, 3.60612537914675*^9, 
   3.60621123273484*^9}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
-\\`\\*TemplateBox[List[RowBox[List[RowBox[List[RowBox[List[\\\"-\\\", \
-SubscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", RowBox[List[\\\"a\\\", \\\"\\\
-\\[InvisibleComma]\\\", \\\"b\\\"]]]]]], \\\"+\\\", SubscriptBox[\\\"m\\\", \
-SubscriptBox[\\\"t\\\", RowBox[List[\\\"a\\\"]]]], \\\"+\\\", SubscriptBox[\\\
-\"m\\\", SubscriptBox[\\\"t\\\", RowBox[List[\\\"b\\\"]]]]]], \\\",\\\", \
-\\\"0\\\"]]], \\\"KroneckerDeltaSeq\\\"]\\), TraditionalForm, Rule[Editable, \
-True]]\\)\[NoBreak]\\\" cannot be fulfilled as the sum of the arguments \
-cannot yield an integer\"\>"}]], "Message", "MSG",
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], ":", 
+  " ", "\<\"Condition \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`\\*TemplateBox[List[RowBox[\
+List[RowBox[List[RowBox[List[\\\"-\\\", SubscriptBox[\\\"m\\\", SubscriptBox[\
+\\\"t\\\", RowBox[List[\\\"a\\\", \\\"\\\\[InvisibleComma]\\\", \
+\\\"b\\\"]]]]]], \\\"+\\\", SubscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", \
+RowBox[List[\\\"a\\\"]]]], \\\"+\\\", SubscriptBox[\\\"m\\\", SubscriptBox[\\\
+\"t\\\", RowBox[List[\\\"b\\\"]]]]]], \\\",\\\", \\\"0\\\"]]], \
+\\\"KroneckerDeltaSeq\\\"]\\), TraditionalForm, Rule[Editable, True]]\\)\
+\[NoBreak]\\\" cannot be fulfilled as the sum of the arguments cannot yield \
+an integer\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.606111315405006*^9, 3.60612537914675*^9, 
   3.606211232853093*^9}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
-\\`\\*StyleBox[\\(\[EmptyUpTriangle] {1\\/2 1\\/2 t\\_\\(a \[InvisibleComma] \
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], ":", 
+  " ", "\<\"Condition \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`\\*StyleBox[\\(\
+\[EmptyUpTriangle] {1\\/2 1\\/2 t\\_\\(a \[InvisibleComma] \
 b\\)\\%\[Prime]}\\), Rule[SpanMaxSize, DirectedInfinity[1]]]\\), \
 TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" cannot be fulfilled \
 as the sum of the arguments cannot yield an integer\"\>"}]], "Message", "MSG",
@@ -707,23 +702,21 @@ as the sum of the arguments cannot yield an integer\"\>"}]], "Message", "MSG",
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"General", "::", "stop"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Further output of \
-\[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck :: halfinteger\\), \
-\\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this calculation. \
-\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
-ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
-ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+   RowBox[{"General", "::", "stop"}], "MessageName"], ":", 
+  " ", "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck \
+:: halfinteger\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed \
+during this calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.606111315405006*^9, 3.60612537914675*^9, 
   3.606211233013879*^9}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Symbols \
+   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], ":", 
+  " ", "\<\"Symbols \
 \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`1\\/2\\), TraditionalForm, \
 Rule[Editable, True]]\\)\[NoBreak]\\\" and \
 \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`m\\_\\(t\\_\\(a\\)\\)\\), \
@@ -736,9 +729,8 @@ half-integer\"\>"}]], "Message", "MSG",
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Symbols \
+   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], ":", 
+  " ", "\<\"Symbols \
 \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`1\\/2\\), TraditionalForm, \
 Rule[Editable, True]]\\)\[NoBreak]\\\" and \
 \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`m\\_\\(t\\_\\(b\\)\\)\\), \
@@ -751,9 +743,8 @@ half-integer\"\>"}]], "Message", "MSG",
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Symbols \
+   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], ":", 
+  " ", "\<\"Symbols \
 \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`t\\_\\(a \[InvisibleComma] \
 b\\)\\), TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" and \\\"\
 \[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`m\\_\\(t\\_\\(a \
@@ -766,14 +757,13 @@ integer and the other is a half-integer\"\>"}]], "Message", "MSG",
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"General", "::", "stop"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Further output of \
-\[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck :: projection\\), \
-\\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during this calculation. \
-\\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", ButtonStyle->\\\"Link\\\", \
-ButtonFrame->None, ButtonData:>\\\"paclet:ref/message/General/stop\\\", \
-ButtonNote -> \\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
+   RowBox[{"General", "::", "stop"}], "MessageName"], ":", 
+  " ", "\<\"Further output of \[NoBreak]\\!\\(\\*StyleBox[\\(consistencyCheck \
+:: projection\\), \\\"MessageName\\\"]\\)\[NoBreak] will be suppressed during \
+this calculation. \\!\\(\\*ButtonBox[\\\"\[RightSkeleton]\\\", \
+ButtonStyle->\\\"Link\\\", ButtonFrame->None, \
+ButtonData:>\\\"paclet:ref/message/General/stop\\\", ButtonNote -> \
+\\\"General::stop\\\"]\\)\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.606111315405006*^9, 3.60612537914675*^9, 
   3.606211233382408*^9}]
 }, Open  ]],
@@ -841,48 +831,44 @@ Cell[BoxData[
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
-\\`\\*TemplateBox[List[RowBox[List[RowBox[List[RowBox[List[\\\"-\\\", \
-SubsuperscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", \
-RowBox[List[\\\"b\\\"]]], \\\"\\\\[Prime]\\\"]]], \\\"+\\\", \
-SubscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", RowBox[List[\\\"b\\\"]]]], \\\
-\"+\\\", \\\"\\\\[Mu]\\\"]], \\\",\\\", \\\"0\\\"]]], \\\"KroneckerDeltaSeq\\\
-\"]\\), TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" cannot be \
-fulfilled as the sum of the arguments cannot yield an integer\"\>"}]], \
-"Message", "MSG",
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], ":", 
+  " ", "\<\"Condition \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`\\*TemplateBox[List[RowBox[\
+List[RowBox[List[RowBox[List[\\\"-\\\", SubsuperscriptBox[\\\"m\\\", \
+SubscriptBox[\\\"t\\\", RowBox[List[\\\"b\\\"]]], \\\"\\\\[Prime]\\\"]]], \
+\\\"+\\\", SubscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", \
+RowBox[List[\\\"b\\\"]]]], \\\"+\\\", \\\"\\\\[Mu]\\\"]], \\\",\\\", \
+\\\"0\\\"]]], \\\"KroneckerDeltaSeq\\\"]\\), TraditionalForm, Rule[Editable, \
+True]]\\)\[NoBreak]\\\" cannot be fulfilled as the sum of the arguments \
+cannot yield an integer\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.606111634324306*^9, 3.6061253835282288`*^9, 
   3.606211250856181*^9}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Condition \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\
-\\`\\*TemplateBox[List[RowBox[List[RowBox[List[SubsuperscriptBox[\\\"m\\\", \
-SubscriptBox[\\\"t\\\", RowBox[List[\\\"a\\\"]]], \\\"\\\\[Prime]\\\"], \\\"-\
-\\\", SubscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", \
-RowBox[List[\\\"a\\\"]]]], \\\"+\\\", \\\"\\\\[Mu]\\\"]], \\\",\\\", \
-\\\"0\\\"]]], \\\"KroneckerDeltaSeq\\\"]\\), TraditionalForm, Rule[Editable, \
-True]]\\)\[NoBreak]\\\" cannot be fulfilled as the sum of the arguments \
-cannot yield an integer\"\>"}]], "Message", "MSG",
+   RowBox[{"consistencyCheck", "::", "halfinteger"}], "MessageName"], ":", 
+  " ", "\<\"Condition \
+\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`\\*TemplateBox[List[RowBox[\
+List[RowBox[List[SubsuperscriptBox[\\\"m\\\", SubscriptBox[\\\"t\\\", \
+RowBox[List[\\\"a\\\"]]], \\\"\\\\[Prime]\\\"], \\\"-\\\", SubscriptBox[\\\"m\
+\\\", SubscriptBox[\\\"t\\\", RowBox[List[\\\"a\\\"]]]], \\\"+\\\", \
+\\\"\\\\[Mu]\\\"]], \\\",\\\", \\\"0\\\"]]], \\\"KroneckerDeltaSeq\\\"]\\), \
+TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" cannot be fulfilled \
+as the sum of the arguments cannot yield an integer\"\>"}]], "Message", "MSG",
+ 
  CellChangeTimes->{3.606111634324306*^9, 3.6061253835282288`*^9, 
   3.606211250935183*^9}],
 
 Cell[BoxData[
  RowBox[{
   StyleBox[
-   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Symbols \
-\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`1\\), TraditionalForm, \
-Rule[Editable, True]]\\)\[NoBreak]\\\" and \
-\\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`\[Mu]\\), TraditionalForm, \
-Rule[Editable, True]]\\)\[NoBreak]\\\" have not been declared consistently, \
-e.g. one might be an integer and the other is a half-integer\"\>"}]], \
-"Message", "MSG",
+   RowBox[{"consistencyCheck", "::", "projection"}], "MessageName"], ":", 
+  " ", "\<\"Symbols \\\"\[NoBreak]\\!\\(\\*TagBox[\\(TraditionalForm\\`1\\), \
+TraditionalForm, Rule[Editable, True]]\\)\[NoBreak]\\\" and \\\"\[NoBreak]\\!\
+\\(\\*TagBox[\\(TraditionalForm\\`\[Mu]\\), TraditionalForm, Rule[Editable, \
+True]]\\)\[NoBreak]\\\" have not been declared consistently, e.g. one might \
+be an integer and the other is a half-integer\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.606111634324306*^9, 3.6061253835282288`*^9, 
   3.606211251049304*^9}]
 }, Open  ]],
@@ -908,9 +894,8 @@ Cell[BoxData[
  RowBox[{
   StyleBox[
    RowBox[{"declareQNInteger", "::", "doubledefinition"}], "MessageName"], 
-  RowBox[{
-  ":", " "}], "\<\"Symbol \[NoBreak]\\!\\(\[Mu]\\)\[NoBreak] has been \
-declared a half-integer quantum number already\"\>"}]], "Message", "MSG",
+  ":", " ", "\<\"Symbol \[NoBreak]\\!\\(\[Mu]\\)\[NoBreak] has been declared \
+a half-integer quantum number already\"\>"}]], "Message", "MSG",
  CellChangeTimes->{3.606111752480803*^9, 3.606125385511077*^9, 
   3.6062112560784063`*^9}],
 
@@ -1760,8 +1745,8 @@ Cell[BoxData[
 Cell["\<\
 A warning about  this AngularMomentum framework. At the moment it has not \
 been tested thoroughly. Therefore you should expect errors. Furthermore it is \
-not finished, 9j symbols do not work yet and the rules for 6j and 3j symbols \
-are somewhat limited.
+not finished, any expression involving 9j symbols should always use the \
+OnlySums option - otherwise it may get stuck in some infinite loop.
 However, I do not intend to extend this package to all possible cases, which \
 might never actually appear in a real application. Nonetheless there will be \
 updates and if you have an expression that can be simplified and this package \
@@ -1772,7 +1757,7 @@ know.\
 \>", "Text",
  CellChangeTimes->{{3.606119793107478*^9, 3.6061199950127077`*^9}, {
   3.6061221522625647`*^9, 3.606122165334873*^9}, {3.6061232481034718`*^9, 
-  3.606123324230801*^9}}]
+  3.606123324230801*^9}, {3.615889233935581*^9, 3.61588927866912*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -3239,9 +3224,7 @@ implementing a formula:\
  CellChangeTimes->{{3.60612345587886*^9, 3.606123519702414*^9}, {
   3.606125592536127*^9, 3.606125593992619*^9}}],
 
-Cell["\<\
-All conditions before simplifying the expression:\
-\>", "Text",
+Cell["All conditions before simplifying the expression:", "Text",
  CellChangeTimes->{{3.6061235426784563`*^9, 3.6061235514791307`*^9}, 
    3.606123951143304*^9}],
 
@@ -3594,11 +3577,11 @@ Cell[BoxData[{
 
 Cell["\<\
 Factors in replacement rules will automatically be moved to the right-hand \
-side, if they are independent of the summation variables. This is done \
+side, if they are independent of the summation variables. This is done using \
 \[OpenCurlyDoubleQuote]normalizeSumRule\[CloseCurlyDoubleQuote]:\
 \>", "Text",
  CellChangeTimes->{{3.6062164172585087`*^9, 3.606216475979117*^9}, 
-   3.606216634332305*^9}],
+   3.606216634332305*^9, {3.615889589548843*^9, 3.6158895918688383`*^9}}],
 
 Cell[CellGroupData[{
 
@@ -3670,13 +3653,13 @@ Cell["", "Text"],
 Cell["", "Text"],
 
 Cell["", "Text"]
-}, Closed]]
+}, Open  ]]
 }, Open  ]]
 },
 WindowSize->{758, 867},
-WindowMargins->{{Automatic, 63}, {41, Automatic}},
+WindowMargins->{{Automatic, 51}, {Automatic, 78}},
 ShowSelection->True,
-FrontEndVersion->"9.0 for Linux x86 (64-bit) (November 20, 2012)",
+FrontEndVersion->"10.0 for Linux x86 (64-bit) (June 27, 2014)",
 StyleDefinitions->"Default.nb"
 ]
 (* End of Notebook Content *)
@@ -3691,167 +3674,167 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[579, 22, 96, 1, 78, "Section"],
-Cell[678, 25, 138, 1, 30, "Text"],
+Cell[579, 22, 96, 1, 65, "Section"],
+Cell[678, 25, 138, 1, 33, "Text"],
 Cell[819, 28, 398, 10, 55, "Input"],
-Cell[1220, 40, 355, 6, 68, "Text"],
-Cell[1578, 48, 212, 4, 51, "Text"],
+Cell[1220, 40, 355, 6, 77, "Text"],
+Cell[1578, 48, 212, 4, 55, "Text"],
 Cell[1793, 54, 4030, 117, 209, "Input"],
-Cell[5826, 173, 226, 5, 30, "Text"],
+Cell[5826, 173, 226, 5, 33, "Text"],
 Cell[CellGroupData[{
 Cell[6077, 182, 164, 3, 32, "Input"],
-Cell[6244, 187, 4729, 136, 198, "Output"]
+Cell[6244, 187, 4729, 136, 234, "Output"]
 }, Open  ]],
-Cell[10988, 326, 315, 7, 49, "Text"],
+Cell[10988, 326, 315, 7, 77, "Text"],
 Cell[11306, 335, 153, 3, 32, "Input"],
-Cell[11462, 340, 190, 4, 30, "Text"],
+Cell[11462, 340, 190, 4, 55, "Text"],
 Cell[CellGroupData[{
 Cell[11677, 348, 125, 2, 32, "Input"],
-Cell[11805, 352, 1600, 47, 81, "Print"]
+Cell[11805, 352, 1600, 47, 78, "Print"]
 }, Open  ]],
-Cell[13420, 402, 107, 1, 30, "Text"],
+Cell[13420, 402, 107, 1, 33, "Text"],
 Cell[CellGroupData[{
 Cell[13552, 407, 165, 3, 32, "Input"],
-Cell[13720, 412, 6099, 170, 155, "Output"]
+Cell[13720, 412, 6099, 170, 189, "Output"]
 }, Open  ]],
-Cell[19834, 585, 458, 8, 68, "Text"],
+Cell[19834, 585, 458, 8, 77, "Text"],
 Cell[CellGroupData[{
 Cell[20317, 597, 166, 3, 32, "Input"],
-Cell[20486, 602, 676, 14, 59, "Message"],
-Cell[21165, 618, 662, 13, 59, "Message"],
-Cell[21830, 633, 660, 13, 59, "Message"],
-Cell[22493, 648, 591, 12, 41, "Message"],
-Cell[23087, 662, 575, 11, 61, "Message"],
-Cell[23665, 675, 871, 15, 49, "Message"],
-Cell[24539, 692, 589, 12, 61, "Message"],
-Cell[25131, 706, 592, 12, 41, "Message"],
-Cell[25726, 720, 622, 13, 81, "Message"],
-Cell[26351, 735, 624, 13, 81, "Message"],
-Cell[26978, 750, 670, 13, 63, "Message"],
-Cell[27651, 765, 591, 12, 41, "Message"]
+Cell[20486, 602, 661, 12, 59, "Message"],
+Cell[21150, 616, 649, 12, 59, "Message"],
+Cell[21802, 630, 647, 12, 59, "Message"],
+Cell[22452, 644, 578, 11, 41, "Message"],
+Cell[23033, 657, 564, 11, 70, "Message"],
+Cell[23600, 670, 860, 15, 49, "Message"],
+Cell[24463, 687, 578, 12, 70, "Message"],
+Cell[25044, 701, 579, 11, 41, "Message"],
+Cell[25626, 714, 609, 12, 90, "Message"],
+Cell[26238, 728, 611, 12, 90, "Message"],
+Cell[26852, 742, 657, 12, 63, "Message"],
+Cell[27512, 756, 578, 11, 41, "Message"]
 }, Open  ]],
-Cell[28257, 780, 647, 13, 106, "Text"],
-Cell[28907, 795, 1170, 32, 77, "Input"],
-Cell[30080, 829, 158, 2, 30, "Text"],
+Cell[28105, 770, 647, 13, 121, "Text"],
+Cell[28755, 785, 1170, 32, 77, "Input"],
+Cell[29928, 819, 158, 2, 33, "Text"],
 Cell[CellGroupData[{
-Cell[30263, 835, 163, 3, 32, "Input"],
-Cell[30429, 840, 802, 15, 52, "Message"],
-Cell[31234, 857, 775, 14, 51, "Message"],
-Cell[32012, 873, 605, 13, 59, "Message"]
+Cell[30111, 825, 163, 3, 32, "Input"],
+Cell[30277, 830, 789, 14, 51, "Message"],
+Cell[31069, 846, 764, 14, 50, "Message"],
+Cell[31836, 862, 588, 10, 59, "Message"]
 }, Open  ]],
-Cell[32632, 889, 531, 9, 71, "Text"],
+Cell[32439, 875, 531, 9, 99, "Text"],
 Cell[CellGroupData[{
-Cell[33188, 902, 138, 2, 32, "Input"],
-Cell[33329, 906, 359, 8, 41, "Message"],
-Cell[33691, 916, 122, 2, 32, "Output"]
+Cell[32995, 888, 138, 2, 32, "Input"],
+Cell[33136, 892, 346, 7, 41, "Message"],
+Cell[33485, 901, 122, 2, 32, "Output"]
 }, Open  ]],
-Cell[33828, 921, 324, 6, 51, "Text"],
+Cell[33622, 906, 324, 6, 55, "Text"],
 Cell[CellGroupData[{
-Cell[34177, 931, 208, 4, 32, "Input"],
-Cell[34388, 937, 175, 3, 32, "Output"]
+Cell[33971, 916, 208, 4, 32, "Input"],
+Cell[34182, 922, 175, 3, 32, "Output"]
 }, Open  ]],
-Cell[34578, 943, 217, 4, 31, "Text"],
-Cell[34798, 949, 100, 2, 32, "Input"],
-Cell[34901, 953, 575, 11, 87, "Text"],
+Cell[34372, 928, 217, 4, 33, "Text"],
+Cell[34592, 934, 100, 2, 32, "Input"],
+Cell[34695, 938, 575, 11, 121, "Text"],
 Cell[CellGroupData[{
-Cell[35501, 968, 389, 9, 32, "Input"],
+Cell[35295, 953, 389, 9, 32, "Input"],
 Cell[CellGroupData[{
-Cell[35915, 981, 8944, 240, 215, "Print"],
-Cell[44862, 1223, 7427, 210, 174, "Print"],
-Cell[52292, 1435, 4206, 127, 120, "Print"],
-Cell[56501, 1564, 2169, 65, 61, "Print"]
+Cell[35709, 966, 8944, 240, 238, "Print"],
+Cell[44656, 1208, 7427, 210, 191, "Print"],
+Cell[52086, 1420, 4206, 127, 129, "Print"],
+Cell[56295, 1549, 2169, 65, 67, "Print"]
 }, Open  ]],
-Cell[58685, 1632, 1498, 46, 133, "Output"]
+Cell[58479, 1617, 1498, 46, 133, "Output"]
 }, Open  ]],
-Cell[60198, 1681, 156, 3, 30, "Text"],
+Cell[59992, 1666, 156, 3, 33, "Text"],
 Cell[CellGroupData[{
-Cell[60379, 1688, 267, 5, 32, "Input"],
-Cell[60649, 1695, 2059, 61, 86, "Output"]
+Cell[60173, 1673, 267, 5, 32, "Input"],
+Cell[60443, 1680, 2059, 61, 74, "Output"]
 }, Open  ]],
-Cell[62723, 1759, 928, 15, 182, "Text"]
+Cell[62517, 1744, 1014, 15, 231, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[63688, 1779, 156, 2, 78, "Section"],
-Cell[63847, 1783, 6446, 179, 363, "Input"],
+Cell[63568, 1764, 156, 2, 65, "Section"],
+Cell[63727, 1768, 6446, 179, 363, "Input"],
 Cell[CellGroupData[{
-Cell[70318, 1966, 169, 3, 32, "Input"],
-Cell[70490, 1971, 9522, 232, 231, "Output"]
+Cell[70198, 1951, 169, 3, 32, "Input"],
+Cell[70370, 1956, 9522, 232, 256, "Output"]
 }, Open  ]],
-Cell[80027, 2206, 1678, 44, 121, "Input"],
-Cell[81708, 2252, 168, 3, 32, "Input"],
+Cell[79907, 2191, 1678, 44, 121, "Input"],
+Cell[81588, 2237, 168, 3, 32, "Input"],
 Cell[CellGroupData[{
-Cell[81901, 2259, 338, 9, 32, "Input"],
-Cell[82242, 2270, 9729, 252, 220, "Print"],
-Cell[91974, 2524, 77, 1, 32, "Output"]
+Cell[81781, 2244, 338, 9, 32, "Input"],
+Cell[82122, 2255, 9729, 252, 231, "Print"],
+Cell[91854, 2509, 77, 1, 32, "Output"]
 }, Open  ]],
-Cell[92066, 2528, 6165, 172, 363, "Input"],
+Cell[91946, 2513, 6165, 172, 363, "Input"],
 Cell[CellGroupData[{
-Cell[98256, 2704, 310, 8, 32, "Input"],
+Cell[98136, 2689, 310, 8, 32, "Input"],
 Cell[CellGroupData[{
-Cell[98591, 2716, 9190, 247, 189, "Print"],
-Cell[107784, 2965, 6119, 174, 144, "Print"],
-Cell[113906, 3141, 2915, 82, 94, "Print"]
+Cell[98471, 2701, 9190, 247, 198, "Print"],
+Cell[107664, 2950, 6119, 174, 151, "Print"],
+Cell[113786, 3126, 2915, 82, 96, "Print"]
 }, Open  ]]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[116882, 3230, 103, 1, 78, "Section"],
-Cell[116988, 3233, 314, 6, 49, "Text"],
-Cell[117305, 3241, 169, 4, 30, "Text"],
+Cell[116762, 3215, 103, 1, 65, "Section"],
+Cell[116868, 3218, 314, 6, 55, "Text"],
+Cell[117185, 3226, 161, 2, 33, "Text"],
 Cell[CellGroupData[{
-Cell[117499, 3249, 209, 5, 32, "Input"],
-Cell[117711, 3256, 3743, 103, 97, "Output"]
+Cell[117371, 3232, 209, 5, 32, "Input"],
+Cell[117583, 3239, 3743, 103, 157, "Output"]
 }, Open  ]],
-Cell[121469, 3362, 239, 5, 30, "Text"],
+Cell[121341, 3345, 239, 5, 55, "Text"],
 Cell[CellGroupData[{
-Cell[121733, 3371, 227, 5, 32, "Input"],
-Cell[121963, 3378, 910, 26, 53, "Output"]
+Cell[121605, 3354, 227, 5, 32, "Input"],
+Cell[121835, 3361, 910, 26, 57, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[122922, 3410, 101, 1, 78, "Section"],
-Cell[123026, 3413, 262, 5, 49, "Text"],
-Cell[123291, 3420, 222, 5, 31, "Text"],
+Cell[122794, 3393, 101, 1, 65, "Section"],
+Cell[122898, 3396, 262, 5, 55, "Text"],
+Cell[123163, 3403, 222, 5, 33, "Text"],
 Cell[CellGroupData[{
-Cell[123538, 3429, 270, 6, 55, "Input"],
-Cell[123811, 3437, 370, 7, 55, "Output"]
+Cell[123410, 3412, 270, 6, 55, "Input"],
+Cell[123683, 3420, 370, 7, 55, "Output"]
 }, Open  ]],
-Cell[124196, 3447, 854, 14, 189, "Text"],
-Cell[125053, 3463, 151, 3, 31, "Text"],
+Cell[124068, 3430, 854, 14, 209, "Text"],
+Cell[124925, 3446, 151, 3, 33, "Text"],
 Cell[CellGroupData[{
-Cell[125229, 3470, 106, 1, 43, "Subsection"],
-Cell[125338, 3473, 290, 5, 31, "Text"],
+Cell[125101, 3453, 106, 1, 45, "Subsection"],
+Cell[125210, 3456, 290, 5, 33, "Text"],
 Cell[CellGroupData[{
-Cell[125653, 3482, 382, 11, 32, "Input"],
-Cell[126038, 3495, 358, 10, 55, "Output"]
+Cell[125525, 3465, 382, 11, 32, "Input"],
+Cell[125910, 3478, 358, 10, 55, "Output"]
 }, Open  ]],
-Cell[126411, 3508, 218, 4, 50, "Text"],
-Cell[126632, 3514, 328, 8, 55, "Input"],
+Cell[126283, 3491, 218, 4, 55, "Text"],
+Cell[126504, 3497, 328, 8, 55, "Input"],
 Cell[CellGroupData[{
-Cell[126985, 3526, 328, 10, 32, "Input"],
-Cell[127316, 3538, 219, 6, 32, "Output"]
+Cell[126857, 3509, 328, 10, 32, "Input"],
+Cell[127188, 3521, 219, 6, 32, "Output"]
 }, Open  ]],
-Cell[127550, 3547, 356, 6, 71, "Text"],
-Cell[127909, 3555, 267, 8, 32, "Input"],
-Cell[128179, 3565, 177, 4, 31, "Text"],
-Cell[128359, 3571, 584, 21, 77, "Input"],
-Cell[128946, 3594, 332, 6, 51, "Text"],
+Cell[127422, 3530, 356, 6, 77, "Text"],
+Cell[127781, 3538, 267, 8, 32, "Input"],
+Cell[128051, 3548, 177, 4, 33, "Text"],
+Cell[128231, 3554, 584, 21, 77, "Input"],
+Cell[128818, 3577, 386, 6, 55, "Text"],
 Cell[CellGroupData[{
-Cell[129303, 3604, 779, 21, 77, "Input"],
-Cell[130085, 3627, 741, 21, 107, "Output"]
+Cell[129229, 3587, 779, 21, 77, "Input"],
+Cell[130011, 3610, 741, 21, 75, "Output"]
 }, Open  ]],
-Cell[130841, 3651, 16, 0, 30, "Text"],
-Cell[130860, 3653, 16, 0, 30, "Text"],
-Cell[130879, 3655, 16, 0, 30, "Text"],
-Cell[130898, 3657, 16, 0, 30, "Text"],
-Cell[130917, 3659, 16, 0, 30, "Text"],
-Cell[130936, 3661, 16, 0, 30, "Text"],
-Cell[130955, 3663, 16, 0, 30, "Text"],
-Cell[130974, 3665, 16, 0, 30, "Text"],
-Cell[130993, 3667, 16, 0, 30, "Text"],
-Cell[131012, 3669, 16, 0, 30, "Text"],
-Cell[131031, 3671, 16, 0, 30, "Text"]
-}, Closed]]
+Cell[130767, 3634, 16, 0, 33, "Text"],
+Cell[130786, 3636, 16, 0, 33, "Text"],
+Cell[130805, 3638, 16, 0, 33, "Text"],
+Cell[130824, 3640, 16, 0, 33, "Text"],
+Cell[130843, 3642, 16, 0, 33, "Text"],
+Cell[130862, 3644, 16, 0, 33, "Text"],
+Cell[130881, 3646, 16, 0, 33, "Text"],
+Cell[130900, 3648, 16, 0, 33, "Text"],
+Cell[130919, 3650, 16, 0, 33, "Text"],
+Cell[130938, 3652, 16, 0, 33, "Text"],
+Cell[130957, 3654, 16, 0, 33, "Text"]
+}, Open  ]]
 }, Open  ]]
 }
 ]
