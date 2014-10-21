@@ -212,6 +212,7 @@ OddPermutations[lst_]:=Select[Permutations[lst],Signature[#]*Signature[lst]==-1&
 
 alternative/:alternative[a__]alternative[b__]:=alternative@@Flatten[{a}*#&/@{b},1] ;
 alternative/:a_ alternative[b__]:=alternative@@(a*{b});
+alternative/:alternative[b__]^n_:=alternative@@((#^n&)/@{b});
 alternative/:alternative[a__]+alternative[b__]:=alternative@@Flatten[{a}+#&/@{b},1] ;
 alternative/:f_[a___,alternative[b__],c___]/;MemberQ[$altFunctionList,f]:=alternative@@(f[a,#,c]&/@{b});
 
@@ -401,6 +402,7 @@ simplifySumRules={
 		KroneckerDelta[a_,-a_]:> KroneckerDelta[a,0],
 		KroneckerDelta[a_,-b_]:> KroneckerDelta[-a,b]/;NumericQ[a]&&!NumericQ[b],
 		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[b_,d___]]:> sum[(a/.b-> c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]||FreeQ[{d},c],
+		sum[a_ KroneckerDelta[-Except[_?NumberQ,b_],c_],set[b_,d___]]:> sum[(a/.b-> -c),set[d]]/;!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]||FreeQ[{d},c],
 		sum[a_ KroneckerDelta[Except[_?NumberQ,b_],c_],set[d___]]:> sum[(a/.b-> c) KroneckerDelta[b,c],set[d]]/;FreeQAll[{d},{b,c}]&&!FreeQ[a,b]&&!FreeQ[a,c]&&(!StringMatchQ[ToString[c],RegularExpression[".*p.*"]]||StringMatchQ[ToString[b],RegularExpression[".*p.*"]]),
 		sum[a_. sum[b_,set[c___]],set[d___]]:> sum[a b,set[c,d]]/;FreeQAll[a,{c}],
 		sum[a_. sum[b_,set[c___]]+m_,set[d___]]:> sum[a b,set[c,d]]+sum[m,set[d]]/;FreeQAll[a,{c}],
