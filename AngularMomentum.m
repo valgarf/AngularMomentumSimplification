@@ -448,8 +448,8 @@ simplify3jmRawRules={
 			:> Sqrt[2 a+1]KroneckerDelta[c,0]KroneckerDelta[\[Gamma],0],
 		sum[(-1)^(p_+\[Psi]_+q_+\[Kappa]_)tj[{a_,\[Alpha]_},{p_,-\[Psi]_},{q_,-\[Kappa]_}]tj[{p_,\[Psi]_},{q_,\[Kappa]_},{ap_,\[Alpha]p_}],\[Psi]_,\[Kappa]_]
 			:> (-1)^(a-\[Alpha])1/(2 a+1)KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],-\[Alpha]p]conTri[a,p,q],
-		sum[(-1)^(x_+\[Xi]_)(2x_+1)tj[{a_,\[Alpha]_},{c_,\[Gamma]_},{x_,\[Xi]_}]tj[{x_,-\[Xi]_},{d_,\[Delta]_},{b_,\[Beta]_}]sj[{b_,d_,x_},{c_,a_,q_}],x_,\[Xi]_]
-			:>sum[(-1)^(2a+q-var[1])tj[{a,\[Alpha]},{b,\[Beta]},{q,-var[1]}]tj[{q,var[1]},{d,\[Delta]},{c,\[Gamma]}],var[1]]
+		sum[(-1)^(\[Xi]_)(2x_+1)tj[{a_,\[Alpha]_},{c_,\[Gamma]_},{x_,\[Xi]_}]tj[{x_,-\[Xi]_},{b_,\[Beta]_},{d_,\[Delta]_}]sj[{b_,d_,x_},{c_,a_,q_}],x_,\[Xi]_]
+			:>sum[(-1)^(2a+b+d+q-var[1])tj[{a,\[Alpha]},{b,\[Beta]},{q,-var[1]}]tj[{q,var[1]},{d,\[Delta]},{c,\[Gamma]}],var[1]]
 		(*sum[(-1)^(q_+\[Kappa]_)tj[{a_,\[Alpha]_},{b_,\[Beta]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{d_,\[Delta]_},{c_,\[Gamma]_}],\[Kappa]_]
 			\[RuleDelayed]sum[(-1)^(2a+var[1]-var[2])(2 var[1]+1)tj[{a,\[Alpha]},{c,\[Gamma]},{var[1],-var[2]}]
 				tj[{var[1],var[2]},{d,\[Delta]},{b,\[Beta]}]sj[{b,d,var[1]},{c,a,q}],set[var[1],var[2]]]
