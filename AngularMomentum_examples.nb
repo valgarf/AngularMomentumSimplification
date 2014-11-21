@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    136643,       3834]
-NotebookOptionsPosition[    131001,       3658]
-NotebookOutlinePosition[    131356,       3674]
-CellTagsIndexPosition[    131313,       3671]
+NotebookDataLength[    149467,       4246]
+NotebookOptionsPosition[    143427,       4056]
+NotebookOutlinePosition[    143783,       4072]
+CellTagsIndexPosition[    143740,       4069]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -3213,6 +3213,408 @@ Cell[BoxData[
 
 Cell[CellGroupData[{
 
+Cell["Misc", "Section",
+ CellChangeTimes->{{3.6255583119369793`*^9, 3.625558312272605*^9}}],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"declareQNInteger", "@", 
+   RowBox[{"{", 
+    RowBox[{
+    "a", ",", "b", ",", "c", ",", "d", ",", "e", ",", "f", ",", "g", ",", "h",
+      ",", "x", ",", "q", ",", "\[Alpha]", ",", "\[Beta]", ",", "\[Gamma]", 
+     ",", "\[Delta]", ",", "\[Epsilon]", ",", "\[Phi]", ",", "\[Kappa]", ",", 
+     "\[Xi]"}], "}"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.625554340538823*^9, 3.625554434368792*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"i", "=", "0"}], ";", 
+  RowBox[{
+   RowBox[{"(", 
+    RowBox[{
+     RowBox[{"expr", "[", "i", "]"}], "=", 
+     RowBox[{"sum", "[", 
+      RowBox[{
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", "x"}], "+", "1"}], ")"}], 
+        RowBox[{
+         RowBox[{"(", 
+          RowBox[{"-", "1"}], ")"}], "^", 
+         RowBox[{"(", 
+          RowBox[{"x", "-", "\[Xi]"}], ")"}]}], 
+        RowBox[{"tj", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"x", ",", "\[Xi]"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"d", ",", "\[Delta]"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"b", ",", "\[Beta]"}], "}"}]}], "]"}], 
+        RowBox[{"tj", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"a", ",", "\[Alpha]"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"c", ",", "\[Gamma]"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"x", ",", 
+            RowBox[{"-", "\[Xi]"}]}], "}"}]}], "]"}], 
+        RowBox[{"sj", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{"b", ",", "d", ",", "x"}], "}"}], ",", 
+          RowBox[{"{", 
+           RowBox[{"c", ",", "a", ",", "q"}], "}"}]}], "]"}]}], ",", 
+       RowBox[{"set", "[", 
+        RowBox[{"x", ",", "\[Xi]"}], "]"}]}], "]"}]}], ")"}], "//", 
+   "TraditionalForm"}]}]], "Input",
+ CellChangeTimes->{{3.625554432970023*^9, 3.625554537187481*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   UnderscriptBox["\[Sum]", "x"], 
+   RowBox[{
+    UnderscriptBox["\[Sum]", "\[Xi]"], 
+    RowBox[{
+     RowBox[{"(", 
+      RowBox[{
+       RowBox[{"2", " ", "x"}], "+", "1"}], ")"}], " ", 
+     SuperscriptBox[
+      RowBox[{"(", 
+       RowBox[{"-", "1"}], ")"}], 
+      RowBox[{"x", "-", "\[Xi]"}]], " ", 
+     RowBox[{
+      TagBox[
+       StyleBox["(",
+        SpanMaxSize->DirectedInfinity[1]],
+       ThreeJSymbol], "\[MediumSpace]", GridBox[{
+        {"a", "c", "x"},
+        {"\[Alpha]", "\[Gamma]", 
+         RowBox[{"-", "\[Xi]"}]}
+       }], "\[MediumSpace]", 
+      TagBox[
+       StyleBox[")",
+        SpanMaxSize->DirectedInfinity[1]],
+       ThreeJSymbol]}], " ", 
+     RowBox[{
+      TagBox[
+       StyleBox["(",
+        SpanMaxSize->DirectedInfinity[1]],
+       ThreeJSymbol], "\[MediumSpace]", GridBox[{
+        {"x", "d", "b"},
+        {"\[Xi]", "\[Delta]", "\[Beta]"}
+       }], "\[MediumSpace]", 
+      TagBox[
+       StyleBox[")",
+        SpanMaxSize->DirectedInfinity[1]],
+       ThreeJSymbol]}], " ", 
+     RowBox[{
+      TagBox[
+       StyleBox["{",
+        SpanMaxSize->DirectedInfinity[1]],
+       SixJSymbol], "\[MediumSpace]", GridBox[{
+        {"b", "d", "x"},
+        {"c", "a", "q"}
+       }], "\[MediumSpace]", 
+      TagBox[
+       StyleBox["}",
+        SpanMaxSize->DirectedInfinity[1]],
+       SixJSymbol]}]}]}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.625554539168745*^9, 3.625555135300457*^9, 
+  3.625555256282077*^9, 3.625555383794386*^9, 3.625555528388199*^9, 
+  3.62555821542737*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"\[IndentingNewLine]", 
+  RowBox[{
+   RowBox[{"i", "=", "1"}], ";", 
+   RowBox[{
+    RowBox[{"(", 
+     RowBox[{
+      RowBox[{"expr", "[", "i", "]"}], "=", 
+      RowBox[{"simplifyAMSum", "[", 
+       RowBox[{
+        RowBox[{"expr", "[", 
+         RowBox[{"i", "-", "1"}], "]"}], ",", 
+        RowBox[{"Print", "\[Rule]", "True"}], ",", 
+        RowBox[{"OnlySums", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"x", ",", "\[Xi]"}], "}"}]}]}], "]"}]}], ")"}], "//", 
+    "TraditionalForm"}]}]}]], "Input",
+ CellChangeTimes->{{3.625554583813428*^9, 3.625554605636736*^9}, {
+  3.625555122886077*^9, 3.625555151953395*^9}, {3.625555271314686*^9, 
+  3.625555271794396*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", "x"], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", "\[Xi]"], 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "x"}], "+", "1"}], ")"}], " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"-", "1"}], ")"}], 
+         RowBox[{"\[Xi]", "+", "x"}]], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["(",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol], "\[MediumSpace]", GridBox[{
+           {"a", "c", "x"},
+           {"\[Alpha]", "\[Gamma]", 
+            RowBox[{"-", "\[Xi]"}]}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox[")",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol]}], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["(",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol], "\[MediumSpace]", GridBox[{
+           {"x", "d", "b"},
+           {"\[Xi]", "\[Delta]", "\[Beta]"}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox[")",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol]}], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["{",
+           SpanMaxSize->DirectedInfinity[1]],
+          SixJSymbol], "\[MediumSpace]", GridBox[{
+           {"a", "b", "q"},
+           {"d", "c", "x"}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox["}",
+           SpanMaxSize->DirectedInfinity[1]],
+          SixJSymbol]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", "x"], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", "\[Xi]"], 
+       RowBox[{
+        RowBox[{"(", 
+         RowBox[{
+          RowBox[{"2", " ", "x"}], "+", "1"}], ")"}], " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"-", "1"}], ")"}], 
+         RowBox[{"\[Xi]", "+", "x"}]], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["(",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol], "\[MediumSpace]", GridBox[{
+           {"a", "c", "x"},
+           {"\[Alpha]", "\[Gamma]", 
+            RowBox[{"-", "\[Xi]"}]}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox[")",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol]}], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["(",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol], "\[MediumSpace]", GridBox[{
+           {"x", "d", "b"},
+           {"\[Xi]", "\[Delta]", "\[Beta]"}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox[")",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol]}], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["{",
+           SpanMaxSize->DirectedInfinity[1]],
+          SixJSymbol], "\[MediumSpace]", GridBox[{
+           {"a", "b", "q"},
+           {"d", "c", "x"}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox["}",
+           SpanMaxSize->DirectedInfinity[1]],
+          SixJSymbol]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`x + $CellContext`\[Xi]) (1 + 
+      2 $CellContext`x) 
+     AngularMomentum`sj[{$CellContext`a, $CellContext`b, $CellContext`q}, \
+{$CellContext`d, $CellContext`c, $CellContext`x}] 
+     AngularMomentum`tj[{$CellContext`a, $CellContext`\[Alpha]}, \
+{$CellContext`c, $CellContext`\[Gamma]}, {$CellContext`x, \
+-$CellContext`\[Xi]}] 
+     AngularMomentum`tj[{$CellContext`x, $CellContext`\[Xi]}, \
+{$CellContext`d, $CellContext`\[Delta]}, {$CellContext`b, \
+$CellContext`\[Beta]}], 
+     Utility`set[$CellContext`x, $CellContext`\[Xi]]]], "working on:", 
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`x + $CellContext`\[Xi]) (1 + 
+      2 $CellContext`x) 
+     AngularMomentum`sj[{$CellContext`a, $CellContext`b, $CellContext`q}, \
+{$CellContext`d, $CellContext`c, $CellContext`x}] 
+     AngularMomentum`tj[{$CellContext`a, $CellContext`\[Alpha]}, \
+{$CellContext`c, $CellContext`\[Gamma]}, {$CellContext`x, \
+-$CellContext`\[Xi]}] 
+     AngularMomentum`tj[{$CellContext`x, $CellContext`\[Xi]}, \
+{$CellContext`d, $CellContext`\[Delta]}, {$CellContext`b, \
+$CellContext`\[Beta]}], 
+     Utility`set[$CellContext`x, $CellContext`\[Xi]]]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.625554607610519*^9, {3.625555132016621*^9, 3.6255551531337423`*^9}, 
+   3.625555257491952*^9, 3.625555384884199*^9, 3.625555529420553*^9, 
+   3.6255582177849483`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["K", "1"]], 
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"-", "1"}], ")"}], 
+        RowBox[{
+         SubscriptBox["K", "1"], "+", "q"}]], " ", 
+       RowBox[{
+        TagBox[
+         StyleBox["(",
+          SpanMaxSize->DirectedInfinity[1]],
+         ThreeJSymbol], "\[MediumSpace]", GridBox[{
+          {"q", "a", "b"},
+          {
+           SubscriptBox["K", "1"], "\[Alpha]", "\[Beta]"}
+         }], "\[MediumSpace]", 
+        TagBox[
+         StyleBox[")",
+          SpanMaxSize->DirectedInfinity[1]],
+         ThreeJSymbol]}], " ", 
+       RowBox[{
+        TagBox[
+         StyleBox["(",
+          SpanMaxSize->DirectedInfinity[1]],
+         ThreeJSymbol], "\[MediumSpace]", GridBox[{
+          {"d", "c", "q"},
+          {"\[Delta]", "\[Gamma]", 
+           RowBox[{"-", 
+            SubscriptBox["K", "1"]}]}
+         }], "\[MediumSpace]", 
+        TagBox[
+         StyleBox[")",
+          SpanMaxSize->DirectedInfinity[1]],
+         ThreeJSymbol]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox["1",
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`q + $CellContext`varK[1]) 
+     AngularMomentum`tj[{$CellContext`d, $CellContext`\[Delta]}, \
+{$CellContext`c, $CellContext`\[Gamma]}, {$CellContext`q, -$CellContext`varK[
+         1]}] AngularMomentum`tj[{$CellContext`q, 
+        $CellContext`varK[
+        1]}, {$CellContext`a, $CellContext`\[Alpha]}, {$CellContext`b, \
+$CellContext`\[Beta]}], 
+     Utility`set[
+      $CellContext`varK[1]]]], "working on:", 
+   TraditionalForm[1]],
+  Editable->False]], "Print",
+ CellChangeTimes->{
+  3.625554607610519*^9, {3.625555132016621*^9, 3.6255551531337423`*^9}, 
+   3.625555257491952*^9, 3.625555384884199*^9, 3.625555529420553*^9, 
+   3.625558217801478*^9}]
+}, Open  ]],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   UnderscriptBox["\[Sum]", 
+    SubscriptBox["K", "1"]], 
+   RowBox[{
+    SuperscriptBox[
+     RowBox[{"(", 
+      RowBox[{"-", "1"}], ")"}], 
+     RowBox[{
+      SubscriptBox["K", "1"], "+", "q"}]], " ", 
+    RowBox[{
+     TagBox[
+      StyleBox["(",
+       SpanMaxSize->DirectedInfinity[1]],
+      ThreeJSymbol], "\[MediumSpace]", GridBox[{
+       {"q", "a", "b"},
+       {
+        SubscriptBox["K", "1"], "\[Alpha]", "\[Beta]"}
+      }], "\[MediumSpace]", 
+     TagBox[
+      StyleBox[")",
+       SpanMaxSize->DirectedInfinity[1]],
+      ThreeJSymbol]}], " ", 
+    RowBox[{
+     TagBox[
+      StyleBox["(",
+       SpanMaxSize->DirectedInfinity[1]],
+      ThreeJSymbol], "\[MediumSpace]", GridBox[{
+       {"d", "c", "q"},
+       {"\[Delta]", "\[Gamma]", 
+        RowBox[{"-", 
+         SubscriptBox["K", "1"]}]}
+      }], "\[MediumSpace]", 
+     TagBox[
+      StyleBox[")",
+       SpanMaxSize->DirectedInfinity[1]],
+      ThreeJSymbol]}]}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{
+  3.625554607654805*^9, {3.625555132220661*^9, 3.625555153187496*^9}, 
+   3.625555257553834*^9, 3.625555384951455*^9, 3.625555529490385*^9, 
+   3.6255582178332357`*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
 Cell["Additional Remarks", "Section",
  CellChangeTimes->{{3.606123416647088*^9, 3.606123443510784*^9}}],
 
@@ -3648,16 +4050,12 @@ Cell["", "Text"],
 
 Cell["", "Text"],
 
-Cell["", "Text"],
-
-Cell["", "Text"],
-
 Cell["", "Text"]
 }, Open  ]]
 }, Open  ]]
 },
 WindowSize->{758, 867},
-WindowMargins->{{Automatic, 51}, {Automatic, 78}},
+WindowMargins->{{Automatic, 223}, {65, Automatic}},
 ShowSelection->True,
 FrontEndVersion->"10.0 for Linux x86 (64-bit) (June 27, 2014)",
 StyleDefinitions->"Default.nb"
@@ -3739,8 +4137,8 @@ Cell[34695, 938, 575, 11, 121, "Text"],
 Cell[CellGroupData[{
 Cell[35295, 953, 389, 9, 32, "Input"],
 Cell[CellGroupData[{
-Cell[35709, 966, 8944, 240, 238, "Print"],
-Cell[44656, 1208, 7427, 210, 191, "Print"],
+Cell[35709, 966, 8944, 240, 237, "Print"],
+Cell[44656, 1208, 7427, 210, 190, "Print"],
 Cell[52086, 1420, 4206, 127, 129, "Print"],
 Cell[56295, 1549, 2169, 65, 67, "Print"]
 }, Open  ]],
@@ -3778,62 +4176,76 @@ Cell[113786, 3126, 2915, 82, 96, "Print"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[116762, 3215, 103, 1, 65, "Section"],
-Cell[116868, 3218, 314, 6, 55, "Text"],
-Cell[117185, 3226, 161, 2, 33, "Text"],
+Cell[116762, 3215, 91, 1, 65, "Section"],
+Cell[116856, 3218, 432, 9, 32, "Input"],
 Cell[CellGroupData[{
-Cell[117371, 3232, 209, 5, 32, "Input"],
-Cell[117583, 3239, 3743, 103, 157, "Output"]
+Cell[117313, 3231, 1466, 44, 99, "Input"],
+Cell[118782, 3277, 1572, 53, 75, "Output"]
 }, Open  ]],
-Cell[121341, 3345, 239, 5, 55, "Text"],
 Cell[CellGroupData[{
-Cell[121605, 3354, 227, 5, 32, "Input"],
-Cell[121835, 3361, 910, 26, 57, "Output"]
+Cell[120391, 3335, 701, 19, 99, "Input"],
+Cell[CellGroupData[{
+Cell[121117, 3358, 4752, 141, 95, "Print"],
+Cell[125872, 3501, 2091, 66, 49, "Print"]
+}, Open  ]],
+Cell[127978, 3570, 1199, 41, 75, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[122794, 3393, 101, 1, 65, "Section"],
-Cell[122898, 3396, 262, 5, 55, "Text"],
-Cell[123163, 3403, 222, 5, 33, "Text"],
+Cell[129226, 3617, 103, 1, 65, "Section"],
+Cell[129332, 3620, 314, 6, 55, "Text"],
+Cell[129649, 3628, 161, 2, 33, "Text"],
 Cell[CellGroupData[{
-Cell[123410, 3412, 270, 6, 55, "Input"],
-Cell[123683, 3420, 370, 7, 55, "Output"]
+Cell[129835, 3634, 209, 5, 32, "Input"],
+Cell[130047, 3641, 3743, 103, 157, "Output"]
 }, Open  ]],
-Cell[124068, 3430, 854, 14, 209, "Text"],
-Cell[124925, 3446, 151, 3, 33, "Text"],
+Cell[133805, 3747, 239, 5, 55, "Text"],
 Cell[CellGroupData[{
-Cell[125101, 3453, 106, 1, 45, "Subsection"],
-Cell[125210, 3456, 290, 5, 33, "Text"],
-Cell[CellGroupData[{
-Cell[125525, 3465, 382, 11, 32, "Input"],
-Cell[125910, 3478, 358, 10, 55, "Output"]
+Cell[134069, 3756, 227, 5, 32, "Input"],
+Cell[134299, 3763, 910, 26, 57, "Output"]
+}, Open  ]]
 }, Open  ]],
-Cell[126283, 3491, 218, 4, 55, "Text"],
-Cell[126504, 3497, 328, 8, 55, "Input"],
 Cell[CellGroupData[{
-Cell[126857, 3509, 328, 10, 32, "Input"],
-Cell[127188, 3521, 219, 6, 32, "Output"]
-}, Open  ]],
-Cell[127422, 3530, 356, 6, 77, "Text"],
-Cell[127781, 3538, 267, 8, 32, "Input"],
-Cell[128051, 3548, 177, 4, 33, "Text"],
-Cell[128231, 3554, 584, 21, 77, "Input"],
-Cell[128818, 3577, 386, 6, 55, "Text"],
+Cell[135258, 3795, 101, 1, 65, "Section"],
+Cell[135362, 3798, 262, 5, 55, "Text"],
+Cell[135627, 3805, 222, 5, 33, "Text"],
 Cell[CellGroupData[{
-Cell[129229, 3587, 779, 21, 77, "Input"],
-Cell[130011, 3610, 741, 21, 75, "Output"]
+Cell[135874, 3814, 270, 6, 55, "Input"],
+Cell[136147, 3822, 370, 7, 55, "Output"]
 }, Open  ]],
-Cell[130767, 3634, 16, 0, 33, "Text"],
-Cell[130786, 3636, 16, 0, 33, "Text"],
-Cell[130805, 3638, 16, 0, 33, "Text"],
-Cell[130824, 3640, 16, 0, 33, "Text"],
-Cell[130843, 3642, 16, 0, 33, "Text"],
-Cell[130862, 3644, 16, 0, 33, "Text"],
-Cell[130881, 3646, 16, 0, 33, "Text"],
-Cell[130900, 3648, 16, 0, 33, "Text"],
-Cell[130919, 3650, 16, 0, 33, "Text"],
-Cell[130938, 3652, 16, 0, 33, "Text"],
-Cell[130957, 3654, 16, 0, 33, "Text"]
+Cell[136532, 3832, 854, 14, 209, "Text"],
+Cell[137389, 3848, 151, 3, 33, "Text"],
+Cell[CellGroupData[{
+Cell[137565, 3855, 106, 1, 45, "Subsection"],
+Cell[137674, 3858, 290, 5, 33, "Text"],
+Cell[CellGroupData[{
+Cell[137989, 3867, 382, 11, 32, "Input"],
+Cell[138374, 3880, 358, 10, 55, "Output"]
+}, Open  ]],
+Cell[138747, 3893, 218, 4, 55, "Text"],
+Cell[138968, 3899, 328, 8, 55, "Input"],
+Cell[CellGroupData[{
+Cell[139321, 3911, 328, 10, 32, "Input"],
+Cell[139652, 3923, 219, 6, 32, "Output"]
+}, Open  ]],
+Cell[139886, 3932, 356, 6, 77, "Text"],
+Cell[140245, 3940, 267, 8, 32, "Input"],
+Cell[140515, 3950, 177, 4, 33, "Text"],
+Cell[140695, 3956, 584, 21, 77, "Input"],
+Cell[141282, 3979, 386, 6, 55, "Text"],
+Cell[CellGroupData[{
+Cell[141693, 3989, 779, 21, 77, "Input"],
+Cell[142475, 4012, 741, 21, 75, "Output"]
+}, Open  ]],
+Cell[143231, 4036, 16, 0, 33, "Text"],
+Cell[143250, 4038, 16, 0, 33, "Text"],
+Cell[143269, 4040, 16, 0, 33, "Text"],
+Cell[143288, 4042, 16, 0, 33, "Text"],
+Cell[143307, 4044, 16, 0, 33, "Text"],
+Cell[143326, 4046, 16, 0, 33, "Text"],
+Cell[143345, 4048, 16, 0, 33, "Text"],
+Cell[143364, 4050, 16, 0, 33, "Text"],
+Cell[143383, 4052, 16, 0, 33, "Text"]
 }, Open  ]]
 }, Open  ]]
 }

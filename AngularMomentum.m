@@ -448,8 +448,12 @@ simplify3jmRawRules={
 			:> Sqrt[2 a+1]KroneckerDelta[c,0]KroneckerDelta[\[Gamma],0],
 		sum[(-1)^(p_+\[Psi]_+q_+\[Kappa]_)tj[{a_,\[Alpha]_},{p_,-\[Psi]_},{q_,-\[Kappa]_}]tj[{p_,\[Psi]_},{q_,\[Kappa]_},{ap_,\[Alpha]p_}],\[Psi]_,\[Kappa]_]
 			:> (-1)^(a-\[Alpha])1/(2 a+1)KroneckerDelta[a,ap]KroneckerDelta[\[Alpha],-\[Alpha]p]conTri[a,p,q],
-		sum[(-1)^(q_+\[Kappa]_)(2q_+1)tj[{a_,\[Alpha]_},{b_,\[Beta]_},{q_,-\[Kappa]_}]tj[{q_,\[Kappa]_},{a_,\[Alpha]p_},{b_,\[Beta]p_}],q_,\[Kappa]_]
-			:>(-1)^(a-\[Alpha]+b-\[Beta])KroneckerDelta[\[Beta],-\[Beta]p]KroneckerDelta[\[Alpha],-\[Alpha]p]				
+		sum[(-1)^(x_+\[Xi]_)(2x_+1)tj[{a_,\[Alpha]_},{c_,\[Gamma]_},{x_,\[Xi]_}]tj[{x_,-\[Xi]_},{d_,\[Delta]_},{b_,\[Beta]_}]sj[{b_,d_,x_},{c_,a_,q_}],x_,\[Xi]_]
+			:>sum[(-1)^(2a+q-var[1])tj[{a,\[Alpha]},{b,\[Beta]},{q,-var[1]}]tj[{q,var[1]},{d,\[Delta]},{c,\[Gamma]}],var[1]]
+		(*sum[(-1)^(q_+\[Kappa]_)tj[{a_,\[Alpha]_},{b_,\[Beta]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{d_,\[Delta]_},{c_,\[Gamma]_}],\[Kappa]_]
+			\[RuleDelayed]sum[(-1)^(2a+var[1]-var[2])(2 var[1]+1)tj[{a,\[Alpha]},{c,\[Gamma]},{var[1],-var[2]}]
+				tj[{var[1],var[2]},{d,\[Delta]},{b,\[Beta]}]sj[{b,d,var[1]},{c,a,q}],set[var[1],var[2]]]
+*)
 		(*the last one takes a very long time when loading the package:*)
 		(*,sum[(-1)^(p_+q_+r_+s_+t_+\[Psi]_+\[Kappa]_+\[Rho]_+\[Sigma]_+\[Tau]_)tj[{p_,-\[Psi]_},{a_,\[Alpha]_},{q_,\[Kappa]_}]tj[{q_,-\[Kappa]_},{b_,\[Beta]_},{r_,\[Rho]_}]tj[{r_,-\[Rho]_},{c_,\[Gamma]_},{s_,\[Sigma]_}]tj[{s_,-\[Sigma]_},{d_,\[Delta]_},{t_,\[Tau]_}]tj[{t_,-\[Tau]_},{e_,\[Epsilon]_},{p_,\[Psi]_}],\[Kappa]_,\[Psi]_,\[Rho]_,\[Sigma]_,\[Tau]_]
 			:> sum[(-1)^(t-p-b-a-d-c+var[1]-var[2]+var[3]-var[4])(2 var[1]+1)(2 var[3]+1)
@@ -1137,6 +1141,9 @@ simplifySHRules={
 	sh[l1_,m1_,\[Theta]_[a_ r_],\[Phi]_[a_ r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a<0,
 	sh[l1_,m1_,\[Theta]_[-a_. r_],\[Phi]_[-a_. r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]]/;NumericQ[a]&&a>0,
 	sh[l1_,m1_,\[Theta]_[-r_],\[Phi]_[-r_]]:>(-1)^l1 sh[l1,m1,\[Theta][r],\[Phi][r]],
+	sh[l1_,m1_,\[Theta]_[a_+b_],\[Phi]_[a_+b_]]sh[l2_,m2_,\[Theta]_[c_+d_],\[Phi]_[c_+d_]]/; Not[Or[And[a === c, b === d], And[a === d, b === b]]]:>
+	shkeep[l1,m1,\[Theta][a+b],\[Phi][a+b]]sh[l2,m2,\[Theta][c+d],\[Phi][c+d]],
+	shkeep->sh,
 	sh[l1_,m1_,\[Theta]_[r1_+r2_],\[Phi]_[r1_+r2_]]:>
 		sum[sh[varl[1],varm[1],\[Theta][r1],\[Phi][r1]]sh[l1-varl[1],varm[2],\[Theta][r2],\[Phi][r2]]
 		Sqrt[4\[Pi] Binomial[2 l1 +1,2 varl[1]]]/Sqrt[2 varl[1]+1]
@@ -1150,7 +1157,7 @@ simplifySHRules={
 (*Functions*)
 
 
-Options[simplifySHIntegral]={Integrate->False,IgnoreIntegrals->{},OnlyIntegrals->{},ReduceProducts->False};
+Options[simplifySHIntegral]={Integrate->False,IgnoreIntegrals->{},OnlyIntegrals->{},ReduceProducts->False,Print->False};
 simplifySHIntegral[expr_,OptionsPattern[]]:=Module[{
 		prepareRules=Join[prepareIntegrateRules,prepareSumRules,prepareSHRules],
 		simplifyRules=Join[simplifyFactorRules,simplifySumRules,simplifyIntegrateRules,simplifyConditionOrderlessRules],
@@ -1165,17 +1172,20 @@ simplifySHIntegral[expr_,OptionsPattern[]]:=Module[{
 		rulesInUse=Join[rulesInUse,simplifySHRulesIntegrate];
 	];
 	If[OptionValue[ReduceProducts],
-		rulesInUse=Join[rulesInUse,simplifySHRulesProduct];
+		rulesInUse=Join[simplifySHRulesProduct,rulesInUse];
 	];
 	result=toTJ[expr//.prepareRules//.simplifyRules];
 	prev=None;
 	While[prev=!=result,
 		prev=result;
+		If[OptionValue[Print],
+			Print[result//TraditionalForm];
+		];
 		If[Length[onlyIntegrals]>0,
 			result=keepNotInvolving[result,Sequence@@onlyIntegrals,OnlyHeads->{sh}],
 			result=keepInvolving[result,Sequence@@ignoreIntegrals,OnlyHeads->{sh}]
 		];
-		result=toTJ[keepClean[result/.rulesInUse]];	
+		result=toTJ[keepClean[ReplaceAll[result,rulesInUse]]];	
 		result=cleanupNewSHVariables[result];
 		result=result//.simplifyRules;		
 	];
