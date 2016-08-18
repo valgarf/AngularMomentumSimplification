@@ -10,10 +10,10 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       157,          7]
-NotebookDataLength[    156698,       4456]
-NotebookOptionsPosition[    150568,       4264]
-NotebookOutlinePosition[    150924,       4280]
-CellTagsIndexPosition[    150881,       4277]
+NotebookDataLength[    308355,       8661]
+NotebookOptionsPosition[    300875,       8428]
+NotebookOutlinePosition[    301230,       8444]
+CellTagsIndexPosition[    301187,       8441]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
@@ -36,7 +36,8 @@ Cell[BoxData[{
   ";"}], "\[IndentingNewLine]", 
  RowBox[{"<<", "AngularMomentum`"}]}], "Input",
  CellChangeTimes->{{3.606110092104203*^9, 3.606110097064487*^9}, {
-  3.606110326552638*^9, 3.60611037716278*^9}}],
+  3.606110326552638*^9, 3.60611037716278*^9}, {3.680516767289673*^9, 
+  3.680516768249647*^9}}],
 
 Cell["\<\
 Loading the package might take some time (~15 s on my machine). There is one \
@@ -1777,6 +1778,1041 @@ Cell[BoxData[{
        RowBox[{
         RowBox[{"{", 
          RowBox[{
+          RowBox[{"jp", "[", 
+           RowBox[{"1", ",", "2"}], "]"}], ",", 
+          RowBox[{"mjp", "[", 
+           RowBox[{"1", ",", "2"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"jp", "[", "3", "]"}], ",", 
+          RowBox[{"mjp", "[", "3", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"Jp", ",", "mJp"}], "}"}]}], "]"}], "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", 
+           RowBox[{"1", ",", "2"}], "]"}], ",", 
+          RowBox[{"mj", "[", 
+           RowBox[{"1", ",", "2"}], "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "3", "]"}], ",", 
+          RowBox[{"mj", "[", "3", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{"J", ",", "mJ"}], "}"}]}], "]"}], 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "0", "]"}], ",", 
+          RowBox[{"mj", "[", "0", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"jp", "[", "3", "]"}], ",", 
+          RowBox[{"mjp", "[", "3", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", 
+           RowBox[{"1", ",", "2"}], "]"}], ",", 
+          RowBox[{"mj", "[", 
+           RowBox[{"1", ",", "2"}], "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "0", "]"}], ",", 
+          RowBox[{"mj", "[", "0", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "3", "]"}], ",", 
+          RowBox[{"mj", "[", "3", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"jp", "[", 
+           RowBox[{"1", ",", "2"}], "]"}], ",", 
+          RowBox[{"mjp", "[", 
+           RowBox[{"1", ",", "2"}], "]"}]}], "}"}]}], "]"}]}], 
+     "\[IndentingNewLine]", ",", 
+     RowBox[{"mj", "[", 
+      RowBox[{"1", ",", "2"}], "]"}], ",", 
+     RowBox[{"mj", "[", "3", "]"}], ",", 
+     RowBox[{"mjp", "[", 
+      RowBox[{"1", ",", "2"}], "]"}], ",", 
+     RowBox[{"mjp", "[", "3", "]"}], ",", 
+     RowBox[{"mj", "[", "0", "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareIndexedAM", "[", 
+   RowBox[{"{", 
+    RowBox[{"j", ",", "J"}], "}"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareQNHalfInteger", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"j", "[", "0", "]"}], ",", 
+     RowBox[{"mj", "[", "0", "]"}], ",", 
+     RowBox[{"j", "[", "3", "]"}], ",", 
+     RowBox[{"mj", "[", "3", "]"}], ",", 
+     RowBox[{"jp", "[", "3", "]"}], ",", 
+     RowBox[{"mjp", "[", "3", "]"}], ",", "J", ",", "mJ", ",", "Jp", ",", 
+     "mJp"}], "}"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareQNInteger", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"j", "[", 
+      RowBox[{"1", ",", "2"}], "]"}], ",", 
+     RowBox[{"mj", "[", 
+      RowBox[{"1", ",", "2"}], "]"}], ",", 
+     RowBox[{"jp", "[", 
+      RowBox[{"1", ",", "2"}], "]"}], ",", 
+     RowBox[{"mjp", "[", 
+      RowBox[{"1", ",", "2"}], "]"}]}], "}"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.6697118290494747`*^9, 3.669712191815646*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"testExpr", "[", "2", "]"}], "//", "TraditionalForm"}]], "Input",
+ CellChangeTimes->{{3.669711943523532*^9, 3.669711948433753*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   UnderscriptBox["\[Sum]", 
+    SubscriptBox["m", 
+     SubscriptBox["j", 
+      RowBox[{"1", "\[InvisibleComma]", "2"}]]]], 
+   RowBox[{
+    UnderscriptBox["\[Sum]", 
+     SubscriptBox["m", 
+      SubscriptBox["j", "3"]]], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      SubsuperscriptBox["m", 
+       SubscriptBox["j", 
+        RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]], 
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubsuperscriptBox["m", 
+        SubscriptBox["j", "3"], "\[Prime]"]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "0"]]], 
+       RowBox[{
+        StyleBox[
+         RowBox[{"c", "(", GridBox[{
+            {
+             SubscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}]], 
+             SubscriptBox["j", "3"]},
+            {
+             SubscriptBox["m", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]]], 
+             SubscriptBox["m", 
+              SubscriptBox["j", "3"]]}
+           }], "|", GridBox[{
+            {"J"},
+            {
+             SubscriptBox["m", "J"]}
+           }], ")"}],
+         SpanMaxSize->DirectedInfinity[1]], " ", 
+        StyleBox[
+         RowBox[{"c", "(", GridBox[{
+            {
+             SubscriptBox["j", "0"], 
+             SubscriptBox["j", "3"]},
+            {
+             SubscriptBox["m", 
+              SubscriptBox["j", "0"]], 
+             SubscriptBox["m", 
+              SubscriptBox["j", "3"]]}
+           }], "|", GridBox[{
+            {
+             SubsuperscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]},
+            {
+             SubsuperscriptBox["m", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]}
+           }], ")"}],
+         SpanMaxSize->DirectedInfinity[1]], " ", 
+        StyleBox[
+         RowBox[{"c", "(", GridBox[{
+            {
+             SubscriptBox["j", "0"], 
+             SubsuperscriptBox["j", "3", "\[Prime]"]},
+            {
+             SubscriptBox["m", 
+              SubscriptBox["j", "0"]], 
+             SubsuperscriptBox["m", 
+              SubscriptBox["j", "3"], "\[Prime]"]}
+           }], "|", GridBox[{
+            {
+             SubscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}]]},
+            {
+             SubscriptBox["m", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]]]}
+           }], ")"}],
+         SpanMaxSize->DirectedInfinity[1]], " ", 
+        StyleBox[
+         RowBox[{"c", "(", GridBox[{
+            {
+             SubsuperscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], 
+             SubsuperscriptBox["j", "3", "\[Prime]"]},
+            {
+             SubsuperscriptBox["m", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], 
+             SubsuperscriptBox["m", 
+              SubscriptBox["j", "3"], "\[Prime]"]}
+           }], "|", GridBox[{
+            {
+             SuperscriptBox["J", "\[Prime]"]},
+            {
+             SubsuperscriptBox["m", "J", "\[Prime]"]}
+           }], ")"}],
+         SpanMaxSize->DirectedInfinity[1]]}]}]}]}]}]}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{{3.669711948767251*^9, 3.669711965515153*^9}, {
+   3.669712072124543*^9, 3.669712104066958*^9}, 3.669712194221325*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{
+    RowBox[{"result", "[", "2", "]"}], "=", 
+    RowBox[{"simplifyAMSum", "[", 
+     RowBox[{
+      RowBox[{"testExpr", "[", "2", "]"}], ",", 
+      RowBox[{"Print", "\[Rule]", "True"}]}], "]"}]}], ";"}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{3.66971211415915*^9}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "0"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "3"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", 
+           RowBox[{"1", "\[InvisibleComma]", "2"}]]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["j", "3"], "\[Prime]"]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubsuperscriptBox["m", 
+            SubscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]], 
+          RowBox[{
+           SqrtBox[
+            RowBox[{
+             RowBox[{"2", " ", "J"}], "+", "1"}]], " ", 
+           SqrtBox[
+            RowBox[{
+             RowBox[{"2", " ", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]]}], "+", "1"}]], " ", 
+           SqrtBox[
+            RowBox[{
+             RowBox[{"2", " ", 
+              SuperscriptBox["J", "\[Prime]"]}], "+", "1"}]], " ", 
+           SqrtBox[
+            RowBox[{
+             RowBox[{"2", " ", 
+              SubsuperscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}], "+", 
+             "1"}]], " ", 
+           RowBox[{
+            TagBox[
+             StyleBox["(",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol], "\[MediumSpace]", GridBox[{
+              {
+               SubscriptBox["j", 
+                RowBox[{"1", "\[InvisibleComma]", "2"}]], 
+               SubscriptBox["j", "3"], "J"},
+              {
+               SubscriptBox["m", 
+                SubscriptBox["j", 
+                 RowBox[{"1", "\[InvisibleComma]", "2"}]]], 
+               SubscriptBox["m", 
+                SubscriptBox["j", "3"]], 
+               RowBox[{"-", 
+                SubscriptBox["m", "J"]}]}
+             }], "\[MediumSpace]", 
+            TagBox[
+             StyleBox[")",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol]}], " ", 
+           RowBox[{
+            TagBox[
+             StyleBox["(",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol], "\[MediumSpace]", GridBox[{
+              {
+               SubscriptBox["j", "0"], 
+               SubscriptBox["j", "3"], 
+               SubsuperscriptBox["j", 
+                RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]},
+              {
+               SubscriptBox["m", 
+                SubscriptBox["j", "0"]], 
+               SubscriptBox["m", 
+                SubscriptBox["j", "3"]], 
+               RowBox[{"-", 
+                SubsuperscriptBox["m", 
+                 SubscriptBox["j", 
+                  RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]}]}
+             }], "\[MediumSpace]", 
+            TagBox[
+             StyleBox[")",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol]}], " ", 
+           RowBox[{
+            TagBox[
+             StyleBox["(",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol], "\[MediumSpace]", GridBox[{
+              {
+               SubscriptBox["j", "0"], 
+               SubsuperscriptBox["j", "3", "\[Prime]"], 
+               SubscriptBox["j", 
+                RowBox[{"1", "\[InvisibleComma]", "2"}]]},
+              {
+               SubscriptBox["m", 
+                SubscriptBox["j", "0"]], 
+               SubsuperscriptBox["m", 
+                SubscriptBox["j", "3"], "\[Prime]"], 
+               RowBox[{"-", 
+                SubscriptBox["m", 
+                 SubscriptBox["j", 
+                  RowBox[{"1", "\[InvisibleComma]", "2"}]]]}]}
+             }], "\[MediumSpace]", 
+            TagBox[
+             StyleBox[")",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol]}], " ", 
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{"-", "1"}], ")"}], 
+            RowBox[{
+             SubsuperscriptBox["m", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], "+", 
+             SubscriptBox["m", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]]], "+", 
+             SubsuperscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], "+", 
+             SubscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}]], "+", 
+             SubsuperscriptBox["m", "J", "\[Prime]"], "+", 
+             SubscriptBox["m", "J"], "+", "1"}]], " ", 
+           RowBox[{
+            TagBox[
+             StyleBox["(",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol], "\[MediumSpace]", GridBox[{
+              {
+               SubsuperscriptBox["j", 
+                RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], 
+               SubsuperscriptBox["j", "3", "\[Prime]"], 
+               SuperscriptBox["J", "\[Prime]"]},
+              {
+               SubsuperscriptBox["m", 
+                SubscriptBox["j", 
+                 RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], 
+               SubsuperscriptBox["m", 
+                SubscriptBox["j", "3"], "\[Prime]"], 
+               RowBox[{"-", 
+                SubsuperscriptBox["m", "J", "\[Prime]"]}]}
+             }], "\[MediumSpace]", 
+            TagBox[
+             StyleBox[")",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol]}]}]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "0"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "3"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", 
+           RowBox[{"1", "\[InvisibleComma]", "2"}]]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["j", "3"], "\[Prime]"]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubsuperscriptBox["m", 
+            SubscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]], 
+          RowBox[{
+           SuperscriptBox[
+            RowBox[{"(", 
+             RowBox[{"-", "1"}], ")"}], 
+            RowBox[{
+             SubsuperscriptBox["m", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], "+", 
+             SubscriptBox["m", 
+              SubscriptBox["j", 
+               RowBox[{"1", "\[InvisibleComma]", "2"}]]]}]], " ", 
+           RowBox[{
+            TagBox[
+             StyleBox["(",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol], "\[MediumSpace]", GridBox[{
+              {
+               SubscriptBox["j", 
+                RowBox[{"1", "\[InvisibleComma]", "2"}]], 
+               SubscriptBox["j", "3"], "J"},
+              {
+               SubscriptBox["m", 
+                SubscriptBox["j", 
+                 RowBox[{"1", "\[InvisibleComma]", "2"}]]], 
+               SubscriptBox["m", 
+                SubscriptBox["j", "3"]], 
+               RowBox[{"-", 
+                SubscriptBox["m", "J"]}]}
+             }], "\[MediumSpace]", 
+            TagBox[
+             StyleBox[")",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol]}], " ", 
+           RowBox[{
+            TagBox[
+             StyleBox["(",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol], "\[MediumSpace]", GridBox[{
+              {
+               SubscriptBox["j", "0"], 
+               SubscriptBox["j", "3"], 
+               SubsuperscriptBox["j", 
+                RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]},
+              {
+               SubscriptBox["m", 
+                SubscriptBox["j", "0"]], 
+               SubscriptBox["m", 
+                SubscriptBox["j", "3"]], 
+               RowBox[{"-", 
+                SubsuperscriptBox["m", 
+                 SubscriptBox["j", 
+                  RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]}]}
+             }], "\[MediumSpace]", 
+            TagBox[
+             StyleBox[")",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol]}], " ", 
+           RowBox[{
+            TagBox[
+             StyleBox["(",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol], "\[MediumSpace]", GridBox[{
+              {
+               SubscriptBox["j", "0"], 
+               SubsuperscriptBox["j", "3", "\[Prime]"], 
+               SubscriptBox["j", 
+                RowBox[{"1", "\[InvisibleComma]", "2"}]]},
+              {
+               SubscriptBox["m", 
+                SubscriptBox["j", "0"]], 
+               SubsuperscriptBox["m", 
+                SubscriptBox["j", "3"], "\[Prime]"], 
+               RowBox[{"-", 
+                SubscriptBox["m", 
+                 SubscriptBox["j", 
+                  RowBox[{"1", "\[InvisibleComma]", "2"}]]]}]}
+             }], "\[MediumSpace]", 
+            TagBox[
+             StyleBox[")",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol]}], " ", 
+           RowBox[{
+            TagBox[
+             StyleBox["(",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol], "\[MediumSpace]", GridBox[{
+              {
+               SubsuperscriptBox["j", 
+                RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], 
+               SubsuperscriptBox["j", "3", "\[Prime]"], 
+               SuperscriptBox["J", "\[Prime]"]},
+              {
+               SubsuperscriptBox["m", 
+                SubscriptBox["j", 
+                 RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], 
+               SubsuperscriptBox["m", 
+                SubscriptBox["j", "3"], "\[Prime]"], 
+               RowBox[{"-", 
+                SubsuperscriptBox["m", "J", "\[Prime]"]}]}
+             }], "\[MediumSpace]", 
+            TagBox[
+             StyleBox[")",
+              SpanMaxSize->DirectedInfinity[1]],
+             ThreeJSymbol]}]}]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(-1)^(
+       1 + $CellContext`mJ + $CellContext`mJp + $CellContext`j[
+        1, 2] + $CellContext`jp[1, 2] + $CellContext`mj[
+        1, 2] + $CellContext`mjp[1, 2]) (1 + 2 $CellContext`J)^
+      Rational[1, 2] (1 + 2 $CellContext`Jp)^
+      Rational[1, 2] (1 + 2 $CellContext`j[1, 2])^
+      Rational[1, 2] (1 + 2 $CellContext`jp[1, 2])^Rational[1, 2] 
+     AngularMomentum`tj[{
+        $CellContext`j[0], 
+        $CellContext`mj[0]}, {
+        $CellContext`j[3], 
+        $CellContext`mj[3]}, {
+        $CellContext`jp[1, 2], -$CellContext`mjp[1, 2]}] AngularMomentum`tj[{
+        $CellContext`j[0], 
+        $CellContext`mj[0]}, {
+        $CellContext`jp[3], 
+        $CellContext`mjp[3]}, {
+        $CellContext`j[1, 2], -$CellContext`mj[1, 2]}] AngularMomentum`tj[{
+        $CellContext`j[1, 2], 
+        $CellContext`mj[1, 2]}, {
+        $CellContext`j[3], 
+        $CellContext`mj[3]}, {$CellContext`J, -$CellContext`mJ}] 
+     AngularMomentum`tj[{
+        $CellContext`jp[1, 2], 
+        $CellContext`mjp[1, 2]}, {
+        $CellContext`jp[3], 
+        $CellContext`mjp[3]}, {$CellContext`Jp, -$CellContext`mJp}], 
+     Utility`set[
+      $CellContext`mj[0], 
+      $CellContext`mj[3], 
+      $CellContext`mj[1, 2], 
+      $CellContext`mjp[3], 
+      $CellContext`mjp[1, 2]]]], "working on:", 
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`mj[1, 2] + $CellContext`mjp[1, 2]) 
+     AngularMomentum`tj[{
+        $CellContext`j[0], 
+        $CellContext`mj[0]}, {
+        $CellContext`j[3], 
+        $CellContext`mj[3]}, {
+        $CellContext`jp[1, 2], -$CellContext`mjp[1, 2]}] AngularMomentum`tj[{
+        $CellContext`j[0], 
+        $CellContext`mj[0]}, {
+        $CellContext`jp[3], 
+        $CellContext`mjp[3]}, {
+        $CellContext`j[1, 2], -$CellContext`mj[1, 2]}] AngularMomentum`tj[{
+        $CellContext`j[1, 2], 
+        $CellContext`mj[1, 2]}, {
+        $CellContext`j[3], 
+        $CellContext`mj[3]}, {$CellContext`J, -$CellContext`mJ}] 
+     AngularMomentum`tj[{
+        $CellContext`jp[1, 2], 
+        $CellContext`mjp[1, 2]}, {
+        $CellContext`jp[3], 
+        $CellContext`mjp[3]}, {$CellContext`Jp, -$CellContext`mJp}], 
+     Utility`set[
+      $CellContext`mj[0], 
+      $CellContext`mj[3], 
+      $CellContext`mj[1, 2], 
+      $CellContext`mjp[3], 
+      $CellContext`mjp[1, 2]]]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.669712123383855*^9, 3.669712195566386*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubsuperscriptBox["m", 
+        SubscriptBox["j", "3"], "\[Prime]"]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubsuperscriptBox["m", 
+         SubscriptBox["j", 
+          RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]], 
+       RowBox[{
+        SqrtBox[
+         RowBox[{
+          RowBox[{"2", " ", "J"}], "+", "1"}]], " ", 
+        SqrtBox[
+         RowBox[{
+          RowBox[{"2", " ", 
+           SubscriptBox["j", 
+            RowBox[{"1", "\[InvisibleComma]", "2"}]]}], "+", "1"}]], " ", 
+        SqrtBox[
+         RowBox[{
+          RowBox[{"2", " ", 
+           SuperscriptBox["J", "\[Prime]"]}], "+", "1"}]], " ", 
+        SqrtBox[
+         RowBox[{
+          RowBox[{"2", " ", 
+           SubsuperscriptBox["j", 
+            RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}], "+", 
+          "1"}]], " ", 
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"-", "1"}], ")"}], 
+         RowBox[{
+          SubsuperscriptBox["m", 
+           SubscriptBox["j", 
+            RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], "+", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["j", "3"], "\[Prime]"], "+", 
+          SubsuperscriptBox["j", 
+           RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], "+", 
+          SubsuperscriptBox["j", "3", "\[Prime]"], "+", 
+          SubscriptBox["j", 
+           RowBox[{"1", "\[InvisibleComma]", "2"}]], "+", 
+          SubscriptBox["j", "3"], "+", 
+          SubscriptBox["m", "J"], "+", "1"}]], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["(",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol], "\[MediumSpace]", GridBox[{
+           {
+            SubsuperscriptBox["j", "3", "\[Prime]"], "J", 
+            SubsuperscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]},
+           {
+            SubsuperscriptBox["m", 
+             SubscriptBox["j", "3"], "\[Prime]"], 
+            RowBox[{"-", 
+             SubscriptBox["m", "J"]}], 
+            SubsuperscriptBox["m", 
+             SubscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox[")",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol]}], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["(",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol], "\[MediumSpace]", GridBox[{
+           {
+            SubsuperscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], 
+            SubsuperscriptBox["j", "3", "\[Prime]"], 
+            SuperscriptBox["J", "\[Prime]"]},
+           {
+            SubsuperscriptBox["m", 
+             SubscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], 
+            SubsuperscriptBox["m", 
+             SubscriptBox["j", "3"], "\[Prime]"], 
+            RowBox[{"-", 
+             SubsuperscriptBox["m", "J", "\[Prime]"]}]}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox[")",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol]}], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["{",
+           SpanMaxSize->DirectedInfinity[1]],
+          SixJSymbol], "\[MediumSpace]", GridBox[{
+           {"J", 
+            SubscriptBox["j", "3"], 
+            SubscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}]]},
+           {
+            SubscriptBox["j", "0"], 
+            SubsuperscriptBox["j", "3", "\[Prime]"], 
+            SubsuperscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox["}",
+           SpanMaxSize->DirectedInfinity[1]],
+          SixJSymbol]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubsuperscriptBox["m", 
+        SubscriptBox["j", "3"], "\[Prime]"]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubsuperscriptBox["m", 
+         SubscriptBox["j", 
+          RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]], 
+       RowBox[{
+        SuperscriptBox[
+         RowBox[{"(", 
+          RowBox[{"-", "1"}], ")"}], 
+         RowBox[{
+          SubsuperscriptBox["m", 
+           SubscriptBox["j", 
+            RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], "+", 
+          SubsuperscriptBox["m", 
+           SubscriptBox["j", "3"], "\[Prime]"], "+", 
+          SubsuperscriptBox["j", "3", "\[Prime]"], "+", 
+          SubscriptBox["j", "3"], "+", 
+          SubsuperscriptBox["m", "J", "\[Prime]"], "+", "1"}]], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["(",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol], "\[MediumSpace]", GridBox[{
+           {
+            SubsuperscriptBox["j", "3", "\[Prime]"], "J", 
+            SubsuperscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]},
+           {
+            SubsuperscriptBox["m", 
+             SubscriptBox["j", "3"], "\[Prime]"], 
+            RowBox[{"-", 
+             SubscriptBox["m", "J"]}], 
+            SubsuperscriptBox["m", 
+             SubscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"]}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox[")",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol]}], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["(",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol], "\[MediumSpace]", GridBox[{
+           {
+            SubsuperscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], 
+            SubsuperscriptBox["j", "3", "\[Prime]"], 
+            SuperscriptBox["J", "\[Prime]"]},
+           {
+            SubsuperscriptBox["m", 
+             SubscriptBox["j", 
+              RowBox[{"1", "\[InvisibleComma]", "2"}]], "\[Prime]"], 
+            SubsuperscriptBox["m", 
+             SubscriptBox["j", "3"], "\[Prime]"], 
+            RowBox[{"-", 
+             SubsuperscriptBox["m", "J", "\[Prime]"]}]}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox[")",
+           SpanMaxSize->DirectedInfinity[1]],
+          ThreeJSymbol]}], " ", 
+        RowBox[{
+         TagBox[
+          StyleBox["{",
+           SpanMaxSize->DirectedInfinity[1]],
+          SixJSymbol], "\[MediumSpace]", GridBox[{
+           {"J", 
+            SubscriptBox["j", "3"], 
+            SubscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}]]},
+           {
+            SubscriptBox["j", "0"], 
+            SubsuperscriptBox["j", "3", "\[Prime]"], 
+            SubsuperscriptBox["j", 
+             RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}
+          }], "\[MediumSpace]", 
+         TagBox[
+          StyleBox["}",
+           SpanMaxSize->DirectedInfinity[1]],
+          SixJSymbol]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(-1)^(
+       1 + $CellContext`mJ + $CellContext`j[3] + $CellContext`j[
+        1, 2] + $CellContext`jp[3] + $CellContext`jp[1, 2] + $CellContext`mjp[
+        3] + $CellContext`mjp[1, 2]) (1 + 2 $CellContext`J)^
+      Rational[1, 2] (1 + 2 $CellContext`Jp)^
+      Rational[1, 2] (1 + 2 $CellContext`j[1, 2])^
+      Rational[1, 2] (1 + 2 $CellContext`jp[1, 2])^Rational[1, 2] 
+     AngularMomentum`sj[{$CellContext`J, 
+        $CellContext`j[3], 
+        $CellContext`j[1, 2]}, {
+        $CellContext`j[0], 
+        $CellContext`jp[3], 
+        $CellContext`jp[1, 2]}] AngularMomentum`tj[{
+        $CellContext`jp[3], 
+        $CellContext`mjp[3]}, {$CellContext`J, -$CellContext`mJ}, {
+        $CellContext`jp[1, 2], 
+        $CellContext`mjp[1, 2]}] AngularMomentum`tj[{
+        $CellContext`jp[1, 2], 
+        $CellContext`mjp[1, 2]}, {
+        $CellContext`jp[3], 
+        $CellContext`mjp[3]}, {$CellContext`Jp, -$CellContext`mJp}], 
+     Utility`set[
+      $CellContext`mjp[3], 
+      $CellContext`mjp[1, 2]]]], "working on:", 
+   TraditionalForm[
+    Utility`sum[(-1)^(
+       1 + $CellContext`mJp + $CellContext`j[3] + $CellContext`jp[
+        3] + $CellContext`mjp[3] + $CellContext`mjp[1, 2]) 
+     AngularMomentum`sj[{$CellContext`J, 
+        $CellContext`j[3], 
+        $CellContext`j[1, 2]}, {
+        $CellContext`j[0], 
+        $CellContext`jp[3], 
+        $CellContext`jp[1, 2]}] AngularMomentum`tj[{
+        $CellContext`jp[3], 
+        $CellContext`mjp[3]}, {$CellContext`J, -$CellContext`mJ}, {
+        $CellContext`jp[1, 2], 
+        $CellContext`mjp[1, 2]}] AngularMomentum`tj[{
+        $CellContext`jp[1, 2], 
+        $CellContext`mjp[1, 2]}, {
+        $CellContext`jp[3], 
+        $CellContext`mjp[3]}, {$CellContext`Jp, -$CellContext`mJp}], 
+     Utility`set[
+      $CellContext`mjp[3], 
+      $CellContext`mjp[1, 2]]]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.669712123383855*^9, 3.6697121956496067`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      SqrtBox[
+       RowBox[{
+        RowBox[{"2", " ", 
+         SubscriptBox["j", 
+          RowBox[{"1", "\[InvisibleComma]", "2"}]]}], "+", "1"}]], " ", 
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"-", "1"}], ")"}], 
+       RowBox[{
+        SubsuperscriptBox["j", 
+         RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], "+", 
+        SubsuperscriptBox["j", "3", "\[Prime]"], "+", 
+        SubscriptBox["j", 
+         RowBox[{"1", "\[InvisibleComma]", "2"}]], "+", 
+        SubscriptBox["j", "3"]}]], " ", 
+      SqrtBox[
+       RowBox[{
+        RowBox[{"2", " ", 
+         SubsuperscriptBox["j", 
+          RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}], "+", "1"}]],
+       " ", 
+      TemplateBox[{RowBox[{"J", ",", 
+          SuperscriptBox["J", "\[Prime]"]}]},
+       "KroneckerDeltaSeq"], " ", 
+      TemplateBox[{RowBox[{
+          SubscriptBox["m", "J"], ",", 
+          SubsuperscriptBox["m", "J", "\[Prime]"]}]},
+       "KroneckerDeltaSeq"], " ", 
+      RowBox[{
+       TagBox[
+        StyleBox["{",
+         SpanMaxSize->DirectedInfinity[1]],
+        SixJSymbol], "\[MediumSpace]", GridBox[{
+         {"J", 
+          SubscriptBox["j", "3"], 
+          SubscriptBox["j", 
+           RowBox[{"1", "\[InvisibleComma]", "2"}]]},
+         {
+          SubscriptBox["j", "0"], 
+          SubsuperscriptBox["j", "3", "\[Prime]"], 
+          SubsuperscriptBox["j", 
+           RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}
+        }], "\[MediumSpace]", 
+       TagBox[
+        StyleBox["}",
+         SpanMaxSize->DirectedInfinity[1]],
+        SixJSymbol]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     FractionBox[
+      RowBox[{
+       SuperscriptBox[
+        RowBox[{"(", 
+         RowBox[{"-", "1"}], ")"}], 
+        RowBox[{
+         SubsuperscriptBox["j", "3", "\[Prime]"], "+", 
+         SubscriptBox["j", "3"]}]], " ", 
+       TemplateBox[{RowBox[{"J", ",", 
+           SuperscriptBox["J", "\[Prime]"]}]},
+        "KroneckerDeltaSeq"], " ", 
+       TemplateBox[{RowBox[{
+           SubscriptBox["m", "J"], ",", 
+           SubsuperscriptBox["m", "J", "\[Prime]"]}]},
+        "KroneckerDeltaSeq"], " ", 
+       RowBox[{
+        TagBox[
+         StyleBox["{",
+          SpanMaxSize->DirectedInfinity[1]],
+         SixJSymbol], "\[MediumSpace]", GridBox[{
+          {"J", 
+           SubscriptBox["j", "3"], 
+           SubscriptBox["j", 
+            RowBox[{"1", "\[InvisibleComma]", "2"}]]},
+          {
+           SubscriptBox["j", "0"], 
+           SubsuperscriptBox["j", "3", "\[Prime]"], 
+           SubsuperscriptBox["j", 
+            RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}
+         }], "\[MediumSpace]", 
+        TagBox[
+         StyleBox["}",
+          SpanMaxSize->DirectedInfinity[1]],
+         SixJSymbol]}]}], 
+      RowBox[{
+       RowBox[{"2", " ", "J"}], "+", "1"}]],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[(-1)^($CellContext`j[3] + $CellContext`j[
+       1, 2] + $CellContext`jp[3] + $CellContext`jp[1, 2]) (1 + 
+      2 $CellContext`j[1, 2])^Rational[1, 2] (1 + 2 $CellContext`jp[1, 2])^
+     Rational[1, 2] KroneckerDelta[$CellContext`J, $CellContext`Jp] 
+    KroneckerDelta[$CellContext`mJ, $CellContext`mJp] 
+    AngularMomentum`sj[{$CellContext`J, 
+       $CellContext`j[3], 
+       $CellContext`j[1, 2]}, {
+       $CellContext`j[0], 
+       $CellContext`jp[3], 
+       $CellContext`jp[1, 2]}]], "working on:", 
+   TraditionalForm[(-1)^($CellContext`j[3] + $CellContext`jp[3]) (1 + 
+      2 $CellContext`J)^(-1) KroneckerDelta[$CellContext`J, $CellContext`Jp] 
+    KroneckerDelta[$CellContext`mJ, $CellContext`mJp] 
+    AngularMomentum`sj[{$CellContext`J, 
+       $CellContext`j[3], 
+       $CellContext`j[1, 2]}, {
+       $CellContext`j[0], 
+       $CellContext`jp[3], 
+       $CellContext`jp[1, 2]}]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.669712123383855*^9, 3.669712195702765*^9}]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"result", "[", "2", "]"}], "//", "TraditionalForm"}], 
+  "\[IndentingNewLine]"}]], "Input",
+ CellChangeTimes->{{3.66971220289957*^9, 3.6697122069028063`*^9}}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   SqrtBox[
+    RowBox[{
+     RowBox[{"2", " ", 
+      SubscriptBox["j", 
+       RowBox[{"1", "\[InvisibleComma]", "2"}]]}], "+", "1"}]], " ", 
+   SuperscriptBox[
+    RowBox[{"(", 
+     RowBox[{"-", "1"}], ")"}], 
+    RowBox[{
+     SubsuperscriptBox["j", 
+      RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"], "+", 
+     SubsuperscriptBox["j", "3", "\[Prime]"], "+", 
+     SubscriptBox["j", 
+      RowBox[{"1", "\[InvisibleComma]", "2"}]], "+", 
+     SubscriptBox["j", "3"]}]], " ", 
+   SqrtBox[
+    RowBox[{
+     RowBox[{"2", " ", 
+      SubsuperscriptBox["j", 
+       RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}], "+", "1"}]], 
+   " ", 
+   TemplateBox[{RowBox[{"J", ",", 
+       SuperscriptBox["J", "\[Prime]"]}]},
+    "KroneckerDeltaSeq"], " ", 
+   TemplateBox[{RowBox[{
+       SubscriptBox["m", "J"], ",", 
+       SubsuperscriptBox["m", "J", "\[Prime]"]}]},
+    "KroneckerDeltaSeq"], " ", 
+   RowBox[{
+    TagBox[
+     StyleBox["{",
+      SpanMaxSize->DirectedInfinity[1]],
+     SixJSymbol], "\[MediumSpace]", GridBox[{
+      {"J", 
+       SubscriptBox["j", "3"], 
+       SubscriptBox["j", 
+        RowBox[{"1", "\[InvisibleComma]", "2"}]]},
+      {
+       SubscriptBox["j", "0"], 
+       SubsuperscriptBox["j", "3", "\[Prime]"], 
+       SubsuperscriptBox["j", 
+        RowBox[{"1", "\[InvisibleComma]", "2"}], "\[Prime]"]}
+     }], "\[MediumSpace]", 
+    TagBox[
+     StyleBox["}",
+      SpanMaxSize->DirectedInfinity[1]],
+     SixJSymbol]}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.66971220718589*^9}]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"testExpr", "[", "2", "]"}], "=", 
+   RowBox[{"sum", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
           RowBox[{"jp", "[", "1", "]"}], ",", 
           RowBox[{"mjp", "[", "1", "]"}]}], "}"}], ",", 
         RowBox[{"{", 
@@ -3208,7 +4244,3135 @@ Cell[BoxData[
  CellChangeTimes->{{3.606213577499316*^9, 3.6062135953407173`*^9}, 
    3.6062136563999434`*^9}]
 }, Open  ]]
-}, Open  ]]
+}, Open  ]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"declareIndexedAM", "[", 
+   RowBox[{"{", 
+    RowBox[{"j", ",", "J"}], "}"}], "]"}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareQNInteger", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"J", "[", "1", "]"}], ",", 
+     RowBox[{"mJ", "[", "1", "]"}], ",", 
+     RowBox[{"J", "[", "2", "]"}], ",", 
+     RowBox[{"mJ", "[", "2", "]"}], ",", 
+     RowBox[{"J", "[", "3", "]"}], ",", 
+     RowBox[{"mJ", "[", "3", "]"}], ",", 
+     RowBox[{"J", "[", "4", "]"}], ",", 
+     RowBox[{"mJ", "[", "4", "]"}]}], "}"}], "]"}], 
+  ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"declareQNHalfInteger", "[", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"j", "[", "t", "]"}], ",", 
+     RowBox[{"mj", "[", "t", "]"}], ",", 
+     RowBox[{"j", "[", "u", "]"}], ",", 
+     RowBox[{"mj", "[", "u", "]"}], ",", 
+     RowBox[{"j", "[", "p", "]"}], ",", 
+     RowBox[{"mj", "[", "p", "]"}], ",", 
+     RowBox[{"j", "[", "w", "]"}], ",", 
+     RowBox[{"mj", "[", "w", "]"}], ",", 
+     RowBox[{"j", "[", "v", "]"}], ",", 
+     RowBox[{"mj", "[", "v", "]"}], ",", 
+     RowBox[{"j", "[", "q", "]"}], ",", 
+     RowBox[{"mj", "[", "q", "]"}], ",", 
+     RowBox[{"j", "[", "r", "]"}], ",", 
+     RowBox[{"mj", "[", "r", "]"}], ",", 
+     RowBox[{"j", "[", "s", "]"}], ",", 
+     RowBox[{"mj", "[", "s", "]"}]}], "}"}], "]"}], ";"}]}], "Input",
+ CellChangeTimes->{{3.680516605118375*^9, 3.680516761233506*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"testExpr", "[", "4", "]"}], " ", "=", " ", 
+   RowBox[{"sum", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "t", "]"}], ",", 
+          RowBox[{"mj", "[", "t", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "u", "]"}], ",", 
+          RowBox[{"mj", "[", "u", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "1", "]"}], ",", 
+          RowBox[{"mJ", "[", "1", "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "v", "]"}], ",", 
+          RowBox[{"mj", "[", "v", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "w", "]"}], ",", 
+          RowBox[{"mj", "[", "w", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "1", "]"}], ",", 
+          RowBox[{"mJ", "[", "1", "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "q", "]"}], ",", 
+          RowBox[{"mj", "[", "q", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "r", "]"}], ",", 
+          RowBox[{"mj", "[", "r", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "2", "]"}], ",", 
+          RowBox[{"mJ", "[", "2", "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "s", "]"}], ",", 
+          RowBox[{"mj", "[", "s", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "u", "]"}], ",", 
+          RowBox[{"mj", "[", "u", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "2", "]"}], ",", 
+          RowBox[{"mJ", "[", "2", "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "p", "]"}], ",", 
+          RowBox[{"mj", "[", "p", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "w", "]"}], ",", 
+          RowBox[{"mj", "[", "w", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "3", "]"}], ",", 
+          RowBox[{"mJ", "[", "3", "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "r", "]"}], ",", 
+          RowBox[{"mj", "[", "r", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "t", "]"}], ",", 
+          RowBox[{"mj", "[", "t", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "3", "]"}], ",", 
+          RowBox[{"mJ", "[", "3", "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "s", "]"}], ",", 
+          RowBox[{"mj", "[", "s", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "v", "]"}], ",", 
+          RowBox[{"mj", "[", "v", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "4", "]"}], ",", 
+          RowBox[{"mJ", "[", "4", "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"cg", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "p", "]"}], ",", 
+          RowBox[{"mj", "[", "p", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "q", "]"}], ",", 
+          RowBox[{"mj", "[", "q", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "4", "]"}], ",", 
+          RowBox[{"mJ", "[", "4", "]"}]}], "}"}]}], "]"}]}], 
+     "\[IndentingNewLine]", ",", "\[IndentingNewLine]", 
+     RowBox[{"mj", "[", "q", "]"}], ",", 
+     RowBox[{"mj", "[", "r", "]"}], ",", 
+     RowBox[{"mj", "[", "s", "]"}], ",", 
+     RowBox[{"mj", "[", "t", "]"}], ",", 
+     RowBox[{"mj", "[", "p", "]"}], ",", 
+     RowBox[{"mj", "[", "v", "]"}], ",", 
+     RowBox[{"mj", "[", "w", "]"}], ",", 
+     RowBox[{"mj", "[", "u", "]"}], ",", 
+     RowBox[{"mJ", "[", "1", "]"}], ",", 
+     RowBox[{"mJ", "[", "2", "]"}], ",", 
+     RowBox[{"mJ", "[", "3", "]"}], ",", 
+     RowBox[{"mJ", "[", "4", "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"testExpr", "[", "4", "]"}], "//", 
+  "consistencyCheck"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"testExpr", "[", "4", "]"}], "//", "TraditionalForm"}]}], "Input",
+ CellChangeTimes->{{3.680516781170908*^9, 3.68051702059943*^9}}],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{{3.680516905647582*^9, 3.680516919741658*^9}, 
+   3.6805170210264063`*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   UnderscriptBox["\[Sum]", 
+    SubscriptBox["m", 
+     SubscriptBox["j", "q"]]], 
+   RowBox[{
+    UnderscriptBox["\[Sum]", 
+     SubscriptBox["m", 
+      SubscriptBox["j", "r"]]], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      SubscriptBox["m", 
+       SubscriptBox["j", "s"]]], 
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "t"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "p"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", "v"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["m", 
+           SubscriptBox["j", "w"]]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubscriptBox["m", 
+            SubscriptBox["j", "u"]]], 
+          RowBox[{
+           UnderscriptBox["\[Sum]", 
+            SubscriptBox["m", 
+             SubscriptBox["J", "1"]]], 
+           RowBox[{
+            UnderscriptBox["\[Sum]", 
+             SubscriptBox["m", 
+              SubscriptBox["J", "2"]]], 
+            RowBox[{
+             UnderscriptBox["\[Sum]", 
+              SubscriptBox["m", 
+               SubscriptBox["J", "3"]]], 
+             RowBox[{
+              UnderscriptBox["\[Sum]", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "4"]]], 
+              RowBox[{
+               StyleBox[
+                RowBox[{"c", "(", GridBox[{
+                   {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "q"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]]}
+                  }], "|", GridBox[{
+                   {
+                    SubscriptBox["J", "4"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]]}
+                  }], ")"}],
+                SpanMaxSize->DirectedInfinity[1]], " ", 
+               StyleBox[
+                RowBox[{"c", "(", GridBox[{
+                   {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "w"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]]}
+                  }], "|", GridBox[{
+                   {
+                    SubscriptBox["J", "3"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}
+                  }], ")"}],
+                SpanMaxSize->DirectedInfinity[1]], " ", 
+               StyleBox[
+                RowBox[{"c", "(", GridBox[{
+                   {
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["j", "r"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]]}
+                  }], "|", GridBox[{
+                   {
+                    SubscriptBox["J", "2"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}
+                  }], ")"}],
+                SpanMaxSize->DirectedInfinity[1]], " ", 
+               StyleBox[
+                RowBox[{"c", "(", GridBox[{
+                   {
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["j", "t"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]]}
+                  }], "|", GridBox[{
+                   {
+                    SubscriptBox["J", "3"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}
+                  }], ")"}],
+                SpanMaxSize->DirectedInfinity[1]], " ", 
+               StyleBox[
+                RowBox[{"c", "(", GridBox[{
+                   {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "u"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "s"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "u"]]}
+                  }], "|", GridBox[{
+                   {
+                    SubscriptBox["J", "2"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}
+                  }], ")"}],
+                SpanMaxSize->DirectedInfinity[1]], " ", 
+               StyleBox[
+                RowBox[{"c", "(", GridBox[{
+                   {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "v"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "s"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "v"]]}
+                  }], "|", GridBox[{
+                   {
+                    SubscriptBox["J", "4"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]]}
+                  }], ")"}],
+                SpanMaxSize->DirectedInfinity[1]], " ", 
+               StyleBox[
+                RowBox[{"c", "(", GridBox[{
+                   {
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["j", "u"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "u"]]}
+                  }], "|", GridBox[{
+                   {
+                    SubscriptBox["J", "1"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "1"]]}
+                  }], ")"}],
+                SpanMaxSize->DirectedInfinity[1]], " ", 
+               StyleBox[
+                RowBox[{"c", "(", GridBox[{
+                   {
+                    SubscriptBox["j", "v"], 
+                    SubscriptBox["j", "w"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "v"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]]}
+                  }], "|", GridBox[{
+                   {
+                    SubscriptBox["J", "1"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "1"]]}
+                  }], ")"}],
+                SpanMaxSize->DirectedInfinity[1]]}]}]}]}]}]}]}]}]}]}]}]}]}], 
+  TraditionalForm]], "Output",
+ CellChangeTimes->{{3.680516905647582*^9, 3.680516919741658*^9}, 
+   3.680517021057349*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{
+   RowBox[{"result", "[", "4", "]"}], "=", 
+   RowBox[{"simplifyAMSum", "[", 
+    RowBox[{
+     RowBox[{"testExpr", "[", "4", "]"}], ",", 
+     RowBox[{"Print", "\[Rule]", "True"}]}], "]"}]}], ";"}]], "Input",
+ CellChangeTimes->{{3.680517081548689*^9, 3.680517089249836*^9}}],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "q"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", "r"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["m", 
+           SubscriptBox["j", "s"]]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubscriptBox["m", 
+            SubscriptBox["j", "t"]]], 
+          RowBox[{
+           UnderscriptBox["\[Sum]", 
+            SubscriptBox["m", 
+             SubscriptBox["j", "u"]]], 
+           RowBox[{
+            UnderscriptBox["\[Sum]", 
+             SubscriptBox["m", 
+              SubscriptBox["j", "v"]]], 
+            RowBox[{
+             UnderscriptBox["\[Sum]", 
+              SubscriptBox["m", 
+               SubscriptBox["j", "w"]]], 
+             RowBox[{
+              UnderscriptBox["\[Sum]", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "1"]]], 
+              RowBox[{
+               UnderscriptBox["\[Sum]", 
+                SubscriptBox["m", 
+                 SubscriptBox["J", "2"]]], 
+               RowBox[{
+                UnderscriptBox["\[Sum]", 
+                 SubscriptBox["m", 
+                  SubscriptBox["J", "3"]]], 
+                RowBox[{
+                 UnderscriptBox["\[Sum]", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "4"]]], 
+                 RowBox[{
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"2", " ", 
+                    SubscriptBox["J", "1"]}], "+", "1"}], ")"}], " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"2", " ", 
+                    SubscriptBox["J", "2"]}], "+", "1"}], ")"}], " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"2", " ", 
+                    SubscriptBox["J", "3"]}], "+", "1"}], ")"}], " ", 
+                  RowBox[{"(", 
+                   RowBox[{
+                    RowBox[{"2", " ", 
+                    SubscriptBox["J", "4"]}], "+", "1"}], ")"}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["J", "4"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "w"], 
+                    SubscriptBox["J", "3"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["J", "2"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["J", "3"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "u"], 
+                    SubscriptBox["J", "2"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "s"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "u"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "v"], 
+                    SubscriptBox["J", "4"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "s"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "v"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["j", "u"], 
+                    SubscriptBox["J", "1"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "u"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "1"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "v"], 
+                    SubscriptBox["j", "w"], 
+                    SubscriptBox["J", "1"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "v"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "1"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}]}]}]}]}]}]}]}]}]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "q"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", "r"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["m", 
+           SubscriptBox["j", "s"]]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubscriptBox["m", 
+            SubscriptBox["j", "t"]]], 
+          RowBox[{
+           UnderscriptBox["\[Sum]", 
+            SubscriptBox["m", 
+             SubscriptBox["j", "u"]]], 
+           RowBox[{
+            UnderscriptBox["\[Sum]", 
+             SubscriptBox["m", 
+              SubscriptBox["j", "v"]]], 
+            RowBox[{
+             UnderscriptBox["\[Sum]", 
+              SubscriptBox["m", 
+               SubscriptBox["j", "w"]]], 
+             RowBox[{
+              UnderscriptBox["\[Sum]", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "1"]]], 
+              RowBox[{
+               UnderscriptBox["\[Sum]", 
+                SubscriptBox["m", 
+                 SubscriptBox["J", "2"]]], 
+               RowBox[{
+                UnderscriptBox["\[Sum]", 
+                 SubscriptBox["m", 
+                  SubscriptBox["J", "3"]]], 
+                RowBox[{
+                 UnderscriptBox["\[Sum]", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "4"]]], 
+                 RowBox[{
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["J", "4"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "w"], 
+                    SubscriptBox["J", "3"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["J", "2"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["J", "3"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "u"], 
+                    SubscriptBox["J", "2"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "s"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "u"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "v"], 
+                    SubscriptBox["J", "4"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "s"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "v"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["j", "u"], 
+                    SubscriptBox["J", "1"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "u"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "1"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}], " ", 
+                  RowBox[{
+                   TagBox[
+                    StyleBox["(",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                    {
+                    SubscriptBox["j", "v"], 
+                    SubscriptBox["j", "w"], 
+                    SubscriptBox["J", "1"]},
+                    {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "v"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "1"]]}]}
+                    }], "\[MediumSpace]", 
+                   TagBox[
+                    StyleBox[")",
+                    SpanMaxSize->DirectedInfinity[1]],
+                    ThreeJSymbol]}]}]}]}]}]}]}]}]}]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(1 + 2 $CellContext`J[1]) (1 + 2 $CellContext`J[2]) (1 + 
+      2 $CellContext`J[3]) (1 + 2 $CellContext`J[4]) AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`J[4], -$CellContext`mJ[4]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], -$CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`j[$CellContext`r], 
+        $CellContext`mj[$CellContext`r]}, {
+        $CellContext`J[2], -$CellContext`mJ[2]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`r], 
+        $CellContext`mj[$CellContext`r]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`mj[$CellContext`t]}, {
+        $CellContext`J[3], -$CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`mj[$CellContext`s]}, {
+        $CellContext`j[$CellContext`u], 
+        $CellContext`mj[$CellContext`u]}, {
+        $CellContext`J[2], -$CellContext`mJ[2]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`mj[$CellContext`s]}, {
+        $CellContext`j[$CellContext`v], 
+        $CellContext`mj[$CellContext`v]}, {
+        $CellContext`J[4], -$CellContext`mJ[4]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`t], 
+        $CellContext`mj[$CellContext`t]}, {
+        $CellContext`j[$CellContext`u], 
+        $CellContext`mj[$CellContext`u]}, {
+        $CellContext`J[1], -$CellContext`mJ[1]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`v], 
+        $CellContext`mj[$CellContext`v]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[1], -$CellContext`mJ[1]}], 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`q], 
+      $CellContext`mj[$CellContext`r], 
+      $CellContext`mj[$CellContext`s], 
+      $CellContext`mj[$CellContext`t], 
+      $CellContext`mj[$CellContext`u], 
+      $CellContext`mj[$CellContext`v], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[1], 
+      $CellContext`mJ[2], 
+      $CellContext`mJ[3], 
+      $CellContext`mJ[4]]]], "working on:", 
+   TraditionalForm[
+    Utility`sum[AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`J[4], -$CellContext`mJ[4]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], -$CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`j[$CellContext`r], 
+        $CellContext`mj[$CellContext`r]}, {
+        $CellContext`J[2], -$CellContext`mJ[2]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`r], 
+        $CellContext`mj[$CellContext`r]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`mj[$CellContext`t]}, {
+        $CellContext`J[3], -$CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`mj[$CellContext`s]}, {
+        $CellContext`j[$CellContext`u], 
+        $CellContext`mj[$CellContext`u]}, {
+        $CellContext`J[2], -$CellContext`mJ[2]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`mj[$CellContext`s]}, {
+        $CellContext`j[$CellContext`v], 
+        $CellContext`mj[$CellContext`v]}, {
+        $CellContext`J[4], -$CellContext`mJ[4]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`t], 
+        $CellContext`mj[$CellContext`t]}, {
+        $CellContext`j[$CellContext`u], 
+        $CellContext`mj[$CellContext`u]}, {
+        $CellContext`J[1], -$CellContext`mJ[1]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`v], 
+        $CellContext`mj[$CellContext`v]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[1], -$CellContext`mJ[1]}], 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`q], 
+      $CellContext`mj[$CellContext`r], 
+      $CellContext`mj[$CellContext`s], 
+      $CellContext`mj[$CellContext`t], 
+      $CellContext`mj[$CellContext`u], 
+      $CellContext`mj[$CellContext`v], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[1], 
+      $CellContext`mJ[2], 
+      $CellContext`mJ[3], 
+      $CellContext`mJ[4]]]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.680517089649365*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "q"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", "r"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["m", 
+           SubscriptBox["j", "t"]]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubscriptBox["m", 
+            SubscriptBox["j", "w"]]], 
+          RowBox[{
+           UnderscriptBox["\[Sum]", 
+            SubscriptBox["m", 
+             SubscriptBox["J", "2"]]], 
+           RowBox[{
+            UnderscriptBox["\[Sum]", 
+             SubscriptBox["m", 
+              SubscriptBox["J", "3"]]], 
+            RowBox[{
+             UnderscriptBox["\[Sum]", 
+              SubscriptBox["m", 
+               SubscriptBox["J", "4"]]], 
+             RowBox[{
+              UnderscriptBox["\[Sum]", 
+               SubscriptBox["K", "1"]], 
+              RowBox[{
+               UnderscriptBox["\[Sum]", 
+                SubscriptBox["K", "2"]], 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"2", " ", 
+                   SubscriptBox["J", "1"]}], "+", "1"}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"2", " ", 
+                   SubscriptBox["J", "2"]}], "+", "1"}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"2", " ", 
+                   SubscriptBox["J", "3"]}], "+", "1"}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"2", " ", 
+                   SubscriptBox["J", "4"]}], "+", "1"}], ")"}], " ", 
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"2", " ", 
+                   SubscriptBox["K", "1"]}], "+", "1"}], ")"}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["J", "2"], 
+                    SubscriptBox["K", "1"], 
+                    SubscriptBox["j", "t"]},
+                   {
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}], 
+                    RowBox[{"-", 
+                    SubscriptBox["K", "2"]}], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]]}]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["J", "4"], 
+                    SubscriptBox["K", "1"], 
+                    SubscriptBox["j", "w"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]], 
+                    SubscriptBox["K", "2"], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["J", "4"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]]}]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "w"], 
+                    SubscriptBox["J", "3"]},
+                   {
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]]}], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]]}], 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["J", "2"]},
+                   {
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]]}], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]]}], 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["J", "3"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["{",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  SixJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "u"], 
+                    SubscriptBox["J", "2"]},
+                   {
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["K", "1"], 
+                    SubscriptBox["J", "1"]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox["}",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  SixJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["{",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  SixJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "v"], 
+                    SubscriptBox["J", "4"]},
+                   {
+                    SubscriptBox["j", "w"], 
+                    SubscriptBox["K", "1"], 
+                    SubscriptBox["J", "1"]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox["}",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  SixJSymbol]}], " ", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{"-", "1"}], ")"}], 
+                 RowBox[{
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "p"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "q"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "r"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "t"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "w"]], "+", 
+                  SubscriptBox["j", "p"], "+", 
+                  SubscriptBox["j", "q"], "+", 
+                  SubscriptBox["j", "r"], "+", 
+                  SubscriptBox["j", "v"], "+", 
+                  SubscriptBox["j", "w"], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "2"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "3"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "4"]], "+", 
+                  SubscriptBox["J", "1"], "+", 
+                  SubscriptBox["J", "3"], "+", 
+                  SubscriptBox["K", "1"], "+", 
+                  SubscriptBox["K", "2"], "+", "1"}]]}]}]}]}]}]}]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "q"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", "r"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["m", 
+           SubscriptBox["j", "t"]]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubscriptBox["m", 
+            SubscriptBox["j", "w"]]], 
+          RowBox[{
+           UnderscriptBox["\[Sum]", 
+            SubscriptBox["m", 
+             SubscriptBox["J", "2"]]], 
+           RowBox[{
+            UnderscriptBox["\[Sum]", 
+             SubscriptBox["m", 
+              SubscriptBox["J", "3"]]], 
+            RowBox[{
+             UnderscriptBox["\[Sum]", 
+              SubscriptBox["m", 
+               SubscriptBox["J", "4"]]], 
+             RowBox[{
+              UnderscriptBox["\[Sum]", 
+               SubscriptBox["K", "1"]], 
+              RowBox[{
+               UnderscriptBox["\[Sum]", 
+                SubscriptBox["K", "2"]], 
+               RowBox[{
+                RowBox[{"(", 
+                 RowBox[{
+                  RowBox[{"2", " ", 
+                   SubscriptBox["K", "1"]}], "+", "1"}], ")"}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["J", "2"], 
+                    SubscriptBox["K", "1"], 
+                    SubscriptBox["j", "t"]},
+                   {
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}], 
+                    RowBox[{"-", 
+                    SubscriptBox["K", "2"]}], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]]}]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["J", "4"], 
+                    SubscriptBox["K", "1"], 
+                    SubscriptBox["j", "w"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]], 
+                    SubscriptBox["K", "2"], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["J", "4"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "4"]]}]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "p"], 
+                    SubscriptBox["j", "w"], 
+                    SubscriptBox["J", "3"]},
+                   {
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "p"]]}], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "w"]]}], 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "q"], 
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["J", "2"]},
+                   {
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "q"]]}], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]]}], 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "2"]]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["(",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "r"], 
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["J", "3"]},
+                   {
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "r"]], 
+                    SubscriptBox["m", 
+                    SubscriptBox["j", "t"]], 
+                    RowBox[{"-", 
+                    SubscriptBox["m", 
+                    SubscriptBox["J", "3"]]}]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox[")",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  ThreeJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["{",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  SixJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "u"], 
+                    SubscriptBox["J", "2"]},
+                   {
+                    SubscriptBox["j", "t"], 
+                    SubscriptBox["K", "1"], 
+                    SubscriptBox["J", "1"]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox["}",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  SixJSymbol]}], " ", 
+                RowBox[{
+                 TagBox[
+                  StyleBox["{",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  SixJSymbol], "\[MediumSpace]", GridBox[{
+                   {
+                    SubscriptBox["j", "s"], 
+                    SubscriptBox["j", "v"], 
+                    SubscriptBox["J", "4"]},
+                   {
+                    SubscriptBox["j", "w"], 
+                    SubscriptBox["K", "1"], 
+                    SubscriptBox["J", "1"]}
+                  }], "\[MediumSpace]", 
+                 TagBox[
+                  StyleBox["}",
+                   SpanMaxSize->DirectedInfinity[1]],
+                  SixJSymbol]}], " ", 
+                SuperscriptBox[
+                 RowBox[{"(", 
+                  RowBox[{"-", "1"}], ")"}], 
+                 RowBox[{
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "p"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "q"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "r"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "t"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "w"]], "+", 
+                  SubscriptBox["j", "p"], "+", 
+                  SubscriptBox["j", "q"], "+", 
+                  SubscriptBox["j", "r"], "+", 
+                  SubscriptBox["j", "v"], "+", 
+                  SubscriptBox["j", "w"], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "2"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "3"]], "+", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "4"]], "+", 
+                  SubscriptBox["J", "1"], "+", 
+                  SubscriptBox["J", "3"], "+", 
+                  SubscriptBox["K", "1"], "+", 
+                  SubscriptBox["K", "2"], "+", "1"}]]}]}]}]}]}]}]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(-1)^(
+       1 + $CellContext`j[$CellContext`p] + $CellContext`j[$CellContext`q] + \
+$CellContext`j[$CellContext`r] + $CellContext`j[$CellContext`v] + \
+$CellContext`j[$CellContext`w] + $CellContext`J[1] + $CellContext`J[
+        3] + $CellContext`mj[$CellContext`p] + \
+$CellContext`mj[$CellContext`q] + $CellContext`mj[$CellContext`r] + \
+$CellContext`mj[$CellContext`t] + $CellContext`mj[$CellContext`w] + \
+$CellContext`mJ[2] + $CellContext`mJ[3] + $CellContext`mJ[
+        4] + $CellContext`varK[1] + $CellContext`varK[2]) (1 + 
+      2 $CellContext`J[1]) (1 + 2 $CellContext`J[2]) (1 + 
+      2 $CellContext`J[3]) (1 + 2 $CellContext`J[4]) AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`u], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`v], 
+        $CellContext`J[4]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`J[4], -$CellContext`mJ[4]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`q], -$CellContext`mj[$CellContext`q]}, {
+        $CellContext`j[$CellContext`r], -$CellContext`mj[$CellContext`r]}, {
+        $CellContext`J[2], 
+        $CellContext`mJ[2]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`r], 
+        $CellContext`mj[$CellContext`r]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`mj[$CellContext`t]}, {
+        $CellContext`J[3], -$CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`J[2], -$CellContext`mJ[2]}, {
+        $CellContext`varK[1], -$CellContext`varK[2]}, {
+        $CellContext`j[$CellContext`t], -$CellContext`mj[$CellContext`t]}] 
+     AngularMomentum`tj[{
+        $CellContext`J[4], 
+        $CellContext`mJ[4]}, {
+        $CellContext`varK[1], 
+        $CellContext`varK[2]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}] (1 + 2 $CellContext`varK[1]), 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`q], 
+      $CellContext`mj[$CellContext`r], 
+      $CellContext`mj[$CellContext`t], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[2], 
+      $CellContext`mJ[3], 
+      $CellContext`mJ[4], 
+      $CellContext`varK[1], 
+      $CellContext`varK[2]]]], "working on:", 
+   TraditionalForm[
+    Utility`sum[(-1)^(
+       1 + $CellContext`j[$CellContext`p] + $CellContext`j[$CellContext`q] + \
+$CellContext`j[$CellContext`r] + $CellContext`j[$CellContext`v] + \
+$CellContext`j[$CellContext`w] + $CellContext`J[1] + $CellContext`J[
+        3] + $CellContext`mj[$CellContext`p] + \
+$CellContext`mj[$CellContext`q] + $CellContext`mj[$CellContext`r] + \
+$CellContext`mj[$CellContext`t] + $CellContext`mj[$CellContext`w] + \
+$CellContext`mJ[2] + $CellContext`mJ[3] + $CellContext`mJ[
+        4] + $CellContext`varK[1] + $CellContext`varK[2]) 
+     AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`u], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`v], 
+        $CellContext`J[4]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`J[4], -$CellContext`mJ[4]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`q], -$CellContext`mj[$CellContext`q]}, {
+        $CellContext`j[$CellContext`r], -$CellContext`mj[$CellContext`r]}, {
+        $CellContext`J[2], 
+        $CellContext`mJ[2]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`r], 
+        $CellContext`mj[$CellContext`r]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`mj[$CellContext`t]}, {
+        $CellContext`J[3], -$CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`J[2], -$CellContext`mJ[2]}, {
+        $CellContext`varK[1], -$CellContext`varK[2]}, {
+        $CellContext`j[$CellContext`t], -$CellContext`mj[$CellContext`t]}] 
+     AngularMomentum`tj[{
+        $CellContext`J[4], 
+        $CellContext`mJ[4]}, {
+        $CellContext`varK[1], 
+        $CellContext`varK[2]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}] (1 + 2 $CellContext`varK[1]), 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`q], 
+      $CellContext`mj[$CellContext`r], 
+      $CellContext`mj[$CellContext`t], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[2], 
+      $CellContext`mJ[3], 
+      $CellContext`mJ[4], 
+      $CellContext`varK[1], 
+      $CellContext`varK[2]]]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6805170898675957`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "q"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", "w"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["m", 
+           SubscriptBox["J", "3"]]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubscriptBox["m", 
+            SubscriptBox["J", "4"]]], 
+          RowBox[{
+           UnderscriptBox["\[Sum]", 
+            SubscriptBox["K", "1"]], 
+           RowBox[{
+            UnderscriptBox["\[Sum]", 
+             SubscriptBox["K", "2"]], 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"2", " ", 
+                SubscriptBox["J", "1"]}], "+", "1"}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"2", " ", 
+                SubscriptBox["J", "2"]}], "+", "1"}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"2", " ", 
+                SubscriptBox["J", "3"]}], "+", "1"}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"2", " ", 
+                SubscriptBox["J", "4"]}], "+", "1"}], ")"}], " ", 
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"2", " ", 
+                SubscriptBox["K", "1"]}], "+", "1"}], ")"}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["(",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["J", "3"], 
+                 SubscriptBox["j", "q"], 
+                 SubscriptBox["K", "1"]},
+                {
+                 SubscriptBox["m", 
+                  SubscriptBox["J", "3"]], 
+                 SubscriptBox["m", 
+                  SubscriptBox["j", "q"]], 
+                 SubscriptBox["K", "2"]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox[")",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["(",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["J", "4"], 
+                 SubscriptBox["K", "1"], 
+                 SubscriptBox["j", "w"]},
+                {
+                 SubscriptBox["m", 
+                  SubscriptBox["J", "4"]], 
+                 SubscriptBox["K", "2"], 
+                 SubscriptBox["m", 
+                  SubscriptBox["j", "w"]]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox[")",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["(",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "p"], 
+                 SubscriptBox["j", "q"], 
+                 SubscriptBox["J", "4"]},
+                {
+                 SubscriptBox["m", 
+                  SubscriptBox["j", "p"]], 
+                 SubscriptBox["m", 
+                  SubscriptBox["j", "q"]], 
+                 RowBox[{"-", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "4"]]}]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox[")",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["(",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "p"], 
+                 SubscriptBox["j", "w"], 
+                 SubscriptBox["J", "3"]},
+                {
+                 RowBox[{"-", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "p"]]}], 
+                 RowBox[{"-", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "w"]]}], 
+                 SubscriptBox["m", 
+                  SubscriptBox["J", "3"]]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox[")",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["{",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "q"], 
+                 SubscriptBox["j", "r"], 
+                 SubscriptBox["J", "2"]},
+                {
+                 SubscriptBox["j", "t"], 
+                 SubscriptBox["K", "1"], 
+                 SubscriptBox["J", "3"]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox["}",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["{",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "s"], 
+                 SubscriptBox["j", "u"], 
+                 SubscriptBox["J", "2"]},
+                {
+                 SubscriptBox["j", "t"], 
+                 SubscriptBox["K", "1"], 
+                 SubscriptBox["J", "1"]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox["}",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["{",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "s"], 
+                 SubscriptBox["j", "v"], 
+                 SubscriptBox["J", "4"]},
+                {
+                 SubscriptBox["j", "w"], 
+                 SubscriptBox["K", "1"], 
+                 SubscriptBox["J", "1"]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox["}",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol]}], " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"-", "1"}], ")"}], 
+              RowBox[{
+               SubscriptBox["m", 
+                SubscriptBox["j", "p"]], "+", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "q"]], "+", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "w"]], "+", 
+               SubscriptBox["j", "p"], "+", 
+               SubscriptBox["j", "r"], "+", 
+               SubscriptBox["j", "t"], "+", 
+               SubscriptBox["j", "v"], "+", 
+               SubscriptBox["j", "w"], "+", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "3"]], "+", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "4"]], "+", 
+               SubscriptBox["J", "1"], "+", 
+               SubscriptBox["J", "3"], "+", 
+               SubscriptBox["K", "1"], "+", 
+               SubscriptBox["K", "2"]}]]}]}]}]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "q"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["j", "w"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["m", 
+           SubscriptBox["J", "3"]]], 
+         RowBox[{
+          UnderscriptBox["\[Sum]", 
+           SubscriptBox["m", 
+            SubscriptBox["J", "4"]]], 
+          RowBox[{
+           UnderscriptBox["\[Sum]", 
+            SubscriptBox["K", "1"]], 
+           RowBox[{
+            UnderscriptBox["\[Sum]", 
+             SubscriptBox["K", "2"]], 
+            RowBox[{
+             RowBox[{"(", 
+              RowBox[{
+               RowBox[{"2", " ", 
+                SubscriptBox["K", "1"]}], "+", "1"}], ")"}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["(",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["J", "3"], 
+                 SubscriptBox["j", "q"], 
+                 SubscriptBox["K", "1"]},
+                {
+                 SubscriptBox["m", 
+                  SubscriptBox["J", "3"]], 
+                 SubscriptBox["m", 
+                  SubscriptBox["j", "q"]], 
+                 SubscriptBox["K", "2"]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox[")",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["(",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["J", "4"], 
+                 SubscriptBox["K", "1"], 
+                 SubscriptBox["j", "w"]},
+                {
+                 SubscriptBox["m", 
+                  SubscriptBox["J", "4"]], 
+                 SubscriptBox["K", "2"], 
+                 SubscriptBox["m", 
+                  SubscriptBox["j", "w"]]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox[")",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["(",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "p"], 
+                 SubscriptBox["j", "q"], 
+                 SubscriptBox["J", "4"]},
+                {
+                 SubscriptBox["m", 
+                  SubscriptBox["j", "p"]], 
+                 SubscriptBox["m", 
+                  SubscriptBox["j", "q"]], 
+                 RowBox[{"-", 
+                  SubscriptBox["m", 
+                   SubscriptBox["J", "4"]]}]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox[")",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["(",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "p"], 
+                 SubscriptBox["j", "w"], 
+                 SubscriptBox["J", "3"]},
+                {
+                 RowBox[{"-", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "p"]]}], 
+                 RowBox[{"-", 
+                  SubscriptBox["m", 
+                   SubscriptBox["j", "w"]]}], 
+                 SubscriptBox["m", 
+                  SubscriptBox["J", "3"]]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox[")",
+                SpanMaxSize->DirectedInfinity[1]],
+               ThreeJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["{",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "q"], 
+                 SubscriptBox["j", "r"], 
+                 SubscriptBox["J", "2"]},
+                {
+                 SubscriptBox["j", "t"], 
+                 SubscriptBox["K", "1"], 
+                 SubscriptBox["J", "3"]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox["}",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["{",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "s"], 
+                 SubscriptBox["j", "u"], 
+                 SubscriptBox["J", "2"]},
+                {
+                 SubscriptBox["j", "t"], 
+                 SubscriptBox["K", "1"], 
+                 SubscriptBox["J", "1"]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox["}",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol]}], " ", 
+             RowBox[{
+              TagBox[
+               StyleBox["{",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol], "\[MediumSpace]", GridBox[{
+                {
+                 SubscriptBox["j", "s"], 
+                 SubscriptBox["j", "v"], 
+                 SubscriptBox["J", "4"]},
+                {
+                 SubscriptBox["j", "w"], 
+                 SubscriptBox["K", "1"], 
+                 SubscriptBox["J", "1"]}
+               }], "\[MediumSpace]", 
+              TagBox[
+               StyleBox["}",
+                SpanMaxSize->DirectedInfinity[1]],
+               SixJSymbol]}], " ", 
+             SuperscriptBox[
+              RowBox[{"(", 
+               RowBox[{"-", "1"}], ")"}], 
+              RowBox[{
+               SubscriptBox["m", 
+                SubscriptBox["j", "p"]], "+", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "q"]], "+", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "w"]], "+", 
+               SubscriptBox["j", "p"], "+", 
+               SubscriptBox["j", "r"], "+", 
+               SubscriptBox["j", "t"], "+", 
+               SubscriptBox["j", "v"], "+", 
+               SubscriptBox["j", "w"], "+", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "3"]], "+", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "4"]], "+", 
+               SubscriptBox["J", "1"], "+", 
+               SubscriptBox["J", "3"], "+", 
+               SubscriptBox["K", "1"], "+", 
+               SubscriptBox["K", "2"]}]]}]}]}]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`j[$CellContext`p] + \
+$CellContext`j[$CellContext`r] + $CellContext`j[$CellContext`t] + \
+$CellContext`j[$CellContext`v] + $CellContext`j[$CellContext`w] + \
+$CellContext`J[1] + $CellContext`J[
+        3] + $CellContext`mj[$CellContext`p] + \
+$CellContext`mj[$CellContext`q] + $CellContext`mj[$CellContext`w] + \
+$CellContext`mJ[3] + $CellContext`mJ[4] + $CellContext`varK[
+        1] + $CellContext`varK[2]) (1 + 2 $CellContext`J[1]) (1 + 
+      2 $CellContext`J[2]) (1 + 2 $CellContext`J[3]) (1 + 2 $CellContext`J[4])
+       AngularMomentum`sj[{
+        $CellContext`j[$CellContext`q], 
+        $CellContext`j[$CellContext`r], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[3]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`u], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`v], 
+        $CellContext`J[4]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`J[4], -$CellContext`mJ[4]}] AngularMomentum`tj[{
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`varK[1], 
+        $CellContext`varK[2]}] AngularMomentum`tj[{
+        $CellContext`J[4], 
+        $CellContext`mJ[4]}, {
+        $CellContext`varK[1], 
+        $CellContext`varK[2]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}] (1 + 2 $CellContext`varK[1]), 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`q], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[3], 
+      $CellContext`mJ[4], 
+      $CellContext`varK[1], 
+      $CellContext`varK[2]]]], "working on:", 
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`j[$CellContext`p] + \
+$CellContext`j[$CellContext`r] + $CellContext`j[$CellContext`t] + \
+$CellContext`j[$CellContext`v] + $CellContext`j[$CellContext`w] + \
+$CellContext`J[1] + $CellContext`J[
+        3] + $CellContext`mj[$CellContext`p] + \
+$CellContext`mj[$CellContext`q] + $CellContext`mj[$CellContext`w] + \
+$CellContext`mJ[3] + $CellContext`mJ[4] + $CellContext`varK[
+        1] + $CellContext`varK[2]) AngularMomentum`sj[{
+        $CellContext`j[$CellContext`q], 
+        $CellContext`j[$CellContext`r], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[3]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`u], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`v], 
+        $CellContext`J[4]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`J[4], -$CellContext`mJ[4]}] AngularMomentum`tj[{
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`mj[$CellContext`q]}, {
+        $CellContext`varK[1], 
+        $CellContext`varK[2]}] AngularMomentum`tj[{
+        $CellContext`J[4], 
+        $CellContext`mJ[4]}, {
+        $CellContext`varK[1], 
+        $CellContext`varK[2]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}] (1 + 2 $CellContext`varK[1]), 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`q], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[3], 
+      $CellContext`mJ[4], 
+      $CellContext`varK[1], 
+      $CellContext`varK[2]]]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.680517090012466*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "w"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["J", "3"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["K", "1"]], 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["J", "1"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["J", "2"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["J", "3"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["J", "4"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["K", "1"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["(",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["j", "w"], 
+              SubscriptBox["J", "3"]},
+             {
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "p"]]}], 
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "w"]]}], 
+              SubscriptBox["m", 
+               SubscriptBox["J", "3"]]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox[")",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["(",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["J", "3"], 
+              SubscriptBox["j", "w"]},
+             {
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "p"]]}], 
+              SubscriptBox["m", 
+               SubscriptBox["J", "3"]], 
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "w"]]}]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox[")",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["{",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["j", "q"], 
+              SubscriptBox["J", "4"]},
+             {
+              SubscriptBox["K", "1"], 
+              SubscriptBox["j", "w"], 
+              SubscriptBox["J", "3"]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox["}",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["{",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "q"], 
+              SubscriptBox["j", "r"], 
+              SubscriptBox["J", "2"]},
+             {
+              SubscriptBox["j", "t"], 
+              SubscriptBox["K", "1"], 
+              SubscriptBox["J", "3"]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox["}",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["{",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "s"], 
+              SubscriptBox["j", "u"], 
+              SubscriptBox["J", "2"]},
+             {
+              SubscriptBox["j", "t"], 
+              SubscriptBox["K", "1"], 
+              SubscriptBox["J", "1"]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox["}",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["{",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "s"], 
+              SubscriptBox["j", "v"], 
+              SubscriptBox["J", "4"]},
+             {
+              SubscriptBox["j", "w"], 
+              SubscriptBox["K", "1"], 
+              SubscriptBox["J", "1"]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox["}",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol]}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{"-", "1"}], ")"}], 
+           RowBox[{
+            SubscriptBox["m", 
+             SubscriptBox["j", "p"]], "+", 
+            SubscriptBox["m", 
+             SubscriptBox["j", "w"]], "+", 
+            SubscriptBox["j", "p"], "+", 
+            SubscriptBox["j", "q"], "+", 
+            SubscriptBox["j", "r"], "+", 
+            SubscriptBox["j", "t"], "+", 
+            SubscriptBox["j", "v"], "+", 
+            SubscriptBox["j", "w"], "+", 
+            SubscriptBox["m", 
+             SubscriptBox["J", "3"]], "+", 
+            SubscriptBox["J", "1"], "+", 
+            SubscriptBox["J", "3"], "+", 
+            SubscriptBox["J", "4"]}]]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "w"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["J", "3"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["K", "1"]], 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["K", "1"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["(",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["j", "w"], 
+              SubscriptBox["J", "3"]},
+             {
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "p"]]}], 
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "w"]]}], 
+              SubscriptBox["m", 
+               SubscriptBox["J", "3"]]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox[")",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["(",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["J", "3"], 
+              SubscriptBox["j", "w"]},
+             {
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "p"]]}], 
+              SubscriptBox["m", 
+               SubscriptBox["J", "3"]], 
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "w"]]}]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox[")",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["{",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["j", "q"], 
+              SubscriptBox["J", "4"]},
+             {
+              SubscriptBox["K", "1"], 
+              SubscriptBox["j", "w"], 
+              SubscriptBox["J", "3"]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox["}",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["{",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "q"], 
+              SubscriptBox["j", "r"], 
+              SubscriptBox["J", "2"]},
+             {
+              SubscriptBox["j", "t"], 
+              SubscriptBox["K", "1"], 
+              SubscriptBox["J", "3"]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox["}",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["{",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "s"], 
+              SubscriptBox["j", "u"], 
+              SubscriptBox["J", "2"]},
+             {
+              SubscriptBox["j", "t"], 
+              SubscriptBox["K", "1"], 
+              SubscriptBox["J", "1"]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox["}",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["{",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "s"], 
+              SubscriptBox["j", "v"], 
+              SubscriptBox["J", "4"]},
+             {
+              SubscriptBox["j", "w"], 
+              SubscriptBox["K", "1"], 
+              SubscriptBox["J", "1"]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox["}",
+             SpanMaxSize->DirectedInfinity[1]],
+            SixJSymbol]}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{"-", "1"}], ")"}], 
+           RowBox[{
+            SubscriptBox["m", 
+             SubscriptBox["j", "p"]], "+", 
+            SubscriptBox["m", 
+             SubscriptBox["j", "w"]], "+", 
+            SubscriptBox["j", "p"], "+", 
+            SubscriptBox["j", "q"], "+", 
+            SubscriptBox["j", "r"], "+", 
+            SubscriptBox["j", "t"], "+", 
+            SubscriptBox["j", "v"], "+", 
+            SubscriptBox["j", "w"], "+", 
+            SubscriptBox["m", 
+             SubscriptBox["J", "3"]], "+", 
+            SubscriptBox["J", "1"], "+", 
+            SubscriptBox["J", "3"], "+", 
+            SubscriptBox["J", "4"]}]]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`j[$CellContext`p] + \
+$CellContext`j[$CellContext`q] + $CellContext`j[$CellContext`r] + \
+$CellContext`j[$CellContext`t] + $CellContext`j[$CellContext`v] + \
+$CellContext`j[$CellContext`w] + $CellContext`J[1] + $CellContext`J[
+        3] + $CellContext`J[
+        4] + $CellContext`mj[$CellContext`p] + \
+$CellContext`mj[$CellContext`w] + $CellContext`mJ[3]) (1 + 
+      2 $CellContext`J[1]) (1 + 2 $CellContext`J[2]) (1 + 
+      2 $CellContext`J[3]) (1 + 2 $CellContext`J[4]) AngularMomentum`sj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`j[$CellContext`q], 
+        $CellContext`J[4]}, {
+        $CellContext`varK[1], 
+        $CellContext`j[$CellContext`w], 
+        $CellContext`J[3]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`q], 
+        $CellContext`j[$CellContext`r], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[3]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`u], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`v], 
+        $CellContext`J[4]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}] (1 + 
+      2 $CellContext`varK[1]), 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[3], 
+      $CellContext`varK[1]]]], "working on:", 
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`j[$CellContext`p] + \
+$CellContext`j[$CellContext`q] + $CellContext`j[$CellContext`r] + \
+$CellContext`j[$CellContext`t] + $CellContext`j[$CellContext`v] + \
+$CellContext`j[$CellContext`w] + $CellContext`J[1] + $CellContext`J[
+        3] + $CellContext`J[
+        4] + $CellContext`mj[$CellContext`p] + \
+$CellContext`mj[$CellContext`w] + $CellContext`mJ[3]) AngularMomentum`sj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`j[$CellContext`q], 
+        $CellContext`J[4]}, {
+        $CellContext`varK[1], 
+        $CellContext`j[$CellContext`w], 
+        $CellContext`J[3]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`q], 
+        $CellContext`j[$CellContext`r], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[3]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`u], 
+        $CellContext`J[2]}, {
+        $CellContext`j[$CellContext`t], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`sj[{
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`v], 
+        $CellContext`J[4]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`varK[1], 
+        $CellContext`J[1]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}] (1 + 
+      2 $CellContext`varK[1]), 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[3], 
+      $CellContext`varK[1]]]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.6805170901595497`*^9}],
+
+Cell[BoxData[
+ InterpretationBox[
+  RowBox[{
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "w"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["J", "3"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["K", "3"]], 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["J", "1"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["J", "2"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["J", "3"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["J", "4"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["K", "3"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["(",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["j", "w"], 
+              SubscriptBox["J", "3"]},
+             {
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "p"]]}], 
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "w"]]}], 
+              SubscriptBox["m", 
+               SubscriptBox["J", "3"]]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox[")",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["(",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["J", "3"], 
+              SubscriptBox["j", "w"]},
+             {
+              SubscriptBox["m", 
+               SubscriptBox["j", "p"]], 
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "3"]]}], 
+              SubscriptBox["m", 
+               SubscriptBox["j", "w"]]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox[")",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol]}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{"-", "1"}], ")"}], 
+           RowBox[{
+            SubscriptBox["m", 
+             SubscriptBox["j", "p"]], "+", 
+            SubscriptBox["m", 
+             SubscriptBox["j", "w"]], "+", 
+            SubscriptBox["j", "q"], "+", 
+            SubscriptBox["j", "r"], "+", 
+            SubscriptBox["j", "t"], "+", 
+            SubscriptBox["j", "v"], "+", 
+            SubscriptBox["m", 
+             SubscriptBox["J", "3"]], "+", 
+            SubscriptBox["J", "1"], "+", 
+            SubscriptBox["J", "4"]}]], " ", 
+          StyleBox[
+           RowBox[{"{", GridBox[{
+              {
+               SubscriptBox["j", "p"], 
+               SubscriptBox["J", "3"], 
+               SubscriptBox["j", "w"]},
+              {
+               SubscriptBox["J", "4"], 
+               SubscriptBox["j", "s"], 
+               SubscriptBox["j", "v"]},
+              {
+               SubscriptBox["j", "q"], 
+               SubscriptBox["K", "3"], 
+               SubscriptBox["J", "1"]}
+             }], "}"}],
+           SpanMaxSize->DirectedInfinity[1]], " ", 
+          StyleBox[
+           RowBox[{"{", GridBox[{
+              {
+               SubscriptBox["j", "q"], 
+               SubscriptBox["J", "1"], 
+               SubscriptBox["K", "3"]},
+              {
+               SubscriptBox["J", "2"], 
+               SubscriptBox["j", "u"], 
+               SubscriptBox["j", "s"]},
+              {
+               SubscriptBox["j", "r"], 
+               SubscriptBox["j", "t"], 
+               SubscriptBox["J", "3"]}
+             }], "}"}],
+           SpanMaxSize->DirectedInfinity[1]]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True], "\[InvisibleSpace]", "\<\"working on:\"\>", 
+   "\[InvisibleSpace]", 
+   TagBox[
+    FormBox[
+     RowBox[{
+      UnderscriptBox["\[Sum]", 
+       SubscriptBox["m", 
+        SubscriptBox["j", "p"]]], 
+      RowBox[{
+       UnderscriptBox["\[Sum]", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "w"]]], 
+       RowBox[{
+        UnderscriptBox["\[Sum]", 
+         SubscriptBox["m", 
+          SubscriptBox["J", "3"]]], 
+        RowBox[{
+         UnderscriptBox["\[Sum]", 
+          SubscriptBox["K", "3"]], 
+         RowBox[{
+          RowBox[{"(", 
+           RowBox[{
+            RowBox[{"2", " ", 
+             SubscriptBox["K", "3"]}], "+", "1"}], ")"}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["(",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["j", "w"], 
+              SubscriptBox["J", "3"]},
+             {
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "p"]]}], 
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["j", "w"]]}], 
+              SubscriptBox["m", 
+               SubscriptBox["J", "3"]]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox[")",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol]}], " ", 
+          RowBox[{
+           TagBox[
+            StyleBox["(",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol], "\[MediumSpace]", GridBox[{
+             {
+              SubscriptBox["j", "p"], 
+              SubscriptBox["J", "3"], 
+              SubscriptBox["j", "w"]},
+             {
+              SubscriptBox["m", 
+               SubscriptBox["j", "p"]], 
+              RowBox[{"-", 
+               SubscriptBox["m", 
+                SubscriptBox["J", "3"]]}], 
+              SubscriptBox["m", 
+               SubscriptBox["j", "w"]]}
+            }], "\[MediumSpace]", 
+           TagBox[
+            StyleBox[")",
+             SpanMaxSize->DirectedInfinity[1]],
+            ThreeJSymbol]}], " ", 
+          SuperscriptBox[
+           RowBox[{"(", 
+            RowBox[{"-", "1"}], ")"}], 
+           RowBox[{
+            SubscriptBox["m", 
+             SubscriptBox["j", "p"]], "+", 
+            SubscriptBox["m", 
+             SubscriptBox["j", "w"]], "+", 
+            SubscriptBox["j", "q"], "+", 
+            SubscriptBox["j", "r"], "+", 
+            SubscriptBox["j", "t"], "+", 
+            SubscriptBox["j", "v"], "+", 
+            SubscriptBox["m", 
+             SubscriptBox["J", "3"]], "+", 
+            SubscriptBox["J", "1"], "+", 
+            SubscriptBox["J", "4"]}]], " ", 
+          StyleBox[
+           RowBox[{"{", GridBox[{
+              {
+               SubscriptBox["j", "p"], 
+               SubscriptBox["J", "3"], 
+               SubscriptBox["j", "w"]},
+              {
+               SubscriptBox["J", "4"], 
+               SubscriptBox["j", "s"], 
+               SubscriptBox["j", "v"]},
+              {
+               SubscriptBox["j", "q"], 
+               SubscriptBox["K", "3"], 
+               SubscriptBox["J", "1"]}
+             }], "}"}],
+           SpanMaxSize->DirectedInfinity[1]], " ", 
+          StyleBox[
+           RowBox[{"{", GridBox[{
+              {
+               SubscriptBox["j", "q"], 
+               SubscriptBox["J", "1"], 
+               SubscriptBox["K", "3"]},
+              {
+               SubscriptBox["J", "2"], 
+               SubscriptBox["j", "u"], 
+               SubscriptBox["j", "s"]},
+              {
+               SubscriptBox["j", "r"], 
+               SubscriptBox["j", "t"], 
+               SubscriptBox["J", "3"]}
+             }], "}"}],
+           SpanMaxSize->DirectedInfinity[1]]}]}]}]}]}],
+     TraditionalForm],
+    TraditionalForm,
+    Editable->True]}],
+  SequenceForm[
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`j[$CellContext`q] + \
+$CellContext`j[$CellContext`r] + $CellContext`j[$CellContext`t] + \
+$CellContext`j[$CellContext`v] + $CellContext`J[1] + $CellContext`J[
+        4] + $CellContext`mj[$CellContext`p] + \
+$CellContext`mj[$CellContext`w] + $CellContext`mJ[3]) (1 + 
+      2 $CellContext`J[1]) (1 + 2 $CellContext`J[2]) (1 + 
+      2 $CellContext`J[3]) (1 + 2 $CellContext`J[4]) AngularMomentum`nj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`J[3], 
+        $CellContext`j[$CellContext`w]}, {
+        $CellContext`J[4], 
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`v]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`varK[3], 
+        $CellContext`J[1]}] AngularMomentum`nj[{
+        $CellContext`j[$CellContext`q], 
+        $CellContext`J[1], 
+        $CellContext`varK[3]}, {
+        $CellContext`J[2], 
+        $CellContext`j[$CellContext`u], 
+        $CellContext`j[$CellContext`s]}, {
+        $CellContext`j[$CellContext`r], 
+        $CellContext`j[$CellContext`t], 
+        $CellContext`J[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`J[3], -$CellContext`mJ[3]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}] (1 + 2 $CellContext`varK[3]), 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[3], 
+      $CellContext`varK[3]]]], "working on:", 
+   TraditionalForm[
+    Utility`sum[(-1)^($CellContext`j[$CellContext`q] + \
+$CellContext`j[$CellContext`r] + $CellContext`j[$CellContext`t] + \
+$CellContext`j[$CellContext`v] + $CellContext`J[1] + $CellContext`J[
+        4] + $CellContext`mj[$CellContext`p] + \
+$CellContext`mj[$CellContext`w] + $CellContext`mJ[3]) AngularMomentum`nj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`J[3], 
+        $CellContext`j[$CellContext`w]}, {
+        $CellContext`J[4], 
+        $CellContext`j[$CellContext`s], 
+        $CellContext`j[$CellContext`v]}, {
+        $CellContext`j[$CellContext`q], 
+        $CellContext`varK[3], 
+        $CellContext`J[1]}] AngularMomentum`nj[{
+        $CellContext`j[$CellContext`q], 
+        $CellContext`J[1], 
+        $CellContext`varK[3]}, {
+        $CellContext`J[2], 
+        $CellContext`j[$CellContext`u], 
+        $CellContext`j[$CellContext`s]}, {
+        $CellContext`j[$CellContext`r], 
+        $CellContext`j[$CellContext`t], 
+        $CellContext`J[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], -$CellContext`mj[$CellContext`p]}, {
+        $CellContext`j[$CellContext`w], -$CellContext`mj[$CellContext`w]}, {
+        $CellContext`J[3], 
+        $CellContext`mJ[3]}] AngularMomentum`tj[{
+        $CellContext`j[$CellContext`p], 
+        $CellContext`mj[$CellContext`p]}, {
+        $CellContext`J[3], -$CellContext`mJ[3]}, {
+        $CellContext`j[$CellContext`w], 
+        $CellContext`mj[$CellContext`w]}] (1 + 2 $CellContext`varK[3]), 
+     Utility`set[
+      $CellContext`mj[$CellContext`p], 
+      $CellContext`mj[$CellContext`w], 
+      $CellContext`mJ[3], 
+      $CellContext`varK[3]]]]],
+  Editable->False]], "Print",
+ CellChangeTimes->{3.680517090682951*^9}]
+}, Open  ]],
+
+Cell[BoxData["$Aborted"], "Output",
+ CellChangeTimes->{3.680517175129325*^9}]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{
+   RowBox[{"testExpr", "[", "5", "]"}], " ", "=", " ", 
+   RowBox[{"sum", "[", 
+    RowBox[{
+     RowBox[{
+      RowBox[{"tj", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "p", "]"}], ",", 
+          RowBox[{"-", 
+           RowBox[{"mj", "[", "p", "]"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "w", "]"}], ",", 
+          RowBox[{"-", 
+           RowBox[{"mj", "[", "w", "]"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "3", "]"}], ",", 
+          RowBox[{"mJ", "[", "3", "]"}]}], "}"}]}], "]"}], 
+      "\[IndentingNewLine]", 
+      RowBox[{"tj", "[", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "p", "]"}], ",", 
+          RowBox[{"mj", "[", "p", "]"}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"J", "[", "3", "]"}], ",", 
+          RowBox[{"-", 
+           RowBox[{"mJ", "[", "3", "]"}]}]}], "}"}], ",", 
+        RowBox[{"{", 
+         RowBox[{
+          RowBox[{"j", "[", "w", "]"}], ",", 
+          RowBox[{"mj", "[", "w", "]"}]}], "}"}]}], "]"}], "*", 
+      RowBox[{
+       RowBox[{"(", 
+        RowBox[{"-", "1"}], ")"}], "^", 
+       RowBox[{"(", 
+        RowBox[{
+         RowBox[{"mj", "[", "p", "]"}], "+", 
+         RowBox[{"mj", "[", "w", "]"}], "+", 
+         RowBox[{"mJ", "[", "3", "]"}]}], ")"}]}]}], "\[IndentingNewLine]", 
+     ",", "\[IndentingNewLine]", 
+     RowBox[{"mj", "[", "p", "]"}], ",", 
+     RowBox[{"mj", "[", "w", "]"}], ",", 
+     RowBox[{"mJ", "[", "3", "]"}]}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"testExpr", "[", "5", "]"}], "//", 
+  "consistencyCheck"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"testExpr", "[", "5", "]"}], "//", 
+  "TraditionalForm"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"simplifyAMSum", "[", 
+   RowBox[{"testExpr", "[", "5", "]"}], "]"}], " ", "//", " ", 
+  "TraditionalForm"}]}], "Input",
+ CellChangeTimes->{{3.680517243379004*^9, 3.6805173160172586`*^9}, {
+  3.680517355681777*^9, 3.680517360177808*^9}, {3.680517418122684*^9, 
+  3.68051744840082*^9}}],
+
+Cell[BoxData["True"], "Output",
+ CellChangeTimes->{3.6805173163841457`*^9, 3.680517360536848*^9, 
+  3.680517448733922*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   UnderscriptBox["\[Sum]", 
+    SubscriptBox["m", 
+     SubscriptBox["j", "p"]]], 
+   RowBox[{
+    UnderscriptBox["\[Sum]", 
+     SubscriptBox["m", 
+      SubscriptBox["j", "w"]]], 
+    RowBox[{
+     UnderscriptBox["\[Sum]", 
+      SubscriptBox["m", 
+       SubscriptBox["J", "3"]]], 
+     RowBox[{
+      SuperscriptBox[
+       RowBox[{"(", 
+        RowBox[{"-", "1"}], ")"}], 
+       RowBox[{
+        SubscriptBox["m", 
+         SubscriptBox["j", "p"]], "+", 
+        SubscriptBox["m", 
+         SubscriptBox["j", "w"]], "+", 
+        SubscriptBox["m", 
+         SubscriptBox["J", "3"]]}]], " ", 
+      RowBox[{
+       TagBox[
+        StyleBox["(",
+         SpanMaxSize->DirectedInfinity[1]],
+        ThreeJSymbol], "\[MediumSpace]", GridBox[{
+         {
+          SubscriptBox["j", "p"], 
+          SubscriptBox["j", "w"], 
+          SubscriptBox["J", "3"]},
+         {
+          RowBox[{"-", 
+           SubscriptBox["m", 
+            SubscriptBox["j", "p"]]}], 
+          RowBox[{"-", 
+           SubscriptBox["m", 
+            SubscriptBox["j", "w"]]}], 
+          SubscriptBox["m", 
+           SubscriptBox["J", "3"]]}
+        }], "\[MediumSpace]", 
+       TagBox[
+        StyleBox[")",
+         SpanMaxSize->DirectedInfinity[1]],
+        ThreeJSymbol]}], " ", 
+      RowBox[{
+       TagBox[
+        StyleBox["(",
+         SpanMaxSize->DirectedInfinity[1]],
+        ThreeJSymbol], "\[MediumSpace]", GridBox[{
+         {
+          SubscriptBox["j", "p"], 
+          SubscriptBox["J", "3"], 
+          SubscriptBox["j", "w"]},
+         {
+          SubscriptBox["m", 
+           SubscriptBox["j", "p"]], 
+          RowBox[{"-", 
+           SubscriptBox["m", 
+            SubscriptBox["J", "3"]]}], 
+          SubscriptBox["m", 
+           SubscriptBox["j", "w"]]}
+        }], "\[MediumSpace]", 
+       TagBox[
+        StyleBox[")",
+         SpanMaxSize->DirectedInfinity[1]],
+        ThreeJSymbol]}]}]}]}]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.6805173163841457`*^9, 3.680517360536848*^9, 
+  3.680517448737794*^9}],
+
+Cell[BoxData[
+ FormBox[
+  RowBox[{
+   UnderscriptBox["\[Sum]", 
+    SubscriptBox["m", 
+     SubscriptBox["j", "p"]]], 
+   FractionBox[
+    StyleBox[
+     RowBox[{"\[EmptyUpTriangle]", "{", 
+      SubscriptBox["j", "p"], 
+      SubscriptBox["j", "w"], 
+      SubscriptBox["J", "3"], "}"}],
+     SpanMaxSize->DirectedInfinity[1]], 
+    RowBox[{
+     RowBox[{"2", " ", 
+      SubscriptBox["j", "p"]}], "+", "1"}]]}], TraditionalForm]], "Output",
+ CellChangeTimes->{3.6805173163841457`*^9, 3.680517360536848*^9, 
+  3.68051744886532*^9}]
+}, Open  ]],
+
+Cell[BoxData[""], "Input",
+ CellChangeTimes->{{3.6805171325127296`*^9, 3.680517135208171*^9}}]
 }, Open  ]],
 
 Cell[CellGroupData[{
@@ -4262,8 +8426,8 @@ Cell["", "Text"]
 }, Open  ]]
 }, Open  ]]
 },
-WindowSize->{758, 867},
-WindowMargins->{{Automatic, 223}, {65, Automatic}},
+WindowSize->{1050, 1660},
+WindowMargins->{{Automatic, 0}, {Automatic, 0}},
 ShowSelection->True,
 FrontEndVersion->"10.0 for Linux x86 (64-bit) (June 27, 2014)",
 StyleDefinitions->"Default.nb"
@@ -4282,180 +8446,221 @@ Notebook[{
 Cell[CellGroupData[{
 Cell[579, 22, 96, 1, 65, "Section"],
 Cell[678, 25, 138, 1, 33, "Text"],
-Cell[819, 28, 398, 10, 112, "Input"],
-Cell[1220, 40, 355, 6, 77, "Text"],
-Cell[1578, 48, 212, 4, 55, "Text"],
-Cell[1793, 54, 4030, 117, 209, "Input"],
-Cell[5826, 173, 226, 5, 33, "Text"],
+Cell[819, 28, 447, 11, 55, "Input"],
+Cell[1269, 41, 355, 6, 55, "Text"],
+Cell[1627, 49, 212, 4, 55, "Text"],
+Cell[1842, 55, 4030, 117, 165, "Input"],
+Cell[5875, 174, 226, 5, 33, "Text"],
 Cell[CellGroupData[{
-Cell[6077, 182, 164, 3, 32, "Input"],
-Cell[6244, 187, 4729, 136, 234, "Output"]
+Cell[6126, 183, 164, 3, 32, "Input"],
+Cell[6293, 188, 4729, 136, 127, "Output"]
 }, Open  ]],
-Cell[10988, 326, 315, 7, 77, "Text"],
-Cell[11306, 335, 153, 3, 32, "Input"],
-Cell[11462, 340, 190, 4, 55, "Text"],
+Cell[11037, 327, 315, 7, 55, "Text"],
+Cell[11355, 336, 153, 3, 32, "Input"],
+Cell[11511, 341, 190, 4, 33, "Text"],
 Cell[CellGroupData[{
-Cell[11677, 348, 125, 2, 32, "Input"],
-Cell[11805, 352, 1600, 47, 78, "Print"]
+Cell[11726, 349, 125, 2, 32, "Input"],
+Cell[11854, 353, 1600, 47, 78, "Print"]
 }, Open  ]],
-Cell[13420, 402, 107, 1, 33, "Text"],
+Cell[13469, 403, 107, 1, 33, "Text"],
 Cell[CellGroupData[{
-Cell[13552, 407, 165, 3, 32, "Input"],
-Cell[13720, 412, 6099, 170, 189, "Output"]
+Cell[13601, 408, 165, 3, 32, "Input"],
+Cell[13769, 413, 6099, 170, 138, "Output"]
 }, Open  ]],
-Cell[19834, 585, 458, 8, 77, "Text"],
+Cell[19883, 586, 458, 8, 55, "Text"],
 Cell[CellGroupData[{
-Cell[20317, 597, 166, 3, 32, "Input"],
-Cell[20486, 602, 661, 12, 59, "Message"],
-Cell[21150, 616, 649, 12, 59, "Message"],
-Cell[21802, 630, 647, 12, 59, "Message"],
-Cell[22452, 644, 578, 11, 41, "Message"],
-Cell[23033, 657, 564, 11, 70, "Message"],
-Cell[23600, 670, 860, 15, 49, "Message"],
-Cell[24463, 687, 578, 12, 70, "Message"],
-Cell[25044, 701, 579, 11, 41, "Message"],
-Cell[25626, 714, 609, 12, 90, "Message"],
-Cell[26238, 728, 611, 12, 90, "Message"],
-Cell[26852, 742, 657, 12, 63, "Message"],
-Cell[27512, 756, 578, 11, 41, "Message"]
+Cell[20366, 598, 166, 3, 32, "Input"],
+Cell[20535, 603, 661, 12, 41, "Message"],
+Cell[21199, 617, 649, 12, 41, "Message"],
+Cell[21851, 631, 647, 12, 41, "Message"],
+Cell[22501, 645, 578, 11, 23, "Message"],
+Cell[23082, 658, 564, 11, 50, "Message"],
+Cell[23649, 671, 860, 15, 30, "Message"],
+Cell[24512, 688, 578, 12, 50, "Message"],
+Cell[25093, 702, 579, 11, 23, "Message"],
+Cell[25675, 715, 609, 12, 69, "Message"],
+Cell[26287, 729, 611, 12, 69, "Message"],
+Cell[26901, 743, 657, 12, 45, "Message"],
+Cell[27561, 757, 578, 11, 23, "Message"]
 }, Open  ]],
-Cell[28105, 770, 647, 13, 121, "Text"],
-Cell[28755, 785, 1170, 32, 77, "Input"],
-Cell[29928, 819, 158, 2, 33, "Text"],
+Cell[28154, 771, 647, 13, 77, "Text"],
+Cell[28804, 786, 1170, 32, 77, "Input"],
+Cell[29977, 820, 158, 2, 33, "Text"],
 Cell[CellGroupData[{
-Cell[30111, 825, 163, 3, 32, "Input"],
-Cell[30277, 830, 789, 14, 51, "Message"],
-Cell[31069, 846, 764, 14, 50, "Message"],
-Cell[31836, 862, 588, 10, 59, "Message"]
+Cell[30160, 826, 163, 3, 32, "Input"],
+Cell[30326, 831, 789, 14, 31, "Message"],
+Cell[31118, 847, 764, 14, 30, "Message"],
+Cell[31885, 863, 588, 10, 41, "Message"]
 }, Open  ]],
-Cell[32439, 875, 531, 9, 99, "Text"],
+Cell[32488, 876, 531, 9, 77, "Text"],
 Cell[CellGroupData[{
-Cell[32995, 888, 138, 2, 32, "Input"],
-Cell[33136, 892, 346, 7, 41, "Message"],
-Cell[33485, 901, 122, 2, 32, "Output"]
+Cell[33044, 889, 138, 2, 32, "Input"],
+Cell[33185, 893, 346, 7, 23, "Message"],
+Cell[33534, 902, 122, 2, 32, "Output"]
 }, Open  ]],
-Cell[33622, 906, 324, 6, 55, "Text"],
+Cell[33671, 907, 324, 6, 55, "Text"],
 Cell[CellGroupData[{
-Cell[33971, 916, 208, 4, 32, "Input"],
-Cell[34182, 922, 175, 3, 32, "Output"]
+Cell[34020, 917, 208, 4, 32, "Input"],
+Cell[34231, 923, 175, 3, 32, "Output"]
 }, Open  ]],
-Cell[34372, 928, 217, 4, 33, "Text"],
-Cell[34592, 934, 100, 2, 32, "Input"],
-Cell[34695, 938, 575, 11, 121, "Text"],
+Cell[34421, 929, 217, 4, 33, "Text"],
+Cell[34641, 935, 100, 2, 32, "Input"],
+Cell[34744, 939, 575, 11, 77, "Text"],
 Cell[CellGroupData[{
-Cell[35295, 953, 389, 9, 32, "Input"],
+Cell[35344, 954, 389, 9, 32, "Input"],
 Cell[CellGroupData[{
-Cell[35709, 966, 8944, 240, 237, "Print"],
-Cell[44656, 1208, 7427, 210, 190, "Print"],
-Cell[52086, 1420, 4206, 127, 129, "Print"],
-Cell[56295, 1549, 2169, 65, 67, "Print"]
+Cell[35758, 967, 8944, 240, 113, "Print"],
+Cell[44705, 1209, 7427, 210, 115, "Print"],
+Cell[52135, 1421, 4206, 127, 60, "Print"],
+Cell[56344, 1550, 2169, 65, 55, "Print"]
 }, Open  ]],
-Cell[58479, 1617, 1498, 46, 133, "Output"]
+Cell[58528, 1618, 1498, 46, 84, "Output"]
 }, Open  ]],
-Cell[59992, 1666, 156, 3, 33, "Text"],
+Cell[60041, 1667, 156, 3, 33, "Text"],
 Cell[CellGroupData[{
-Cell[60173, 1673, 267, 5, 32, "Input"],
-Cell[60443, 1680, 2059, 61, 74, "Output"]
+Cell[60222, 1674, 267, 5, 32, "Input"],
+Cell[60492, 1681, 2059, 61, 74, "Output"]
 }, Open  ]],
-Cell[62517, 1744, 1014, 15, 231, "Text"]
+Cell[62566, 1745, 1014, 15, 187, "Text"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[63568, 1764, 156, 2, 65, "Section"],
-Cell[63727, 1768, 6446, 179, 363, "Input"],
+Cell[63617, 1765, 156, 2, 65, "Section"],
+Cell[63776, 1769, 3540, 103, 165, "Input"],
 Cell[CellGroupData[{
-Cell[70198, 1951, 169, 3, 32, "Input"],
-Cell[70370, 1956, 9522, 232, 256, "Output"]
+Cell[67341, 1876, 165, 3, 32, "Input"],
+Cell[67509, 1881, 3489, 104, 67, "Output"]
 }, Open  ]],
-Cell[79907, 2191, 1678, 44, 121, "Input"],
-Cell[81588, 2237, 168, 3, 32, "Input"],
 Cell[CellGroupData[{
-Cell[81781, 2244, 338, 9, 32, "Input"],
-Cell[82122, 2255, 9729, 252, 231, "Print"],
-Cell[91854, 2509, 77, 1, 32, "Output"]
-}, Open  ]],
-Cell[91946, 2513, 6165, 172, 363, "Input"],
+Cell[71035, 1990, 330, 10, 55, "Input"],
 Cell[CellGroupData[{
-Cell[98136, 2689, 310, 8, 32, "Input"],
-Cell[CellGroupData[{
-Cell[98471, 2701, 9190, 247, 198, "Print"],
-Cell[107664, 2950, 6119, 174, 151, "Print"],
-Cell[113786, 3126, 2915, 82, 96, "Print"]
-}, Open  ]]
+Cell[71390, 2004, 12956, 354, 156, "Print"],
+Cell[84349, 2360, 9249, 256, 116, "Print"],
+Cell[93601, 2618, 4154, 120, 56, "Print"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[116762, 3215, 91, 1, 65, "Section"],
-Cell[116856, 3218, 432, 9, 32, "Input"],
-Cell[CellGroupData[{
-Cell[117313, 3231, 2235, 65, 165, "Input"],
-Cell[119551, 3298, 1796, 58, 75, "Output"],
-Cell[CellGroupData[{
-Cell[121372, 3360, 4852, 145, 95, "Print"],
-Cell[126227, 3507, 2129, 65, 49, "Print"]
+Cell[97804, 2744, 204, 5, 55, "Input"],
+Cell[98011, 2751, 1570, 50, 52, "Output"]
 }, Open  ]],
-Cell[128371, 3575, 1356, 42, 108, "Output"]
+Cell[99596, 2804, 6446, 179, 297, "Input"],
+Cell[CellGroupData[{
+Cell[106067, 2987, 169, 3, 32, "Input"],
+Cell[106239, 2992, 9522, 232, 160, "Output"]
+}, Open  ]],
+Cell[115776, 3227, 1678, 44, 99, "Input"],
+Cell[117457, 3273, 168, 3, 32, "Input"],
+Cell[CellGroupData[{
+Cell[117650, 3280, 338, 9, 32, "Input"],
+Cell[117991, 3291, 9729, 252, 138, "Print"],
+Cell[127723, 3545, 77, 1, 32, "Output"]
+}, Open  ]],
+Cell[127815, 3549, 6165, 172, 341, "Input"],
+Cell[CellGroupData[{
+Cell[134005, 3725, 310, 8, 32, "Input"],
+Cell[CellGroupData[{
+Cell[134340, 3737, 9190, 247, 138, "Print"],
+Cell[143533, 3986, 6119, 174, 98, "Print"],
+Cell[149655, 4162, 2915, 82, 53, "Print"]
+}, Open  ]]
+}, Open  ]],
+Cell[152597, 4248, 1441, 38, 99, "Input"],
+Cell[CellGroupData[{
+Cell[154063, 4290, 4983, 144, 275, "Input"],
+Cell[159049, 4436, 125, 2, 32, "Output"],
+Cell[159177, 4440, 6906, 197, 132, "Output"]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[129764, 3622, 235, 3, 55, "Input"],
-Cell[130002, 3627, 4688, 137, 95, "Print"],
-Cell[134693, 3766, 1625, 53, 75, "Output"]
+Cell[166120, 4642, 310, 8, 32, "Input"],
+Cell[CellGroupData[{
+Cell[166455, 4654, 23222, 593, 211, "Print"],
+Cell[189680, 5249, 25219, 639, 294, "Print"],
+Cell[214902, 5890, 19637, 532, 211, "Print"],
+Cell[234542, 6424, 15441, 440, 205, "Print"],
+Cell[249986, 6866, 11883, 336, 193, "Print"]
+}, Open  ]],
+Cell[261884, 7205, 77, 1, 32, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[261998, 7211, 2195, 63, 165, "Input"],
+Cell[264196, 7276, 122, 2, 32, "Output"],
+Cell[264321, 7280, 2067, 71, 84, "Output"],
+Cell[266391, 7353, 532, 17, 89, "Output"]
+}, Open  ]],
+Cell[266938, 7373, 94, 1, 32, "Input"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[267069, 7379, 91, 1, 65, "Section"],
+Cell[267163, 7382, 432, 9, 32, "Input"],
+Cell[CellGroupData[{
+Cell[267620, 7395, 2235, 65, 121, "Input"],
+Cell[269858, 7462, 1796, 58, 60, "Output"],
+Cell[CellGroupData[{
+Cell[271679, 7524, 4852, 145, 47, "Print"],
+Cell[276534, 7671, 2129, 65, 47, "Print"]
+}, Open  ]],
+Cell[278678, 7739, 1356, 42, 60, "Output"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[280071, 7786, 235, 3, 55, "Input"],
+Cell[280309, 7791, 4688, 137, 47, "Print"],
+Cell[285000, 7930, 1625, 53, 60, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[136367, 3825, 103, 1, 65, "Section"],
-Cell[136473, 3828, 314, 6, 55, "Text"],
-Cell[136790, 3836, 161, 2, 33, "Text"],
+Cell[286674, 7989, 103, 1, 65, "Section"],
+Cell[286780, 7992, 314, 6, 55, "Text"],
+Cell[287097, 8000, 161, 2, 33, "Text"],
 Cell[CellGroupData[{
-Cell[136976, 3842, 209, 5, 32, "Input"],
-Cell[137188, 3849, 3743, 103, 157, "Output"]
+Cell[287283, 8006, 209, 5, 32, "Input"],
+Cell[287495, 8013, 3743, 103, 108, "Output"]
 }, Open  ]],
-Cell[140946, 3955, 239, 5, 55, "Text"],
+Cell[291253, 8119, 239, 5, 33, "Text"],
 Cell[CellGroupData[{
-Cell[141210, 3964, 227, 5, 32, "Input"],
-Cell[141440, 3971, 910, 26, 57, "Output"]
+Cell[291517, 8128, 227, 5, 32, "Input"],
+Cell[291747, 8135, 910, 26, 58, "Output"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[142399, 4003, 101, 1, 65, "Section"],
-Cell[142503, 4006, 262, 5, 55, "Text"],
-Cell[142768, 4013, 222, 5, 33, "Text"],
+Cell[292706, 8167, 101, 1, 65, "Section"],
+Cell[292810, 8170, 262, 5, 55, "Text"],
+Cell[293075, 8177, 222, 5, 33, "Text"],
 Cell[CellGroupData[{
-Cell[143015, 4022, 270, 6, 55, "Input"],
-Cell[143288, 4030, 370, 7, 55, "Output"]
+Cell[293322, 8186, 270, 6, 32, "Input"],
+Cell[293595, 8194, 370, 7, 55, "Output"]
 }, Open  ]],
-Cell[143673, 4040, 854, 14, 209, "Text"],
-Cell[144530, 4056, 151, 3, 33, "Text"],
+Cell[293980, 8204, 854, 14, 165, "Text"],
+Cell[294837, 8220, 151, 3, 33, "Text"],
 Cell[CellGroupData[{
-Cell[144706, 4063, 106, 1, 45, "Subsection"],
-Cell[144815, 4066, 290, 5, 33, "Text"],
+Cell[295013, 8227, 106, 1, 45, "Subsection"],
+Cell[295122, 8230, 290, 5, 33, "Text"],
 Cell[CellGroupData[{
-Cell[145130, 4075, 382, 11, 32, "Input"],
-Cell[145515, 4088, 358, 10, 55, "Output"]
+Cell[295437, 8239, 382, 11, 32, "Input"],
+Cell[295822, 8252, 358, 10, 52, "Output"]
 }, Open  ]],
-Cell[145888, 4101, 218, 4, 55, "Text"],
-Cell[146109, 4107, 328, 8, 55, "Input"],
+Cell[296195, 8265, 218, 4, 33, "Text"],
+Cell[296416, 8271, 328, 8, 55, "Input"],
 Cell[CellGroupData[{
-Cell[146462, 4119, 328, 10, 32, "Input"],
-Cell[146793, 4131, 219, 6, 32, "Output"]
+Cell[296769, 8283, 328, 10, 32, "Input"],
+Cell[297100, 8295, 219, 6, 32, "Output"]
 }, Open  ]],
-Cell[147027, 4140, 356, 6, 77, "Text"],
-Cell[147386, 4148, 267, 8, 32, "Input"],
-Cell[147656, 4158, 177, 4, 33, "Text"],
-Cell[147836, 4164, 584, 21, 77, "Input"],
-Cell[148423, 4187, 386, 6, 55, "Text"],
+Cell[297334, 8304, 356, 6, 55, "Text"],
+Cell[297693, 8312, 267, 8, 32, "Input"],
+Cell[297963, 8322, 177, 4, 33, "Text"],
+Cell[298143, 8328, 584, 21, 77, "Input"],
+Cell[298730, 8351, 386, 6, 55, "Text"],
 Cell[CellGroupData[{
-Cell[148834, 4197, 779, 21, 77, "Input"],
-Cell[149616, 4220, 741, 21, 75, "Output"]
+Cell[299141, 8361, 779, 21, 77, "Input"],
+Cell[299923, 8384, 741, 21, 73, "Output"]
 }, Open  ]],
-Cell[150372, 4244, 16, 0, 33, "Text"],
-Cell[150391, 4246, 16, 0, 33, "Text"],
-Cell[150410, 4248, 16, 0, 33, "Text"],
-Cell[150429, 4250, 16, 0, 33, "Text"],
-Cell[150448, 4252, 16, 0, 33, "Text"],
-Cell[150467, 4254, 16, 0, 33, "Text"],
-Cell[150486, 4256, 16, 0, 33, "Text"],
-Cell[150505, 4258, 16, 0, 33, "Text"],
-Cell[150524, 4260, 16, 0, 33, "Text"]
+Cell[300679, 8408, 16, 0, 33, "Text"],
+Cell[300698, 8410, 16, 0, 33, "Text"],
+Cell[300717, 8412, 16, 0, 33, "Text"],
+Cell[300736, 8414, 16, 0, 33, "Text"],
+Cell[300755, 8416, 16, 0, 33, "Text"],
+Cell[300774, 8418, 16, 0, 33, "Text"],
+Cell[300793, 8420, 16, 0, 33, "Text"],
+Cell[300812, 8422, 16, 0, 33, "Text"],
+Cell[300831, 8424, 16, 0, 33, "Text"]
 }, Open  ]]
 }, Open  ]]
 }
